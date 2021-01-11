@@ -4,5 +4,8 @@
 <configuration>
     <typeAliases>
         <typeAlias alias="Location" type="project.personal.lhinfo.entity.Location"/>
+        <typeAlias alias="SupplyType" type="project.personal.lhinfo.entity.SupplyType"/>
+        <typeAlias alias="NoticeType" type="project.personal.lhinfo.entity.NoticeType"/>
+        <typeAlias alias="NoticeStatusType" type="project.personal.lhinfo.entity.NoticeStatusType"/>
     </typeAliases>
 </configuration>

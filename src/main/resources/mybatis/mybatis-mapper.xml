@@ -2,8 +2,24 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="lhinfoDB">
-    <select id="selectLocations" resultType="project.personal.lhinfo.entity.Location">
+
+    <select id="selectLocations" resultType="Location">
         SELECT *
         FROM location
+    </select>
+
+    <select id="selectSupplyTypes" resultType="SupplyType">
+        SELECT *
+        FROM supplytype
+    </select>
+
+    <select id="selectNoticeTypes" resultType="NoticeType">
+        SELECT *
+        FROM noticetype
+    </select>
+
+    <select id="selectNoticeStatusTypes" resultType="NoticeStatusType">
+        SELECT *
+        FROM noticestatustype
     </select>
 </mapper>
