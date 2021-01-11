@@ -20,7 +20,8 @@
 		<beans:property name="prefix" value="/WEB-INF/views/" />
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
-	
+
+	<!-- annotaion-scan scope -->
 	<context:component-scan base-package="project.personal.lhinfo" />
 	
 	
