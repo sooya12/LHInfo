@@ -13,13 +13,12 @@ import project.personal.lhinfo.service.TypeService;
 import java.util.List;
 
 @Controller
-@RequestMapping(value = "/type")
 public class TypeController {
 
     @Autowired
     TypeService typeService;
 
-    @RequestMapping(value = "/locations")
+    @RequestMapping(value = "/type")
     public String locationList(Model model) {
         List<Location> locationList = typeService.locationList();
         List<SupplyType> supplyTypeList = typeService.supplyTypeList();
