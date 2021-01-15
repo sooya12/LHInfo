@@ -7,8 +7,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import project.personal.lhinfo.dto.LeaseComplexDto;
+import project.personal.lhinfo.dto.LeaseComplexListDto;
 import project.personal.lhinfo.entity.Location;
 import project.personal.lhinfo.entity.SupplyType;
 import project.personal.lhinfo.service.LeaseComplexService;
@@ -29,7 +29,11 @@ public class LeaseComplexController {
     TypeService typeService;
 
     @RequestMapping(value = "/list", method = RequestMethod.GET)
-    public String leaseComplexList(Model model, @RequestParam("location") String location, @RequestParam("supplyType") String supplyType, @RequestParam("page") String page) {
+    public String leaseComplexList(Model model, LeaseComplexListDto leaseComplexListDto) {
+        String location = leaseComplexListDto.getLocation();
+        String supplyType = leaseComplexListDto.getSupplyType();
+        String page = leaseComplexListDto.getPage();
+
         logger.info(location + ", " + supplyType + ", " + page);
 
         List<Location> locationList = typeService.locationList();
@@ -44,9 +48,15 @@ public class LeaseComplexController {
             List<LeaseComplexDto> leaseComplexList = leaseComplexService.leaseComplexList(location, supplyType, page);
             System.out.println(leaseComplexList.toString());
             model.addAttribute("leaseComplexList", leaseComplexList);
+
+            int totalCnt = Integer.parseInt(leaseComplexList.get(0).ALL_CNT);
+            int pageCnt = totalCnt / 100 + 1;
+            model.addAttribute("pageCnt", pageCnt);
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        model.addAttribute("currentValue", leaseComplexListDto);
 
         return "leaseComplex";
     }
