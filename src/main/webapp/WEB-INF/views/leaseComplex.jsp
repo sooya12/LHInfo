@@ -20,30 +20,52 @@
     <div class="container">
         <jsp:include page="header.jsp"/>
         <div id="selectBoxArea">
-            <form>
+            <form id="leaseComplexSelectForm" action="/leasecomplex/list" method="get">
                 <div class="form-group">
                     <label for="selLocation">지역 </label>
-                    <select class="form-control" id="selLocation">
+                    <select class="form-control" id="selLocation" name="location">
                       <c:forEach var="location" items="${locationList}">
-                            <option><c:out value="${location.info} (${location.code})"/></option>
+                            <option value="${location.code}">${location.info}</option>
                         </c:forEach>
                     </select>
                 </div>
                 <div class="form-group">
                     <label for="selSupplyType">공급유형 </label>
-                    <select class="form-control" id="selSupplyType">
+                    <select class="form-control" id="selSupplyType" name="supplyType">
                         <c:forEach var="supplyType" items="${supplyTypeList}">
-                            <option><c:out value="${supplyType.info} (${supplyType.code})"/></option>
+                            <option value="${supplyType.code}">${supplyType.info}</option>
                         </c:forEach>
                     </select>
                 </div>
-                <div class="form-button">
-                    <button type="button" class="btn btn-basic">임대단지 조회</button>
+                <div id="paging">
+                    <label for="selPage">페이지 </label>
+                    <ul class="pagination" id="selPage" name="page" >
+                        <c:forEach begin="1" end="${pageCnt}" varStatus="idx">
+                            <li><a href="#"><c:out value="${idx.count}"/></a></li>
+                        </c:forEach>
+                        <%--<c:choose>
+                            <c:when test="${pageCnt <= 4}">
+                                <c:forEach begin="1" end="${pageCnt}" varStatus="idx">
+                                    <li><a href="#"><c:out value="${idx.count}"/></a></li>
+                                </c:forEach>
+                            </c:when>
+                            <c:otherwise>
+                                <li><a href="#"><c:out value="${currentValue.page - 1}"/></a></li>
+                                <li><a href="#"><c:out value="${currentValue.page}"/></a></li>
+                                <li><a href="#"><c:out value="0"/></a></li>
+                                <li><a href="#"><c:out value="${pageCnt}"/></a></li>
+                            </c:otherwise>
+                        </c:choose>--%>
+                    </ul>
                 </div>
+                <div class="form-button">
+                    <button type="submit" class="btn btn-basic" id="inquiryButton">임대단지 조회</button>
+                </div>
+                <input type="hidden" name="page" value="1"/>
             </form>
         </div>
         <div id="leaseComplexListArea">
-            <table class="table table-condensed">
+            <table class="table table-condensed" id="leaseComplexTable">
                 <thead>
                     <tr>
                         <th>순번</th>
@@ -56,25 +78,43 @@
                         <th>세대수</th>
                         <th>최초입주년월</th>
                         <th>임대보증금</th>
-                        <th>전체건수</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <c:forEach var="leaseComplex" items="${leaseComplexList}" varStatus="idx">
-                        <tr>
-                            <td><c:out value="${leaseComplex.RNUM}"/></td>
-                            <td><c:out value="${leaseComplex.ARA_NM}"/></td>
-                            <td><c:out value="${leaseComplex.AIS_TP_CD_NM}"/></td>
-                            <td><c:out value="${leaseComplex.SBD_LGO_NM}"/></td>
-                            <td><c:out value="${leaseComplex.DDO_AR}"/></td>
-                            <td><c:out value="${leaseComplex.RFE}"/></td>
-                            <td><c:out value="${leaseComplex.SUM_HSH_CNT}"/></td>
-                            <td><c:out value="${leaseComplex.HSH_CNT}"/></td>
-                            <td><c:out value="${leaseComplex.MVIN_XPC_YM}"/></td>
-                            <td><c:out value="${leaseComplex.LS_GMY}"/></td>
-                            <td><c:out value="${leaseComplex.ALL_CNT}"/></td>
-                        </tr>
-                    </c:forEach>
+                    <c:choose>
+                        <c:when test="${leaseComplexList.size() < 1}">
+                            <tr>
+                                <td colspan="11" id="noInfomation">해당 임대단지 조회 정보가 없습니다.</td>
+                            </tr>
+                        </c:when>
+                        <c:otherwise>
+                        <c:forEach var="leaseComplex" items="${leaseComplexList}" varStatus="idx">
+                            <tr>
+                                <td><c:out value="${leaseComplex.RNUM}"/></td>
+                                <td><c:out value="${leaseComplex.ARA_NM}"/></td>
+                                <td><c:out value="${leaseComplex.AIS_TP_CD_NM}"/></td>
+                                <td><c:out value="${leaseComplex.SBD_LGO_NM}"/></td>
+                                <td><c:out value="${leaseComplex.DDO_AR}"/></td>
+                                <td><c:out value="${leaseComplex.RFE}"/></td>
+                                <td><c:out value="${leaseComplex.SUM_HSH_CNT}"/></td>
+                                <td><c:out value="${leaseComplex.HSH_CNT}"/></td>
+                                <td><c:out value="${leaseComplex.MVIN_XPC_YM}"/></td>
+                                <td><c:out value="${leaseComplex.LS_GMY}"/></td>
+                                <script type="text/javascript">
+                                    $(document).ready(function () {
+                                        const regexp = /\B(?=(\d{3})+(?!\d))/g;
+
+                                        const rfe = $("#leaseComplexTable tr:eq(${idx.count}) td:eq(5)");
+                                        rfe.html(rfe.html().replace(regexp, ','));
+
+                                        const ls_gmy = $("#leaseComplexTable tr:eq(${idx.count}) td:eq(9)");
+                                        ls_gmy.html(ls_gmy.html().replace(regexp, ','));
+                                    });
+                                </script>
+                            </tr>
+                        </c:forEach>
+                        </c:otherwise>
+                    </c:choose>
                 </tbody>
             </table>
         </div>
@@ -82,7 +122,18 @@
     </div>
 </body>
 </html>
+<script>
+    $(document).ready(function () {
+        $("#selLocation option[value=${currentValue.location}]").attr("selected", true);
+        $("#selSupplyType option[value=${currentValue.supplyType}]").attr("selected", true);
+    });
 
+    function addComma(num) {
+        const regexp = /\B(?=(\d{3})+(?!\d))/g;
+        return num.replace(regexp, ',');
+    }
+
+</script>
 <style>
     #selectBoxArea {
         width: 70%;
@@ -107,6 +158,11 @@
         width: auto;
     }
 
+    .pagination {
+        margin: 0;
+        float: left;
+    }
+
     #selectBoxArea .form-button {
         float: right;
     }
@@ -120,7 +176,11 @@
     #leaseComplexListArea table {
         width: 100%;
         margin: 0 auto;
-        font-size: min(1vw, 14px);
+        font-size: min(max(10px, 1vw), 14px);
+    }
+
+    #noInfomation {
+        text-align: center;
     }
 
 </style>
