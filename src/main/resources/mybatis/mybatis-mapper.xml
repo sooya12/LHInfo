@@ -22,4 +22,15 @@
         SELECT *
         FROM noticestatustype
     </select>
+
+    <insert id="insertAccount" parameterType="Account">
+        INSERT INTO account (identify, password, name, email)
+        VALUES (#{identity}, md5(#{password}), #{name}, #{email})
+    </insert>
+
+    <select id="selectAccount" resultType="Account">
+        SELECT *
+        FROM account
+        WHERE identify=#{identify} and password=#{password}
+    </select>
 </mapper>
