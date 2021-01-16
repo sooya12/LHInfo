@@ -30,7 +30,7 @@
     #footer-backgroundArea {
         width: 100%;
         height: 100px;
-        background: #CBBAAA;
+        background: #D9C2AD;
         bottom: 0;
     }
 
