@@ -37,31 +37,17 @@
                         </c:forEach>
                     </select>
                 </div>
-                <div id="paging">
+                <div class="form-group">
                     <label for="selPage">페이지 </label>
-                    <ul class="pagination" id="selPage" name="page" >
+                    <select class="form-control" id="selPage" name="page">
                         <c:forEach begin="1" end="${pageCnt}" varStatus="idx">
-                            <li><a href="#"><c:out value="${idx.count}"/></a></li>
+                            <option value="${idx.count}">${idx.count}</option>
                         </c:forEach>
-                        <%--<c:choose>
-                            <c:when test="${pageCnt <= 4}">
-                                <c:forEach begin="1" end="${pageCnt}" varStatus="idx">
-                                    <li><a href="#"><c:out value="${idx.count}"/></a></li>
-                                </c:forEach>
-                            </c:when>
-                            <c:otherwise>
-                                <li><a href="#"><c:out value="${currentValue.page - 1}"/></a></li>
-                                <li><a href="#"><c:out value="${currentValue.page}"/></a></li>
-                                <li><a href="#"><c:out value="0"/></a></li>
-                                <li><a href="#"><c:out value="${pageCnt}"/></a></li>
-                            </c:otherwise>
-                        </c:choose>--%>
-                    </ul>
+                    </select>
                 </div>
                 <div class="form-button">
                     <button type="submit" class="btn btn-basic" id="inquiryButton">임대단지 조회</button>
                 </div>
-                <input type="hidden" name="page" value="1"/>
             </form>
         </div>
         <div id="leaseComplexListArea">
@@ -126,6 +112,7 @@
     $(document).ready(function () {
         $("#selLocation option[value=${currentValue.location}]").attr("selected", true);
         $("#selSupplyType option[value=${currentValue.supplyType}]").attr("selected", true);
+        $("#selPage option[value=${currentValue.page}]").attr("selected", true);
     });
 
     function addComma(num) {
@@ -140,6 +127,11 @@
         height: 50px;
         text-align: center;
         margin: 20px auto;
+    }
+
+    .form-group {
+        height: 40px;
+        float: left;
     }
 
     #selectBoxArea form {
@@ -158,13 +150,13 @@
         width: auto;
     }
 
+    #selectBoxArea .form-button {
+        float: right;
+    }
+
     .pagination {
         margin: 0;
         float: left;
-    }
-
-    #selectBoxArea .form-button {
-        float: right;
     }
 
     #leaseComplexListArea {

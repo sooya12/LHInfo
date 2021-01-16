@@ -51,6 +51,11 @@ public class LeaseComplexController {
 
             int totalCnt = Integer.parseInt(leaseComplexList.get(0).ALL_CNT);
             int pageCnt = totalCnt / 100 + 1;
+
+            if(pageCnt < 2) {
+                pageCnt = 1;
+                leaseComplexListDto.setPage("1");
+            }
             model.addAttribute("pageCnt", pageCnt);
         } catch (Exception e) {
             e.printStackTrace();
