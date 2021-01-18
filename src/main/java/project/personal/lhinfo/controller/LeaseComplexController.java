@@ -8,7 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import project.personal.lhinfo.dto.LeaseComplexDto;
-import project.personal.lhinfo.dto.LeaseComplexListDto;
+import project.personal.lhinfo.dto.LeaseComplexTypeDto;
 import project.personal.lhinfo.entity.Location;
 import project.personal.lhinfo.entity.SupplyType;
 import project.personal.lhinfo.service.LeaseComplexService;
@@ -29,10 +29,10 @@ public class LeaseComplexController {
     TypeService typeService;
 
     @RequestMapping(value = "/list", method = RequestMethod.GET)
-    public String leaseComplexList(Model model, LeaseComplexListDto leaseComplexListDto) {
-        String location = leaseComplexListDto.getLocation();
-        String supplyType = leaseComplexListDto.getSupplyType();
-        String page = leaseComplexListDto.getPage();
+    public String leaseComplexList(Model model, LeaseComplexTypeDto leaseComplexTypeDto) {
+        String location = leaseComplexTypeDto.getLocation();
+        String supplyType = leaseComplexTypeDto.getSupplyType();
+        String page = leaseComplexTypeDto.getPage();
 
         logger.info(location + ", " + supplyType + ", " + page);
 
@@ -54,14 +54,14 @@ public class LeaseComplexController {
 
             if(pageCnt < 2) {
                 pageCnt = 1;
-                leaseComplexListDto.setPage("1");
+                leaseComplexTypeDto.setPage("1");
             }
             model.addAttribute("pageCnt", pageCnt);
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        model.addAttribute("currentValue", leaseComplexListDto);
+        model.addAttribute("currentValue", leaseComplexTypeDto);
 
         return "leaseComplex";
     }
