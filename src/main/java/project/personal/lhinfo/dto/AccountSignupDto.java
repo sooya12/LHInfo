@@ -6,9 +6,18 @@ import lombok.Setter;
 @Getter
 @Setter
 public class AccountSignupDto {
-    public int id;
     public String identify;
     public String password;
     public String name;
     public String email;
+
+    @Override
+    public String toString() {
+        return "AccountSignupDto{" +
+                "identify='" + identify + '\'' +
+                ", password='" + password + '\'' +
+                ", name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                '}';
+    }
 }
