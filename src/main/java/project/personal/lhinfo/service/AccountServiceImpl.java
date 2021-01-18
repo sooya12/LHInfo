@@ -22,4 +22,9 @@ public class AccountServiceImpl implements AccountService {
     public Account readAccount(AccountSigninDto accountSigninDto) {
         return accountDao.readAccount(accountSigninDto);
     }
+
+    @Override
+    public int checkIdentify(String identify) {
+        return accountDao.checkIdentify(identify);
+    }
 }

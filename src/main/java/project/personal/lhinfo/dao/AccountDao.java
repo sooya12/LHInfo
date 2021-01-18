@@ -8,4 +8,6 @@ public interface AccountDao {
     int createAccount(AccountSignupDto accountSignupDto);
 
     Account readAccount(AccountSigninDto accountSigninDto);
+
+    int checkIdentify(String identify);
 }

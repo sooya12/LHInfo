@@ -33,4 +33,10 @@
         FROM account
         WHERE identify=#{identify} and password=#{password}
     </select>
+
+    <select id="checkIdentify" resultType="java.lang.Integer">
+        SELECT count(*)
+        FROM account
+        WHERE identify=#{identify}
+    </select>
 </mapper>

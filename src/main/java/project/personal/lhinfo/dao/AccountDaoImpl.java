@@ -23,4 +23,9 @@ public class AccountDaoImpl implements AccountDao{
         Account.setAccount(session.selectOne("lhinfoDB.selectAccount", accountSigninDto));
         return Account.SINGLETON_Account;
     }
+
+    @Override
+    public int checkIdentify(String identify) {
+        return session.selectOne("lhinfoDB.checkIdentify", identify);
+    }
 }
