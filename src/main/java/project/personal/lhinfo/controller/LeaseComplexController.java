@@ -17,7 +17,6 @@ import project.personal.lhinfo.service.TypeService;
 import java.util.List;
 
 @Controller
-@RequestMapping(value = "/leasecomplex")
 public class LeaseComplexController {
 
     private static final Logger logger = LoggerFactory.getLogger(LeaseComplexController.class);
@@ -28,7 +27,7 @@ public class LeaseComplexController {
     @Autowired
     TypeService typeService;
 
-    @RequestMapping(value = "/list", method = RequestMethod.GET)
+    @RequestMapping(value = "/leasecomplex", method = RequestMethod.GET)
     public String leaseComplexList(Model model, LeaseComplexTypeDto leaseComplexTypeDto) {
         String location = leaseComplexTypeDto.getLocation();
         String supplyType = leaseComplexTypeDto.getSupplyType();
@@ -37,11 +36,11 @@ public class LeaseComplexController {
         logger.info(location + ", " + supplyType + ", " + page);
 
         List<Location> locationList = typeService.locationList();
-        logger.info(locationList.toString());
+        logger.info("지역 정보 - " + locationList.toString());
         model.addAttribute("locationList", locationList);
 
         List<SupplyType> supplyTypeList = typeService.supplyTypeList();
-        logger.info(supplyTypeList.toString());
+        logger.info("공급유형 정보 - " + supplyTypeList.toString());
         model.addAttribute("supplyTypeList", supplyTypeList);
 
         try {

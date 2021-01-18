@@ -10,6 +10,22 @@ public class LeaseComplexTypeDto {
     public String supplyType;
     public String page;
 
+    public String getLocation() {
+        if(location == null) {
+            return "11";
+        } else {
+            return this.location;
+        }
+    }
+
+    public String getSupplyType() {
+        if(supplyType == null) {
+            return "07";
+        } else {
+            return this.supplyType;
+        }
+    }
+
     public String getPage() {
         if(page == null) {
             return "1";

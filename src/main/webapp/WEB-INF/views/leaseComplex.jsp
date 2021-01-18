@@ -20,7 +20,7 @@
     <div class="container">
         <jsp:include page="header.jsp"/>
         <div id="selectBoxArea">
-            <form id="leaseComplexSelectForm" action="/leasecomplex/list" method="get">
+            <form id="leaseComplexSelectForm" action="/leasecomplex" method="get">
                 <div class="form-group">
                     <label for="selLocation">지역 </label>
                     <select class="form-control" id="selLocation" name="location">
