@@ -7,6 +7,7 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 	<link rel="stylesheet" href="/resources/main.css">
+	<script src="https://kit.fontawesome.com/8962e3bb2c.js" crossorigin="anonymous"></script>
 	<title>분양임대 정보 제공 서비스</title>
 </head>
 <body>
@@ -15,8 +16,20 @@
 			<p>분양임대 정보 제공 서비스</p>
 		</div>
 		<div id="home-contentArea">
-			<button type="button" class="btn btn-default" onclick="location.href='/account/signin'">로그인</button>
-			<button type="button" class="btn btn-default" onclick="location.href='/account/signup'">회원가입</button>
+			<div class="account-button">
+				<span onclick="location.href='/account/signin'">
+					<i class="fas fa-user-check"></i><br>
+					로그인
+				</span>
+			</div>
+			<div class="account-button">
+				<span onclick="location.href='/account/signup'">
+					<i class="fas fa-user-plus"></i><br>
+					회원가입
+				</span>
+			</div>
+			<%--<button type="button" class="btn btn-default" onclick="location.href='/account/signin'">로그인</button>
+			<button type="button" class="btn btn-default" onclick="location.href='/account/signup'">회원가입</button>--%>
 		</div>
 	</div>
 </body>
@@ -41,7 +54,7 @@
 
 	#home-titleArea p {
 		margin: 0;
-		font-size: 50px;
+		font-size: max(4vw, 50px);
 		font-weight: bold;
 	}
 
@@ -50,10 +63,23 @@
 		height: 100px;
 		margin: 20px auto;
 		text-align: center;
-		vertical-align: top;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		font-size: 25px;
 	}
 
-	button {
-		margin: 0 20px auto;
+	.account-button {
+		width: 20%;
+		float: left;
 	}
+
+	.account-button span {
+		cursor: pointer;
+	}
+
+	.account-button i {
+		margin-bottom: 5px;
+	}
+
 </style>
