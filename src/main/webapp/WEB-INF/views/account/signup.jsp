@@ -126,8 +126,13 @@
     });
 
     $('.repeat-password').on("change keyup paste", function(){
-        if($(this).val()){
-            $('.icon-repeat-lock').addClass("next");
+        if($(this).val() && $(this).val().length >= $(".password").val().length){
+            if($(this).val() == $(".password").val()) {
+                $('.icon-repeat-lock').addClass("next");
+            } else {
+                $(this).val("");
+            }
+            // $('.icon-repeat-lock').addClass("next");
         } else {
             $('.icon-repeat-lock').removeClass("next");
         }
