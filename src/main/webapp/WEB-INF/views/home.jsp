@@ -28,8 +28,6 @@
 					회원가입
 				</span>
 			</div>
-			<%--<button type="button" class="btn btn-default" onclick="location.href='/account/signin'">로그인</button>
-			<button type="button" class="btn btn-default" onclick="location.href='/account/signup'">회원가입</button>--%>
 		</div>
 	</div>
 </body>
