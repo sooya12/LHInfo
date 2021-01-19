@@ -15,7 +15,6 @@
 <body>
     <div id="header-backgroundArea">
         <div id="header-titleArea">
-            <%--<p>분양임대 <i class="fal fa-house-night"></i> 정보 제공 서비스</p>--%>
             <p>분양임대 정보 제공 서비스 <i class="fal fa-person-sign"></i> </p>
         </div>
         <div id="accountArea">
@@ -43,7 +42,6 @@
     #header-backgroundArea {
         width: 100%;
         height: 300px;
-        /*background-color: black;*/
         background: url('/resources/img/lichtraum-1560788_1920.jpg') no-repeat right center;
     }
 
