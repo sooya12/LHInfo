@@ -7,6 +7,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import project.personal.lhinfo.dto.AccountSignupDto;
 import project.personal.lhinfo.service.AccountService;
 
@@ -33,12 +35,25 @@ public class AccountController {
     public String createAccount(Model model, AccountSignupDto accountSignupDto) {
         logger.info("회원 입력 정보 - " + accountSignupDto.toString());
 
-        int result = accountService.createAccount(accountSignupDto);
-        if(result >= 1) {
+        if(accountService.createAccount(accountSignupDto) >= 1) {
             model.addAttribute("accountName", accountSignupDto.name);
             return "home";
         } else {
             return "error";
         }
+    }
+
+    @RequestMapping(value = "/checkIdentify", method = RequestMethod.GET)
+    @ResponseBody
+    public String checkIdentify(@RequestParam("identify") String identify) {
+        int result = accountService.checkIdentify(identify);
+
+        logger.info("회원 아이디 중복 확인 - " + identify + " / " + result);
+
+        if(result < 1) {
+            return "available";
+        }
+
+        return "re-enter";
     }
 }
