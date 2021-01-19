@@ -31,12 +31,18 @@
     <select id="selectAccount" resultType="Account">
         SELECT *
         FROM account
-        WHERE identify=#{identify} and password=#{password}
+        WHERE id=#{id}
     </select>
 
     <select id="checkIdentify" resultType="java.lang.Integer">
         SELECT count(*)
         FROM account
         WHERE identify=#{identify}
+    </select>
+
+    <select id="checkExistence" resultType="java.lang.String">
+        SELECT id
+        FROM account
+        WHERE identify=#{identify} and password=md5(#{password})
     </select>
 </mapper>
