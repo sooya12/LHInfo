@@ -104,8 +104,30 @@
     });
 
     $('.next-button.identify').click(function(){
-        $('.identify-section').addClass("fold-up");
-        $('.password-section').removeClass("folded");
+
+        $.ajax({
+            type: "GET",
+            async: false,
+            url: "/account/checkIdentify",
+            data: {identify: $(".identify").val()},
+            dataType: "text",
+            success: function(data) {
+                if(data == "available") { // 사용 가능한 아이디
+                    $('.identify-section').addClass("fold-up");
+                    $('.password-section').removeClass("folded");
+                } else if(data == "re-enter") { // 중복된 아이디 -> 재입력
+                    $('.icon-id-card').removeClass("next");
+                    $(".identify").attr("placeholder", "중복된 아이디입니다! 다시 입력해주세요");
+                    $(".identify").val("");
+                }
+            },
+            error: function(request, status, error) {
+                console.log(request.status + "\n" + request.responseText + "\n" + error);
+
+                $('.icon-id-card').removeClass("next");
+                $(".identify").val("");
+            }
+        })
     });
 
     $('.password').on("change keyup paste", function(){
@@ -130,9 +152,9 @@
             if($(this).val() == $(".password").val()) {
                 $('.icon-repeat-lock').addClass("next");
             } else {
+                $(this).attr("placeholder", "틀렸습니다! 다시 입력해주세요");
                 $(this).val("");
             }
-            // $('.icon-repeat-lock').addClass("next");
         } else {
             $('.icon-repeat-lock').removeClass("next");
         }
@@ -209,6 +231,7 @@
         top: 40%;
         background: transparent;
     }
+
     .registration-form header {
         position: relative;
         z-index: 6;
@@ -216,6 +239,7 @@
         padding: 20px 40px;
         border-radius: 15px 15px 0 0;
     }
+
     .registration-form header h1 {
         font-weight: 900;
         letter-spacing: 1.5px;
@@ -224,6 +248,7 @@
         text-transform: uppercase;
         margin: 0;
     }
+
     .registration-form header p {
         word-spacing: 0px;
         color: #9CB9D1;
@@ -231,9 +256,11 @@
         margin: 0;
         margin-top: 5px;
     }
+
     .registration-form form {
         position: relative;
     }
+
     .registration-form .input-section {
         width: 100%;
         position: absolute;
@@ -247,6 +274,7 @@
         box-shadow: 0px 0px 100px rgba(238, 240, 246, 0.2);
         transition: all 0.2s ease-in;
     }
+
     .registration-form .input-section.folded {
         width: 95%;
         margin-top: 10px;
@@ -254,12 +282,15 @@
         transform: translate(-50%, 0);
         z-index: 4;
     }
+
     .registration-form .input-section.folded input {
         background-color: #9CB9D1;
     }
+
     .registration-form .input-section.folded span {
         background-color: #9CB9D1;
     }
+
     .registration-form .input-section.folded + .folded {
         width: 90%;
         margin-top: 20px;
@@ -267,9 +298,11 @@
         transform: translate(-50%, 0);
         z-index: 3;
     }
+
     .registration-form .input-section.folded + .folded input {
         background-color: #094D74;
     }
+
     .registration-form .input-section.folded + .folded span {
         background-color: #094D74;
     }
@@ -281,9 +314,11 @@
         transform: translate(-50%, 0);
         z-index: 2;
     }
+
     .registration-form .input-section.folded + .folded + .folded input {
         background-color: #e1bcef;
     }
+
     .registration-form .input-section.folded + .folded + .folded span {
         background-color: #e1bcef;
     }
@@ -295,9 +330,11 @@
         transform: translate(-50%, 0);
         z-index: 1;
     }
+
     .registration-form .input-section.folded + .folded + .folded + .folded  input {
         background-color: #094D74;
     }
+
     .registration-form .input-section.folded + .folded + .folded + .folded  span {
         background-color: #094D74;
     }
@@ -305,6 +342,7 @@
     .registration-form .input-section.fold-up {
         margin-top: -75px;
     }
+
     .registration-form form input {
         background: white;
         color: #8f8fd6;
@@ -313,17 +351,21 @@
         padding: 20px 40px;
         margin: 0;
     }
+
     .registration-form form input:focus {
         outline: none;
     }
+
     .registration-form form input::-moz-placeholder {
         color: #8f8fd6;
         font-weight: 100;
     }
+
     .registration-form form input:-ms-input-placeholder {
         color: #8f8fd6;
         font-weight: 100;
     }
+
     .registration-form form input::placeholder {
         color: #8f8fd6;
         font-weight: 100;
@@ -333,6 +375,7 @@
         width: 20%;
         background-color: #d4d4ff;
     }
+
     .animated-button span {
         display: flex;
         flex-direction: row;
@@ -343,10 +386,12 @@
         height: 75px;
         transition: all 0.2s ease-in;
     }
+
     .animated-button span i {
         font-size: 25px;
         color: #9999f8;
     }
+
     .animated-button .next-button {
         background: transparent;
         color: #9999f8;
@@ -375,6 +420,7 @@
         background: #759CD8;
         margin-top: -75px;
     }
+
     .success p {
         color: white;
         font-weight: 900;
