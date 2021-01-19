@@ -9,7 +9,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import project.personal.lhinfo.dto.AccountSigninDto;
 import project.personal.lhinfo.dto.AccountSignupDto;
+import project.personal.lhinfo.entity.Account;
 import project.personal.lhinfo.service.AccountService;
 
 @Controller
@@ -55,5 +57,29 @@ public class AccountController {
         }
 
         return "re-enter";
+    }
+
+    @RequestMapping(value = "/checkExistence", method = RequestMethod.POST)
+    @ResponseBody
+    public String checkExistence(AccountSigninDto accountSigninDto) {
+        String result = accountService.checkExistence(accountSigninDto);
+
+        logger.info("존재하는 회원 정보 확인 - " + result);
+
+        if(result != null) {
+            return result;
+        }
+
+        return "re-enter";
+    }
+
+    @RequestMapping(value = "/", method = RequestMethod.GET)
+    public String readAccount(Model model, @RequestParam("id") String id) {
+        Account account = accountService.readAccount(id);
+        model.addAttribute("account", account);
+
+        logger.info("회원 로그인 - " + account.toString());
+
+        return "home";
     }
 }

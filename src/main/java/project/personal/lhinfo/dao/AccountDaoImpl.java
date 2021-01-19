@@ -19,8 +19,8 @@ public class AccountDaoImpl implements AccountDao{
     }
 
     @Override
-    public Account readAccount(AccountSigninDto accountSigninDto) {
-        Account.setAccount(session.selectOne("lhinfoDB.selectAccount", accountSigninDto));
+    public Account readAccount(String id) {
+        Account.setAccount(session.selectOne("lhinfoDB.selectAccount", id));
         return Account.SINGLETON_Account;
     }
 
@@ -28,4 +28,10 @@ public class AccountDaoImpl implements AccountDao{
     public int checkIdentify(String identify) {
         return session.selectOne("lhinfoDB.checkIdentify", identify);
     }
+
+    @Override
+    public String checkExistence(AccountSigninDto accountSigninDto) {
+        return session.selectOne("lhinfoDB.checkExistence", accountSigninDto);
+    }
+
 }

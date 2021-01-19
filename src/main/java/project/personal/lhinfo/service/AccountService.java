@@ -8,7 +8,9 @@ public interface AccountService {
 
     int createAccount(AccountSignupDto accountSignupDto);
 
-    Account readAccount(AccountSigninDto accountSigninDto);
+    Account readAccount(String id);
 
     int checkIdentify(String identify);
+
+    String checkExistence(AccountSigninDto accountSigninDto);
 }

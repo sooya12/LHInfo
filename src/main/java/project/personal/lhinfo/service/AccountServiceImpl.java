@@ -19,12 +19,17 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public Account readAccount(AccountSigninDto accountSigninDto) {
-        return accountDao.readAccount(accountSigninDto);
+    public Account readAccount(String id) {
+        return accountDao.readAccount(id);
     }
 
     @Override
     public int checkIdentify(String identify) {
         return accountDao.checkIdentify(identify);
+    }
+
+    @Override
+    public String checkExistence(AccountSigninDto accountSigninDto) {
+        return accountDao.checkExistence(accountSigninDto);
     }
 }

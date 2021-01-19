@@ -7,7 +7,9 @@ import project.personal.lhinfo.entity.Account;
 public interface AccountDao {
     int createAccount(AccountSignupDto accountSignupDto);
 
-    Account readAccount(AccountSigninDto accountSigninDto);
+    Account readAccount(String id);
 
     int checkIdentify(String identify);
+
+    String checkExistence(AccountSigninDto accountSigninDto);
 }
