@@ -16,7 +16,6 @@ import project.personal.lhinfo.service.AccountService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.io.IOException;
 
 @Controller
 @RequestMapping(value = "/account")
