@@ -154,11 +154,6 @@
         float: right;
     }
 
-    .pagination {
-        margin: 0;
-        float: left;
-    }
-
     #leaseComplexListArea {
         width: 70%;
         margin: 20px auto;
