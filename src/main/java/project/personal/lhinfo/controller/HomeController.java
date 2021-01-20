@@ -6,14 +6,22 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 @Controller
 public class HomeController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String open() {
+	public String open(HttpServletRequest request) {
 		logger.info("분양임대 정보 제공 서비스 - open");
+
+		HttpSession session = request.getSession();
+		if(session.getAttribute("account") != null) {
+			return "redirect:/home";
+		}
 
 		return "open";
 	}
