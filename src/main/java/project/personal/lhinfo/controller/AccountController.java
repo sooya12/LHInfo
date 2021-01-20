@@ -14,6 +14,10 @@ import project.personal.lhinfo.dto.AccountSignupDto;
 import project.personal.lhinfo.entity.Account;
 import project.personal.lhinfo.service.AccountService;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import java.io.IOException;
+
 @Controller
 @RequestMapping(value = "/account")
 public class AccountController {
@@ -23,28 +27,41 @@ public class AccountController {
     @Autowired
     AccountService accountService;
 
+    /*
+    회원가입 화면으로 이동
+     */
     @RequestMapping(value = "/signup", method = RequestMethod.GET)
     public String signup() {
         return "/account/signup";
     }
 
+    /*
+    로그인 화면으로 이동
+     */
     @RequestMapping(value = "/signin", method = RequestMethod.GET)
     public String signin() {
         return "/account/signin";
     }
 
+    /*
+    회원가입 기능
+    AccountSignupDto로 identify, password를 받음
+     */
     @RequestMapping(value = "/", method = RequestMethod.POST)
     public String createAccount(Model model, AccountSignupDto accountSignupDto) {
         logger.info("회원 입력 정보 - " + accountSignupDto.toString());
 
         if(accountService.createAccount(accountSignupDto) >= 1) {
             model.addAttribute("accountName", accountSignupDto.name);
-            return "home";
+            return "open";
         } else {
             return "error";
         }
     }
 
+    /*
+    회원가입 시, 아이디 중복확인 기능
+     */
     @RequestMapping(value = "/checkIdentify", method = RequestMethod.GET)
     @ResponseBody
     public String checkIdentify(@RequestParam("identify") String identify) {
@@ -59,6 +76,10 @@ public class AccountController {
         return "re-enter";
     }
 
+    /*
+    로그인 시, 회원정보 존재 확인 기능
+    AccountSigninDto로 identify, password 받음
+     */
     @RequestMapping(value = "/checkExistence", method = RequestMethod.POST)
     @ResponseBody
     public String checkExistence(AccountSigninDto accountSigninDto) {
@@ -73,13 +94,34 @@ public class AccountController {
         return "re-enter";
     }
 
+    /*
+    로그인 시, 회원정보 조회 기능
+    세션에 회원정보 저장
+     */
     @RequestMapping(value = "/", method = RequestMethod.GET)
-    public String readAccount(Model model, @RequestParam("id") String id) {
+    public String readAccount(@RequestParam("id") String id, HttpServletRequest request) {
         Account account = accountService.readAccount(id);
-        model.addAttribute("account", account);
 
         logger.info("회원 로그인 - " + account.toString());
 
-        return "home";
+        HttpSession session = request.getSession();
+        session.setAttribute("account", account);
+
+        return "redirect:/home";
+    }
+
+    /*
+    로그아웃 기능
+    세션에서 회원정보 삭제
+     */
+    @RequestMapping(value = "/signout", method = RequestMethod.GET)
+    public String signout(HttpServletRequest request) {
+        logger.info("회원 로그아웃");
+        
+        HttpSession session = request.getSession();
+        session.removeAttribute("account");
+        session.invalidate();
+
+        return "redirect:/";
     }
 }
