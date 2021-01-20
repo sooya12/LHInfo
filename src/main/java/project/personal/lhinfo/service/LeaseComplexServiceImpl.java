@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import project.personal.lhinfo.dto.LeaseComplexDto;
+import project.personal.lhinfo.dto.LeaseComplexTypeDto;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -24,16 +25,16 @@ public class LeaseComplexServiceImpl implements LeaseComplexService {
     private static final Logger logger = LoggerFactory.getLogger(LeaseComplexServiceImpl.class);
 
     @Override
-    public List<LeaseComplexDto> leaseComplexList(String location, String supplyType, String page) throws IOException {
+    public List<LeaseComplexDto> leaseComplexList(LeaseComplexTypeDto leaseComplexTypeDto) throws IOException {
 
         String serviceKey = "IhlOKKhbrN3s3DDJbBOWAXyGUX8JND9y16Yg%2Fbrs3nGCYyPxywXIyC%2Fu4Uzi9xUd4AR8XYpnGlcm2E%2FgskkKiQ%3D%3D";
 
         StringBuilder urlBuilder = new StringBuilder("http://apis.data.go.kr/B552555/lhLeaseInfo/lhLeaseInfo"); /*URL*/
         urlBuilder.append("?" + URLEncoder.encode("ServiceKey","UTF-8") + "=" + serviceKey); /*Service Key*/
         urlBuilder.append("&" + URLEncoder.encode("PG_SZ","UTF-8") + "=" + URLEncoder.encode("100", "UTF-8")); /*한 페이지 결과 수*/
-        urlBuilder.append("&" + URLEncoder.encode("PAGE","UTF-8") + "=" + URLEncoder.encode(page, "UTF-8")); /*페이지 번호*/
-        urlBuilder.append("&" + URLEncoder.encode("CNP_CD","UTF-8") + "=" + URLEncoder.encode(location, "UTF-8")); /*지역코드*/
-        urlBuilder.append("&" + URLEncoder.encode("SPL_TP_CD","UTF-8") + "=" + URLEncoder.encode(supplyType, "UTF-8")); /*공급유형코드*/
+        urlBuilder.append("&" + URLEncoder.encode("PAGE","UTF-8") + "=" + URLEncoder.encode(leaseComplexTypeDto.getPage(), "UTF-8")); /*페이지 번호*/
+        urlBuilder.append("&" + URLEncoder.encode("CNP_CD","UTF-8") + "=" + URLEncoder.encode(leaseComplexTypeDto.getLocation(), "UTF-8")); /*지역코드*/
+        urlBuilder.append("&" + URLEncoder.encode("SPL_TP_CD","UTF-8") + "=" + URLEncoder.encode(leaseComplexTypeDto.getSupplyType(), "UTF-8")); /*공급유형코드*/
 
         URL url = new URL(urlBuilder.toString());
 

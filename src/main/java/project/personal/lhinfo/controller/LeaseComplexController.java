@@ -44,7 +44,7 @@ public class LeaseComplexController {
         model.addAttribute("supplyTypeList", supplyTypeList);
 
         try {
-            List<LeaseComplexDto> leaseComplexList = leaseComplexService.leaseComplexList(location, supplyType, page);
+            List<LeaseComplexDto> leaseComplexList = leaseComplexService.leaseComplexList(leaseComplexTypeDto);
             System.out.println(leaseComplexList.toString());
             model.addAttribute("leaseComplexList", leaseComplexList);
 
