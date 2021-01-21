@@ -114,12 +114,6 @@
         $("#selSupplyType option[value=${currentValue.supplyType}]").attr("selected", true);
         $("#selPage option[value=${currentValue.page}]").attr("selected", true);
     });
-
-    function addComma(num) {
-        const regexp = /\B(?=(\d{3})+(?!\d))/g;
-        return num.replace(regexp, ',');
-    }
-
 </script>
 <style>
     #selectBoxArea {
