@@ -57,7 +57,7 @@
                 <div class="selectFormLine">
                     <div>
                         <label for="inputNoticeName">공고명 </label>
-                        <input type="text" class="form-control" id="inputNoticeName" name="noticeName">
+                        <input type="text" class="form-control" id="inputNoticeName" name="noticeName"/>
                     </div>
                     <div class="form-button">
                         <button type="submit" class="btn btn-basic" id="inquiryButton">공고문 조회</button>
@@ -66,7 +66,7 @@
             </form>
         </div>
         <div id="subLeaseNoticeArea">
-            <table class="table table-condensed">
+            <table class="table table-condensed" id="subLeaseNoticeTable">
                 <thead>
                     <tr>
                         <th>순번</th>
@@ -76,20 +76,31 @@
                         <th>세부유형명</th>
                         <th>공고게시일</th>
                         <th>공고마감일</th>
+                        <th>공고상태</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <c:forEach var="subLeaseNotice" items="${subLeaseNoticeList}">
-                        <tr>
-                            <td>${subLeaseNotice.RNUM}</td>
-                            <td>${subLeaseNotice.CNP_CD_NM}</td>
-                            <td>${subLeaseNotice.PAN_NM}</td>
-                            <td>${subLeaseNotice.UPP_AIS_TP_NM}</td>
-                            <td>${subLeaseNotice.AIS_TP_CD_NM}</td>
-                            <td>${subLeaseNotice.PAN_NT_ST_DT}</td>
-                            <td>${subLeaseNotice.CLSG_DT}</td>
-                        </tr>
-                    </c:forEach>
+                    <c:choose>
+                        <c:when test="${subLeaseNoticeList.size() < 1}">
+                            <tr>
+                                <td colspan="8" id="noInfomation">해당 임대단지 조회 정보가 없습니다.</td>
+                            </tr>
+                        </c:when>
+                        <c:otherwise>
+                            <c:forEach var="subLeaseNotice" items="${subLeaseNoticeList}">
+                                <tr>
+                                    <td>${subLeaseNotice.RNUM}</td>
+                                    <td>${subLeaseNotice.CNP_CD_NM}</td>
+                                    <td>${subLeaseNotice.PAN_NM}</td>
+                                    <td>${subLeaseNotice.UPP_AIS_TP_NM}</td>
+                                    <td>${subLeaseNotice.AIS_TP_CD_NM}</td>
+                                    <td>${subLeaseNotice.PAN_NT_ST_DT}</td>
+                                    <td>${subLeaseNotice.CLSG_DT}</td>
+                                    <td>${subLeaseNotice.PAN_SS}</td>
+                                </tr>
+                            </c:forEach>
+                        </c:otherwise>
+                    </c:choose>
                 </tbody>
             </table>
         </div>
@@ -97,6 +108,24 @@
     </div>
 </body>
 </html>
+<script>
+    $(document).ready(function() {
+        if(${currentValue.location != ""}) {
+            $("#selLocation option[value=${currentValue.location}]").attr("selected", true);
+        }
+
+        if(${currentValue.noticeType != ""}) {
+            $("#selNoticeType option[value=${currentValue.noticeType}]").attr("selected", true);
+        }
+
+        if(${currentValue.noticeStatusType != ""}) {
+            $("#selNoticeStatusType option[value=${currentValue.noticeStatusType}]").attr("selected", true);
+        }
+
+        $("#selPage option[value=${currentValue.page}]").attr("selected", true);
+        $("#inputNoticeName").val("${currentValue.noticeName}");
+    })
+</script>
 <style>
     #selectBoxArea {
         width: 70%;
@@ -157,6 +186,10 @@
         width: 100%;
         margin: 0 auto;
         font-size: min(max(10px, 1vw), 14px);
+    }
+
+    #noInfomation {
+        text-align: center;
     }
 
 </style>
