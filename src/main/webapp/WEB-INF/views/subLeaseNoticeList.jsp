@@ -18,6 +18,7 @@
 <body>
     <div class="container">
         <jsp:include page="header.jsp"/>
+        <jsp:include page="menu.jsp"/>
         <div id="selectBoxArea">
             <form id="subLeaseNoticeSelectForm" action="/subleasenotice/list" method="get">
                 <div class="selectFormLine">
