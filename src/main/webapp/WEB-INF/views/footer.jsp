@@ -38,9 +38,11 @@
 
     #footer-backgroundArea {
         width: 100%;
-        height: 100px;
-        background: #C1A387;
+        height: 120px;
+        background: #CDC4B3;
         bottom: 0;
+        position: relative;
+        margin-top: 10px;
     }
 
     #footer-infoArea {
