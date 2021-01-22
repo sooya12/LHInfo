@@ -22,4 +22,27 @@
         SELECT *
         FROM noticestatustype
     </select>
+
+    <insert id="insertAccount" parameterType="Account">
+        INSERT INTO account (identify, password, name, email)
+        VALUES (#{identify}, md5(#{password}), #{name}, #{email})
+    </insert>
+
+    <select id="selectAccount" resultType="Account">
+        SELECT *
+        FROM account
+        WHERE id=#{id}
+    </select>
+
+    <select id="checkIdentify" resultType="java.lang.Integer">
+        SELECT count(*)
+        FROM account
+        WHERE identify=#{identify}
+    </select>
+
+    <select id="checkExistence" resultType="java.lang.String">
+        SELECT id
+        FROM account
+        WHERE identify=#{identify} and password=md5(#{password})
+    </select>
 </mapper>

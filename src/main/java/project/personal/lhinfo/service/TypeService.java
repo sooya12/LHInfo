@@ -9,11 +9,11 @@ import java.util.List;
 
 public interface TypeService {
 
-    public List<Location> locationList();
+    List<Location> locationList();
 
-    public List<SupplyType> supplyTypeList();
+    List<SupplyType> supplyTypeList();
 
-    public List<NoticeType> noticeTypeList();
+    List<NoticeType> noticeTypeList();
 
-    public List<NoticeStatusType> noticeStatusTypeList();
+    List<NoticeStatusType> noticeStatusTypeList();
 }
