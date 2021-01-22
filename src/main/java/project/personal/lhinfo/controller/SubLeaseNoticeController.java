@@ -30,6 +30,7 @@ public class SubLeaseNoticeController {
     @Autowired
     TypeService typeService;
 
+    // 분양임대 공고문 목록 화면으로 이동
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public String subLeaseNoticeList(Model model, SubLeaseNoticeSearchDto subLeaseNoticeSearchDto) {
         logger.info("분양임대 공고문 목록 - " + subLeaseNoticeSearchDto.toString());

@@ -14,6 +14,7 @@ public class HomeController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 
+	// 로그인, 회원가입 안내 화면으로 이동
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String open(HttpServletRequest request) {
 		logger.info("분양임대 정보 제공 서비스 - open");
@@ -26,6 +27,7 @@ public class HomeController {
 		return "open";
 	}
 
+	// 홈 화면으로 이동
 	@RequestMapping(value = "/home", method = RequestMethod.GET)
 	public String home() {
 		logger.info("분양임대 정보 제공 서비스 - home");

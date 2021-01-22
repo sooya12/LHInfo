@@ -27,6 +27,7 @@ public class LeaseComplexController {
     @Autowired
     TypeService typeService;
 
+    // 임대단지 목록 조회 화면으로 이동
     @RequestMapping(value = "/leasecomplex", method = RequestMethod.GET)
     public String leaseComplexList(Model model, LeaseComplexTypeDto leaseComplexTypeDto) {
         String location = leaseComplexTypeDto.getLocation();
