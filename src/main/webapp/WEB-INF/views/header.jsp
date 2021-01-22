@@ -16,7 +16,7 @@
 <body>
     <div id="header-backgroundArea">
         <div id="header-titleArea">
-            <p>분양임대 정보 제공 서비스 <i class="fal fa-person-sign"></i> </p>
+            <p onclick="location.href='/'">분양임대 정보 제공 서비스</p>
         </div>
         <div id="accountArea">
             <c:choose>
@@ -38,6 +38,11 @@
     </div>
 </body>
 </html>
+<script>
+    $("#header-titleArea p").hover(function() {
+        $(this).css("cursor", "pointer");
+    })
+</script>
 <style>
     body {
         width: 100%;
