@@ -1,13 +1,17 @@
 package project.personal.lhinfo.entity;
 
 import lombok.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 
+@Component
 @Getter
 @Setter
-@NoArgsConstructor
 @AllArgsConstructor
 public class Account {
-    public static Account SINGLETON_Account = new Account();
+
+    Logger logger = LoggerFactory.getLogger(Account.class);
 
     public int id;
     public String identify;
@@ -15,23 +19,8 @@ public class Account {
     public String name;
     public String email;
 
-    public static Account getAccount() {
-        if(SINGLETON_Account == null) {
-            SINGLETON_Account = new Account();
-        }
-
-        return SINGLETON_Account;
-    }
-
-    public static void setAccount(Account account) {
-        if(SINGLETON_Account == null) {
-            SINGLETON_Account = new Account();
-        }
-
-        SINGLETON_Account.setId(account.getId());
-        SINGLETON_Account.setIdentify(account.getIdentify());
-        SINGLETON_Account.setName(account.getName());
-        SINGLETON_Account.setEmail(account.getEmail());
+    public Account() {
+        logger.info("회원 싱글톤 객체 생성");
     }
 
     @Override

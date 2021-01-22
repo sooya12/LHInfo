@@ -13,6 +13,9 @@ public class AccountDaoImpl implements AccountDao{
     @Autowired
     private SqlSessionTemplate session;
 
+    @Autowired
+    Account account;
+
     @Override
     public int createAccount(AccountSignupDto accountSignupDto) {
         return session.insert("lhinfoDB.insertAccount", accountSignupDto);
@@ -20,8 +23,8 @@ public class AccountDaoImpl implements AccountDao{
 
     @Override
     public Account readAccount(String id) {
-        Account.setAccount(session.selectOne("lhinfoDB.selectAccount", id));
-        return Account.SINGLETON_Account;
+        account = session.selectOne("lhinfoDB.selectAccount", id);
+        return account;
     }
 
     @Override
