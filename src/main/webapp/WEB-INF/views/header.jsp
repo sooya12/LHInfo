@@ -19,6 +19,9 @@
             <p onclick="location.href='/'">분양임대 정보 제공 서비스</p>
         </div>
         <div id="accountArea">
+            <div class="home-button" onclick="location.href='/home'">
+                <i class="fas fa-home-lg"></i> 첫 화면으로
+            </div>
             <c:choose>
                 <c:when test="${account == null}">
                     <div class="account-button" onclick="location.href='/account/signup'">
@@ -76,6 +79,13 @@
         height: 10%;
         text-align: right;
         vertical-align: center;
+    }
+
+    .home-button {
+        width: max(6%, 90px);
+        height: 100%;
+        float: left;
+        cursor: pointer;
     }
 
     .account-button {
