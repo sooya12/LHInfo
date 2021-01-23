@@ -53,10 +53,11 @@
 <style>
     .menu-container {
         width: min(max(10%, 100px), 200px);
-        height: 280px;
+        height: 300px;
         margin: 20px auto;
         float: left;
         background-color: #CDC4B3;
+        position: fixed;
     }
 
     header p {
