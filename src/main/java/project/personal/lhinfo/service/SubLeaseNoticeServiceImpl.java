@@ -20,10 +20,10 @@ import java.util.List;
 @Service
 public class SubLeaseNoticeServiceImpl implements SubLeaseNoticeService {
 
+    private static String serviceKey = "IhlOKKhbrN3s3DDJbBOWAXyGUX8JND9y16Yg%2Fbrs3nGCYyPxywXIyC%2Fu4Uzi9xUd4AR8XYpnGlcm2E%2FgskkKiQ%3D%3D";
+
     @Override
     public List<SubLeaseNoticeDto> subLeaseNoticeList(SubLeaseNoticeSearchDto subLeaseNoticeSearchDto) throws IOException {
-        String serviceKey = "IhlOKKhbrN3s3DDJbBOWAXyGUX8JND9y16Yg%2Fbrs3nGCYyPxywXIyC%2Fu4Uzi9xUd4AR8XYpnGlcm2E%2FgskkKiQ%3D%3D";
-
         StringBuilder urlBuilder = new StringBuilder("http://apis.data.go.kr/B552555/lhLeaseNoticeInfo/lhLeaseNoticeInfo"); /*URL*/
         urlBuilder.append("?" + URLEncoder.encode("ServiceKey","UTF-8") + "=" + serviceKey); /*Service Key*/
         urlBuilder.append("&" + URLEncoder.encode("PG_SZ","UTF-8") + "=" + URLEncoder.encode("50", "UTF-8")); /*한 페이지 결과 수*/
@@ -34,7 +34,22 @@ public class SubLeaseNoticeServiceImpl implements SubLeaseNoticeService {
         urlBuilder.append("&" + URLEncoder.encode("PAN_SS","UTF-8") + "=" + URLEncoder.encode(subLeaseNoticeSearchDto.getNoticeStatusType(), "UTF-8")); /*공고상태코드*/
 //        urlBuilder.append("&" + URLEncoder.encode("PAN_NT_ST_DT","UTF-8") + "=" + URLEncoder.encode("2019.12.01", "UTF-8")); /*공고게시일*/
 //        urlBuilder.append("&" + URLEncoder.encode("CLSG_DT","UTF-8") + "=" + URLEncoder.encode("2019.08.22", "UTF-8")); /*공고마감일*/
-        URL url = new URL(urlBuilder.toString());
+
+        return sendURL(urlBuilder.toString());
+    }
+
+    @Override
+    public List<SubLeaseNoticeDto> subLeaseNoticeSmallList() throws IOException {
+        StringBuilder urlBuilder = new StringBuilder("http://apis.data.go.kr/B552555/lhLeaseNoticeInfo/lhLeaseNoticeInfo"); /*URL*/
+        urlBuilder.append("?" + URLEncoder.encode("ServiceKey","UTF-8") + "=" + serviceKey); /*Service Key*/
+        urlBuilder.append("&" + URLEncoder.encode("PG_SZ","UTF-8") + "=" + URLEncoder.encode("5", "UTF-8")); /*한 페이지 결과 수*/
+        urlBuilder.append("&" + URLEncoder.encode("PAGE","UTF-8") + "=" + URLEncoder.encode("1", "UTF-8")); /*페이지 번호*/
+
+        return sendURL(urlBuilder.toString());
+    }
+
+    private List<SubLeaseNoticeDto> sendURL(String urlStr) throws IOException {
+        URL url = new URL(urlStr);
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setRequestMethod("GET");
         conn.setRequestProperty("Content-type", "application/json");
