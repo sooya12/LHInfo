@@ -88,7 +88,7 @@
                             </tr>
                         </c:when>
                         <c:otherwise>
-                            <c:forEach var="subLeaseNotice" items="${subLeaseNoticeList}">
+                            <c:forEach var="subLeaseNotice" items="${subLeaseNoticeList}" varStatus="idx">
                                 <tr>
                                     <td>${subLeaseNotice.RNUM}</td>
                                     <td>${subLeaseNotice.CNP_CD_NM}</td>
@@ -98,6 +98,19 @@
                                     <td>${subLeaseNotice.PAN_NT_ST_DT}</td>
                                     <td>${subLeaseNotice.CLSG_DT}</td>
                                     <td>${subLeaseNotice.PAN_SS}</td>
+
+                                    <script type="text/javascript">
+                                        $(document).ready(function() {
+                                            const line = $("#subLeaseNoticeTable tr:eq(${idx.count}) td:eq(2)");
+
+                                            const submitForm = makeForm("${subLeaseNotice.AIS_TP_CD}", "${subLeaseNotice.SPL_INF_TP_CD}", "${subLeaseNotice.PAN_ID}", "${subLeaseNotice.UPP_AIS_TP_CD}", "${subLeaseNotice.CCR_CNNT_SYS_DS_CD}");
+                                            document.body.appendChild(submitForm);
+
+                                            $(line).click(function() {
+                                                submitForm.submit();
+                                            });
+                                        });
+                                    </script>
                                 </tr>
                             </c:forEach>
                         </c:otherwise>
@@ -125,72 +138,111 @@
 
         $("#selPage option[value=${currentValue.page}]").attr("selected", true);
         $("#inputNoticeName").val("${currentValue.noticeName}");
-    })
+    });
+
+    function makeForm(a, s, p, u, c) {
+        const form = document.createElement("form");
+        form.setAttribute("action", "/subleasenotice/detail");
+        form.setAttribute("method", "get");
+        document.charset = "UTF-8";
+
+        const AIS_TP_CD = document.createElement("input");
+        AIS_TP_CD.setAttribute("type", "hidden");
+        AIS_TP_CD.setAttribute("name", "AIS_TP_CD");
+        AIS_TP_CD.setAttribute("value", a);
+        form.appendChild(AIS_TP_CD);
+
+        const SPL_INF_TP_CD = document.createElement("input");
+        SPL_INF_TP_CD.setAttribute("type", "hidden");
+        SPL_INF_TP_CD.setAttribute("name", "SPL_INF_TP_CD");
+        SPL_INF_TP_CD.setAttribute("value", s);
+        form.appendChild(SPL_INF_TP_CD);
+
+        const PAN_ID = document.createElement("input");
+        PAN_ID.setAttribute("type", "hidden");
+        PAN_ID.setAttribute("name", "PAN_ID");
+        PAN_ID.setAttribute("value", p);
+        form.appendChild(PAN_ID);
+
+        const UPP_AIS_TP_CD = document.createElement("input");
+        UPP_AIS_TP_CD.setAttribute("type", "hidden");
+        UPP_AIS_TP_CD.setAttribute("name", "UPP_AIS_TP_CD");
+        UPP_AIS_TP_CD.setAttribute("value", u);
+        form.appendChild(UPP_AIS_TP_CD);
+
+        const CCR_CNNT_SYS_DS_CD = document.createElement("input");
+        CCR_CNNT_SYS_DS_CD.setAttribute("type", "hidden");
+        CCR_CNNT_SYS_DS_CD.setAttribute("name", "CCR_CNNT_SYS_DS_CD");
+        CCR_CNNT_SYS_DS_CD.setAttribute("value", c);
+        form.appendChild(CCR_CNNT_SYS_DS_CD);
+
+        return form;
+    }
 </script>
 <style>
-    #selectBoxArea {
-        width: 70%;
-        height: 100px;
-        text-align: center;
-        margin: 20px auto;
-    }
+#selectBoxArea {
+width: 70%;
+height: 100px;
+text-align: center;
+margin: 20px auto;
+}
 
-    .selectFormLine {
-        width: 100%;
-        height: 40px;
-        margin: 5px auto;
-        text-align: center;
-        float: none;
-    }
+.selectFormLine {
+width: 100%;
+height: 40px;
+margin: 5px auto;
+text-align: center;
+float: none;
+}
 
-    .form-group {
-        height: 40px;
-        float: left;
-    }
+.form-group {
+height: 40px;
+float: left;
+}
 
-    #selectBoxArea form {
-        width: 100%;
-        height: 100%;
-        border-bottom: solid darkgrey 1px;
-    }
+#selectBoxArea form {
+width: 100%;
+height: 100%;
+border-bottom: solid darkgrey 1px;
+}
 
-    #selectBoxArea label {
-        float: left;
-        padding: 6px 12px 6px 12px;
-    }
+#selectBoxArea label {
+float: left;
+padding: 6px 12px 6px 12px;
+}
 
-    #selectBoxArea select {
-        float: left;
-        width: auto;
-    }
+#selectBoxArea select {
+float: left;
+width: auto;
+}
 
-    #selectBoxArea .form-button {
-        float: right;
-    }
+#selectBoxArea .form-button {
+float: right;
+}
 
-    .selectFormLine {
-        float: left;
-    }
+.selectFormLine {
+float: left;
+}
 
-    .selectFormLine .form-control {
-        width: min(70%, 600px);
-        float: left;
-    }
+.selectFormLine .form-control {
+width: min(70%, 600px);
+float: left;
+}
 
-    #subLeaseNoticeArea {
-        width: 70%;
-        margin: 20px auto;
-        text-align: center;
-    }
+#subLeaseNoticeArea {
+width: 70%;
+margin: 20px auto;
+text-align: center;
+}
 
-    #subLeaseNoticeArea table {
-        width: 100%;
-        margin: 0 auto;
-        font-size: min(max(10px, 1vw), 14px);
-    }
+#subLeaseNoticeArea table {
+width: 100%;
+margin: 0 auto;
+font-size: min(max(10px, 1vw), 14px);
+}
 
-    #noInfomation {
-        text-align: center;
-    }
+#noInfomation {
+text-align: center;
+}
 
 </style>

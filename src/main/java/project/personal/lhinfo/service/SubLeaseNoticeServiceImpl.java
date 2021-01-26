@@ -5,6 +5,8 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import org.springframework.stereotype.Service;
+import project.personal.lhinfo.dto.SubLeaseNoticeDetailDto;
+import project.personal.lhinfo.dto.SubLeaseNoticeDetailSearchDto;
 import project.personal.lhinfo.dto.SubLeaseNoticeDto;
 import project.personal.lhinfo.dto.SubLeaseNoticeSearchDto;
 
@@ -35,7 +37,7 @@ public class SubLeaseNoticeServiceImpl implements SubLeaseNoticeService {
 //        urlBuilder.append("&" + URLEncoder.encode("PAN_NT_ST_DT","UTF-8") + "=" + URLEncoder.encode("2019.12.01", "UTF-8")); /*공고게시일*/
 //        urlBuilder.append("&" + URLEncoder.encode("CLSG_DT","UTF-8") + "=" + URLEncoder.encode("2019.08.22", "UTF-8")); /*공고마감일*/
 
-        return sendURL(urlBuilder.toString());
+        return getNoticeList(urlBuilder.toString());
     }
 
     @Override
@@ -45,10 +47,50 @@ public class SubLeaseNoticeServiceImpl implements SubLeaseNoticeService {
         urlBuilder.append("&" + URLEncoder.encode("PG_SZ","UTF-8") + "=" + URLEncoder.encode("5", "UTF-8")); /*한 페이지 결과 수*/
         urlBuilder.append("&" + URLEncoder.encode("PAGE","UTF-8") + "=" + URLEncoder.encode("1", "UTF-8")); /*페이지 번호*/
 
-        return sendURL(urlBuilder.toString());
+        return getNoticeList(urlBuilder.toString());
     }
 
-    private List<SubLeaseNoticeDto> sendURL(String urlStr) throws IOException {
+    @Override
+    public SubLeaseNoticeDetailDto subLeaseNoticeDetail(SubLeaseNoticeDetailSearchDto subLeaseNoticeDetailSearchDto) throws IOException {
+        StringBuilder urlBuilder = new StringBuilder("http://apis.data.go.kr/B552555/lhLeaseNoticeDtlInfo/getLeaseNoticeDtlInfo"); /*URL*/
+        urlBuilder.append("?" + URLEncoder.encode("ServiceKey", "UTF-8") + "=" + serviceKey); /*Service Key*/
+        urlBuilder.append("&" + URLEncoder.encode("SPL_INF_TP_CD", "UTF-8") + "=" + URLEncoder.encode(subLeaseNoticeDetailSearchDto.SPL_INF_TP_CD, "UTF-8")); /*분양임대공고문조회 API의 특정 공고의 응답 메시지 중 공급정보구분코드*/
+        urlBuilder.append("&" + URLEncoder.encode("CCR_CNNT_SYS_DS_CD", "UTF-8") + "=" + URLEncoder.encode(subLeaseNoticeDetailSearchDto.CCR_CNNT_SYS_DS_CD, "UTF-8")); /*분양임대공고문조회 API의 특정 공고의 응답 메시지 중 고객센터연계시스템구분코드*/
+        urlBuilder.append("&" + URLEncoder.encode("PAN_ID", "UTF-8") + "=" + URLEncoder.encode(subLeaseNoticeDetailSearchDto.PAN_ID, "UTF-8")); /*분양임대공고문조회 API의 특정 공고의 응답 메시지 중 공고아이디*/
+        urlBuilder.append("&" + URLEncoder.encode("UPP_AIS_TP_CD", "UTF-8") + "=" + URLEncoder.encode(subLeaseNoticeDetailSearchDto.UPP_AIS_TP_CD, "UTF-8")); /*분양임대공고문조회 API의 특정 공고의 응답 메시지 중 상위매물유형코드*/
+        urlBuilder.append("&" + URLEncoder.encode("AIS_TP_CD", "UTF-8") + "=" + URLEncoder.encode(subLeaseNoticeDetailSearchDto.AIS_TP_CD, "UTF-8")); /*분양임대공고문조회 API의 특정 공고의 응답 메시지 중 매물유형코드*/
+        URL url = new URL(urlBuilder.toString());
+        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+        conn.setRequestMethod("GET");
+        conn.setRequestProperty("Content-type", "application/json");
+        System.out.println("Response code: " + conn.getResponseCode());
+        BufferedReader rd;
+        if (conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
+            rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+        } else {
+            rd = new BufferedReader(new InputStreamReader(conn.getErrorStream()));
+        }
+        StringBuilder sb = new StringBuilder();
+        String line;
+        while ((line = rd.readLine()) != null) {
+            sb.append(line);
+        }
+        rd.close();
+        conn.disconnect();
+        System.out.println(sb.toString());
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.configure(com.fasterxml.jackson.core.JsonParser.Feature.ALLOW_UNQUOTED_CONTROL_CHARS, true);
+        JsonArray jsonArray = JsonParser.parseString(sb.toString()).getAsJsonArray();
+        JsonObject jsonObject = jsonArray.get(1).getAsJsonObject();
+
+        SubLeaseNoticeDetailDto detail = objectMapper.readValue(jsonObject.toString(), SubLeaseNoticeDetailDto.class);
+        System.out.println(detail.toString());
+
+        return detail;
+    }
+
+    private List<SubLeaseNoticeDto> getNoticeList(String urlStr) throws IOException {
         URL url = new URL(urlStr);
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setRequestMethod("GET");
