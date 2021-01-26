@@ -1,6 +1,6 @@
 package project.personal.lhinfo.dto.SubLeaseNoticeDetail;
 
-public class dsAhflInfoNm {               // 첨부파일 정보
+public class dsAhflInfoNm {             // 첨부파일 정보
     public String CMN_AHFL_NM;          // 첨부파일명
     public String AHFL_URL;             // 다운로드
     public String SL_PAN_AHFL_DS_CD_NM; // 파일구분명

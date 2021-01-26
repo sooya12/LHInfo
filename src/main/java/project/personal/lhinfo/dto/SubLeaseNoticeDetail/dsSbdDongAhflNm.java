@@ -1,6 +1,6 @@
 package project.personal.lhinfo.dto.SubLeaseNoticeDetail;
 
-public class dsSbdDongAhflNm {                  // 단지내상가동별이미지 정보
+public class dsSbdDongAhflNm {                  // 단지내상가동별이미지정보
     public String CMN_AHFL_NM;                  // 첨부파일명
     public String AHFL_URL;                     // 다운로드
     public String DNG_HS_NO;                    // 상가명

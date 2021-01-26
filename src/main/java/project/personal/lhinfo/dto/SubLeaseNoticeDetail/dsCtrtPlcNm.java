@@ -1,6 +1,6 @@
 package project.personal.lhinfo.dto.SubLeaseNoticeDetail;
 
-public class dsCtrtPlcNm {            // 접수처 정보
+public class dsCtrtPlcNm {          // 접수처 정보
     public String TSK_ST_DTTM;      // 운영기간시작일시
     public String SIL_OFC_TLNO;     // 전화번호
     public String TSK_ED_DTTM;      // 운영기간종료일시

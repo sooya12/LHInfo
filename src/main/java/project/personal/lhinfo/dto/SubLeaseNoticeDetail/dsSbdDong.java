@@ -9,7 +9,7 @@ public class dsSbdDong {            // 단지내상가동정보
 
     @Override
     public String toString() {
-        return "dsSbdDongNm{" +
+        return "dsSbdDong{" +
                 "HO_ADM_NO_CNT='" + HO_ADM_NO_CNT + '\'' +
                 ", MSH_DT='" + MSH_DT + '\'' +
                 ", DNG_HS_NO='" + DNG_HS_NO + '\'' +
