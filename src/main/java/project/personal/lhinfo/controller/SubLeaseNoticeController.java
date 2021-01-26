@@ -7,6 +7,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import project.personal.lhinfo.dto.SubLeaseNoticeDetailDto;
+import project.personal.lhinfo.dto.SubLeaseNoticeDetailSearchDto;
 import project.personal.lhinfo.dto.SubLeaseNoticeDto;
 import project.personal.lhinfo.dto.SubLeaseNoticeSearchDto;
 import project.personal.lhinfo.entity.Location;
@@ -66,5 +69,20 @@ public class SubLeaseNoticeController {
         model.addAttribute("currentValue", subLeaseNoticeSearchDto);
         
         return "subLeaseNoticeList";
+    }
+
+    @RequestMapping(value = "/detail", method = RequestMethod.GET)
+    public String subLeaseNoticeDetail(Model model, SubLeaseNoticeDetailSearchDto subLeaseNoticeDetailSearchDto, RedirectAttributes redirect) {
+        logger.info("분양임대 공고문 상세 - " + subLeaseNoticeDetailSearchDto.toString());
+
+        try {
+            SubLeaseNoticeDetailDto subLeaseNoticeDetailDto = subLeaseNoticeService.subLeaseNoticeDetail(subLeaseNoticeDetailSearchDto);
+            model.addAttribute("detail", subLeaseNoticeDetailDto);
+            return "subLeaseNoticeDetail";
+        } catch (Exception e) {
+            e.printStackTrace();
+            redirect.addAttribute("subLeaseNoticeDetailSearchDto", subLeaseNoticeDetailSearchDto);
+            return "redirect:/detail";
+        }
     }
 }
