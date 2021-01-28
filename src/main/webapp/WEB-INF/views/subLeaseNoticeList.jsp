@@ -107,6 +107,11 @@
                                             document.body.appendChild(submitForm);
 
                                             $(line).click(function() {
+                                                sessionStorage.setItem("noticeName", "${subLeaseNotice.PAN_NM}");
+                                                sessionStorage.setItem("noticeType", "${subLeaseNotice.UPP_AIS_TP_NM}");
+                                                sessionStorage.setItem("noticeDetailType", "${subLeaseNotice.AIS_TP_CD_NM}");
+                                                sessionStorage.setItem("locationName", "${subLeaseNotice.CNP_CD_NM}");
+                                                sessionStorage.setItem("noticeStatus", "${subLeaseNotice.PAN_SS}");
                                                 submitForm.submit();
                                             });
                                         });
