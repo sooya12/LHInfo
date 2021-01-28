@@ -1,5 +1,10 @@
 package project.personal.lhinfo.dto.SubLeaseNoticeDetail;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 public class dsEtcInfo {                // 기타 정보
     public String ETC_CTS;              // 기타사항
     public String CRC_RSN;              // 정정/취소사유

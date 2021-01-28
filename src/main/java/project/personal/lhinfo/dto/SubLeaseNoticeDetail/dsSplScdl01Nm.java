@@ -1,5 +1,10 @@
 package project.personal.lhinfo.dto.SubLeaseNoticeDetail;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 public class dsSplScdl01Nm {        // 공급일정-입찰
     public String CLSG_DTTM;        // 입찰보증금납부일시
     public String OPB_RSL_NT_DTTM;  // 개찰결과게시일시

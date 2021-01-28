@@ -1,5 +1,10 @@
 package project.personal.lhinfo.dto.SubLeaseNoticeDetail;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 public class dsSbdDongAhfl {                    // 단지내상가동별이미지정보
     public String CMN_AHFL_NM;                  // 첨부파일명
     public String AHFL_URL;                     // 다운로드

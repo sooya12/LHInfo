@@ -1,5 +1,10 @@
 package project.personal.lhinfo.dto.SubLeaseNoticeDetail;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 public class dsSbdDongNm {          // 단지내상가동정보
     public String HO_ADM_NO_CNT;    // 상가전체호수
     public String MSH_DT;           // 상가입점시기

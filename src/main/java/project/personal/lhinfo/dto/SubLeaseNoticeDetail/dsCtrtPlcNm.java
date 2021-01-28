@@ -1,5 +1,10 @@
 package project.personal.lhinfo.dto.SubLeaseNoticeDetail;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 public class dsCtrtPlcNm {          // 접수처 정보
     public String TSK_ST_DTTM;      // 운영기간시작일시
     public String SIL_OFC_TLNO;     // 전화번호

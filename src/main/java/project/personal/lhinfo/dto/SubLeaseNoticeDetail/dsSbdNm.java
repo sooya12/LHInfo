@@ -1,5 +1,10 @@
 package project.personal.lhinfo.dto.SubLeaseNoticeDetail;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 public class dsSbdNm {                  // 단지 정보
     public String DDO_AR;               // 전용면적
     public String LGDN_ADR;             // 단지주소

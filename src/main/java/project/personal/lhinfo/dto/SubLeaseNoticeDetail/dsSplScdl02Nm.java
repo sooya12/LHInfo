@@ -1,5 +1,10 @@
 package project.personal.lhinfo.dto.SubLeaseNoticeDetail;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 public class dsSplScdl02Nm {    // 공금일정-추첨
     public String CLSG_DTTM;    // 신청예약금입금마감일시
     public String RQS_DTTM;     // 신청일시
