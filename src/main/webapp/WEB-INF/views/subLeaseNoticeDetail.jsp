@@ -34,7 +34,7 @@
                     </table>
                 </div>
             </div>
-            <div id="map" style="width: 300px; height: 300px;"></div>
+            <div id="map" style="width: 500px; height: 400px;"></div>
             <script>
                 var geocoder = new kakao.maps.services.Geocoder();
 
@@ -46,15 +46,38 @@
                         var container = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스
                         var options = { //지도를 생성할 때 필요한 기본 옵션
                             center: new kakao.maps.LatLng(y, x), //지도의 중심좌표.
-                            level: 3 //지도의 레벨(확대, 축소 정도)
+                            level: 5 //지도의 레벨(확대, 축소 정도)
                         };
 
                         var map = new kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
+
+                        var markerPosition = new kakao.maps.LatLng(y, x);
+
+                        var marker = new kakao.maps.Marker({
+                            position: markerPosition
+                        });
+
+                        marker.setMap(map);
                     }
                 };
 
-                geocoder.addressSearch('서울 서초구 반포대로 13', callback);
+                var receptionAddr = "${detail.dsCtrtPlc.get(0).CTRT_PLC_ADR}";
+                var complexAddr;
+                if("${detail.dsSbd.get(0).LCT_ARA_ADR}" == "") {
+                    complexAddr = "${detail.dsSbd.get(0).LGDN_ADR}";
+                } else {
+                    complexAddr = "${detail.dsSbd.get(0).LCT_ARA_ADR}";
+                }
 
+                if(receptionAddr == "" && complexAddr == "") {
+                    $("#map").remove();
+                }
+
+                if(complexAddr != "") {
+                    geocoder.addressSearch(complexAddr, callback);
+                } else if(receptionAddr != "") {
+                    geocoder.addressSearch(receptionAddr, callback);
+                }
             </script>
             <c:if test="${detail.dsSbd.size() > 0}">
                 <div id="complex">
