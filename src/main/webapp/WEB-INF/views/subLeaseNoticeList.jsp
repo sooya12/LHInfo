@@ -106,6 +106,15 @@
                                     const submitForm = makeForm("${subLeaseNotice.AIS_TP_CD}", "${subLeaseNotice.SPL_INF_TP_CD}", "${subLeaseNotice.PAN_ID}", "${subLeaseNotice.UPP_AIS_TP_CD}", "${subLeaseNotice.CCR_CNNT_SYS_DS_CD}");
                                     document.body.appendChild(submitForm);
 
+                                    $(line).hover(function() {
+                                        $(this).css("cursor", "pointer");
+                                        $(this).css("color", "#759CD8");
+                                    });
+
+                                    $(line).mouseout(function() {
+                                        $(this).css("color", "#000000");
+                                    });
+
                                     $(line).click(function () {
                                         sessionStorage.setItem("noticeName", "${subLeaseNotice.PAN_NM}");
                                         sessionStorage.setItem("noticeType", "${subLeaseNotice.UPP_AIS_TP_NM}");
