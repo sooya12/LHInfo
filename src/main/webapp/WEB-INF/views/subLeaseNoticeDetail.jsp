@@ -14,6 +14,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="/resources/main.css">
     <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f71a931fcbbd7c297a88e94cacd0b2e4&libraries=services,clusterer,drawing"></script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <title>분양임대 공고문 조회</title>
 </head>
 <body>
@@ -35,7 +36,7 @@
                 </div>
             </div>
             <div id="map" style="width: 500px; height: 400px;"></div>
-            <script>
+            <script type="text/javascript">
                 var geocoder = new kakao.maps.services.Geocoder();
 
                 var callback = function(result, status) {
@@ -58,6 +59,41 @@
                         });
 
                         marker.setMap(map);
+
+                        $.ajax({
+                            type: "GET",
+                            async: false,
+                            url: "/subleasenotice/store",
+                            data: {x: x, y: y},
+                            dataType: "json",
+                            success: function(store) {
+
+                                function drawChart() {
+                                    var arr = [];
+                                    for(var i = 0; i < store.length; i++) {
+                                        arr.push([store[i].indsLclsNm, store[i].statCnt]);
+                                    }
+
+                                    var data = new google.visualization.DataTable();
+                                    data.addColumn('string', 'StoreType');
+                                    data.addColumn('number', 'Count');
+                                    data.addRows(arr);
+
+                                    var options = {
+                                        pieSliceText: 'label',
+                                        title: "Store Info",
+                                    };
+
+                                    var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+                                    chart.draw(data, options);
+                                }
+                                google.charts.load('current', {'packages':['corechart']});
+                                google.charts.setOnLoadCallback(drawChart);
+                            },
+                            error: function(request, status, error) {
+                                console.log(request.status + "\n" + request.responseText + "\n" + error);
+                            }
+                        });
                     }
                 };
 
@@ -79,6 +115,7 @@
                     geocoder.addressSearch(receptionAddr, callback);
                 }
             </script>
+            <div id="piechart" style="width: 900px; height: 500px;"></div>
             <c:if test="${detail.dsSbd.size() > 0}">
                 <div id="complex">
                     <header>
