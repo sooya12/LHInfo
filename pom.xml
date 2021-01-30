@@ -150,7 +150,6 @@
 			<version>2.7.0</version>
 		</dependency>
 
-
 		<!-- JSON - Gson & Jackson -->
 		<dependency>
 			<groupId>com.google.code.gson</groupId>
