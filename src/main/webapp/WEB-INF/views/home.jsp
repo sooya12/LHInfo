@@ -18,7 +18,6 @@
 <body>
     <div class="container">
         <jsp:include page="header.jsp"/>
-        <jsp:include page="menu.jsp"/>
         <div id="mainArea">
             <div id="leaseComplexArea">
                 <div id="leaseComplexTitle">
@@ -91,7 +90,7 @@
     #mainArea {
         width: 70%;
         height: 600px;
-        margin: 0 auto;
+        margin: 50px auto;
     }
 
     #leaseComplexArea {
