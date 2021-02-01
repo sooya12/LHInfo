@@ -22,7 +22,6 @@
 <body>
     <div class="container">
         <jsp:include page="header.jsp"/>
-        <jsp:include page="menu.jsp"/>
         <div id="detailArea">
             <div id="title">
                 <header>
