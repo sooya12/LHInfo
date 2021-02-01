@@ -18,26 +18,6 @@
         <div id="header-titleArea">
             <p onclick="location.href='/'">분양임대 정보 제공 서비스</p>
         </div>
-<%--        <div id="accountArea">--%>
-<%--            <div class="home-button" onclick="location.href='/home'">--%>
-<%--                <i class="fas fa-home-lg"></i> 첫 화면으로--%>
-<%--            </div>--%>
-<%--            <c:choose>--%>
-<%--                <c:when test="${account == null}">--%>
-<%--                    <div class="account-button" onclick="location.href='/account/signup'">--%>
-<%--                        <i class="fas fa-user-plus"></i> 회원가입--%>
-<%--                    </div>--%>
-<%--                    <div class="account-button" onclick="location.href='/account/signin'">--%>
-<%--                        <i class="fas fa-user-check"></i> 로그인--%>
-<%--                    </div>--%>
-<%--                </c:when>--%>
-<%--                <c:otherwise>--%>
-<%--                    <div class="login-account-button">--%>
-<%--                        <span onclick="location.href='${path}/account/signout'"><i class="fad fa-user-times"></i> 로그아웃</span>--%>
-<%--                    </div>--%>
-<%--                </c:otherwise>--%>
-<%--            </c:choose>--%>
-<%--        </div>--%>
         <nav class="navbar navbar-inverse">
             <div class="container-fluid">
                 <div class="navbar-header">
@@ -99,36 +79,4 @@
         font-weight: bold;
     }
 
-    #accountArea {
-        width: 100%;
-        height: 10%;
-        text-align: right;
-        vertical-align: center;
-    }
-
-    .home-button {
-        width: max(6%, 90px);
-        height: 100%;
-        float: left;
-        cursor: pointer;
-    }
-
-    .account-button {
-        width: max(5%, 80px);
-        height: 100%;
-        margin-right: 1%;
-        float: right;
-        cursor: pointer;
-    }
-
-    .login-account-button {
-        width: max(10%, 160px);
-        height: 100%;
-        margin-right: 1%;
-        float: right;
-    }
-
-    .login-account-button {
-        cursor: pointer;
-    }
 </style>
