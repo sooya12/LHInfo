@@ -18,26 +18,51 @@
         <div id="header-titleArea">
             <p onclick="location.href='/'">분양임대 정보 제공 서비스</p>
         </div>
-        <div id="accountArea">
-            <div class="home-button" onclick="location.href='/home'">
-                <i class="fas fa-home-lg"></i> 첫 화면으로
+<%--        <div id="accountArea">--%>
+<%--            <div class="home-button" onclick="location.href='/home'">--%>
+<%--                <i class="fas fa-home-lg"></i> 첫 화면으로--%>
+<%--            </div>--%>
+<%--            <c:choose>--%>
+<%--                <c:when test="${account == null}">--%>
+<%--                    <div class="account-button" onclick="location.href='/account/signup'">--%>
+<%--                        <i class="fas fa-user-plus"></i> 회원가입--%>
+<%--                    </div>--%>
+<%--                    <div class="account-button" onclick="location.href='/account/signin'">--%>
+<%--                        <i class="fas fa-user-check"></i> 로그인--%>
+<%--                    </div>--%>
+<%--                </c:when>--%>
+<%--                <c:otherwise>--%>
+<%--                    <div class="login-account-button">--%>
+<%--                        <span onclick="location.href='${path}/account/signout'"><i class="fad fa-user-times"></i> 로그아웃</span>--%>
+<%--                    </div>--%>
+<%--                </c:otherwise>--%>
+<%--            </c:choose>--%>
+<%--        </div>--%>
+        <nav class="navbar navbar-inverse">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="/home"><i class="fas fa-home-lg"></i></a>
+                </div>
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="/leasecomplex">임대단지</a></li>
+                    <li><a href="/subleasenotice/list">분양임대 공고문</a></li>
+                    <li><a href="/lhnotice">청약센터 공고문</a></li>
+                </ul>
+                <c:choose>
+                    <c:when test="${account == null}">
+                        <ul class="nav navbar-nav navbar-right">
+                            <li><a href="/account/signin"><i class="fas fa-user-check"></i> 로그인</a></li>
+                            <li><a href="/account/signup"><i class="fas fa-user-plus"></i> 회원가입</a></li>
+                        </ul>
+                    </c:when>
+                    <c:otherwise>
+                        <ul class="nav navbar-nav navbar-right">
+                            <li><a href="${path}/account/signout"><i class="fad fa-user-times"></i> 로그아웃</a></li>
+                        </ul>
+                    </c:otherwise>
+                </c:choose>
             </div>
-            <c:choose>
-                <c:when test="${account == null}">
-                    <div class="account-button" onclick="location.href='/account/signup'">
-                        <i class="fas fa-user-plus"></i> 회원가입
-                    </div>
-                    <div class="account-button" onclick="location.href='/account/signin'">
-                        <i class="fas fa-user-check"></i> 로그인
-                    </div>
-                </c:when>
-                <c:otherwise>
-                    <div class="login-account-button">
-                        <span onclick="location.href='${path}/account/signout'"><i class="fad fa-user-times"></i> 로그아웃</span>
-                    </div>
-                </c:otherwise>
-            </c:choose>
-        </div>
+        </nav>
     </div>
 </body>
 </html>
@@ -53,7 +78,7 @@
 
     #header-backgroundArea {
         width: 100%;
-        height: 300px;
+        height: 250px;
         background: url('/resources/img/lichtraum-1560788_1920.jpg') no-repeat right center;
     }
 
