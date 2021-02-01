@@ -15,6 +15,8 @@
     <link rel="stylesheet" href="/resources/main.css">
     <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f71a931fcbbd7c297a88e94cacd0b2e4&libraries=services,clusterer,drawing"></script>
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+    <meta charset="UTF-8"/>
     <title>분양임대 공고문 조회</title>
 </head>
 <body>
@@ -35,87 +37,6 @@
                     </table>
                 </div>
             </div>
-            <div id="map" style="width: 500px; height: 400px;"></div>
-            <script type="text/javascript">
-                var geocoder = new kakao.maps.services.Geocoder();
-
-                var callback = function(result, status) {
-                    if (status === kakao.maps.services.Status.OK) {
-                        var x = result[0].x;
-                        var y = result[0].y;
-
-                        var container = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스
-                        var options = { //지도를 생성할 때 필요한 기본 옵션
-                            center: new kakao.maps.LatLng(y, x), //지도의 중심좌표.
-                            level: 5 //지도의 레벨(확대, 축소 정도)
-                        };
-
-                        var map = new kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
-
-                        var markerPosition = new kakao.maps.LatLng(y, x);
-
-                        var marker = new kakao.maps.Marker({
-                            position: markerPosition
-                        });
-
-                        marker.setMap(map);
-
-                        $.ajax({
-                            type: "GET",
-                            async: false,
-                            url: "/subleasenotice/store",
-                            data: {x: x, y: y},
-                            dataType: "json",
-                            success: function(store) {
-
-                                function drawChart() {
-                                    var arr = [];
-                                    for(var i = 0; i < store.length; i++) {
-                                        arr.push([store[i].indsLclsNm, store[i].statCnt]);
-                                    }
-
-                                    var data = new google.visualization.DataTable();
-                                    data.addColumn('string', 'StoreType');
-                                    data.addColumn('number', 'Count');
-                                    data.addRows(arr);
-
-                                    var options = {
-                                        pieSliceText: 'label',
-                                        title: "Store Info",
-                                    };
-
-                                    var chart = new google.visualization.PieChart(document.getElementById('piechart'));
-                                    chart.draw(data, options);
-                                }
-                                google.charts.load('current', {'packages':['corechart']});
-                                google.charts.setOnLoadCallback(drawChart);
-                            },
-                            error: function(request, status, error) {
-                                console.log(request.status + "\n" + request.responseText + "\n" + error);
-                            }
-                        });
-                    }
-                };
-
-                var receptionAddr = "${detail.dsCtrtPlc.get(0).CTRT_PLC_ADR}";
-                var complexAddr;
-                if("${detail.dsSbd.get(0).LCT_ARA_ADR}" == "") {
-                    complexAddr = "${detail.dsSbd.get(0).LGDN_ADR}";
-                } else {
-                    complexAddr = "${detail.dsSbd.get(0).LCT_ARA_ADR}";
-                }
-
-                if(receptionAddr == "" && complexAddr == "") {
-                    $("#map").remove();
-                }
-
-                if(complexAddr != "") {
-                    geocoder.addressSearch(complexAddr, callback);
-                } else if(receptionAddr != "") {
-                    geocoder.addressSearch(receptionAddr, callback);
-                }
-            </script>
-            <div id="piechart" style="width: 900px; height: 500px;"></div>
             <c:if test="${detail.dsSbd.size() > 0}">
                 <div id="complex">
                     <header>
@@ -372,6 +293,115 @@
                     </div>
                 </div>
             </c:if>
+            <div>
+                <header>
+                    <p><i class="fad fa-map-marked-alt"></i> 지도 및 상권 정보</p>
+                </header>
+                <div id="map" style="width: 500px; height: 400px;"></div>
+                <div id="chart" style="width: 500px; height: auto; margin: 0 auto;">
+                    <canvas id="myChart" aria-label="상권 정보"></canvas>
+                </div>
+                <script type="text/javascript">
+                    var geocoder = new kakao.maps.services.Geocoder();
+
+                    var chartData = [];
+                    var chartLabel = [];
+
+                    var callback = function(result, status) {
+                        if (status === kakao.maps.services.Status.OK) {
+                            var x = result[0].x;
+                            var y = result[0].y;
+
+                            var container = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스
+                            var options = { //지도를 생성할 때 필요한 기본 옵션
+                                center: new kakao.maps.LatLng(y, x), //지도의 중심좌표.
+                                level: 5 //지도의 레벨(확대, 축소 정도)
+                            };
+
+                            var map = new kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
+                            var markerPosition = new kakao.maps.LatLng(y, x);
+                            var marker = new kakao.maps.Marker({
+                                position: markerPosition
+                            });
+
+                            marker.setMap(map);
+
+                            $.ajax({
+                                type: "GET",
+                                async: false,
+                                url: "/subleasenotice/store",
+                                data: {x: x, y: y},
+                                dataType: "json",
+                                success: function(store) {
+                                    for(var i = 0; i < store.length; i++) {
+                                        chartLabel.push(store[i].indsLclsNm);
+                                        chartData.push(store[i].statCnt);
+                                    }
+
+                                    var ctx = document.getElementById('myChart').getContext('2d');
+                                    var myChart = new Chart(ctx, {
+                                        type: 'bar',
+                                        data: {
+                                            labels: chartLabel,
+                                            datasets: [{
+                                                label: '상권 정보 (500m 반경 이내)',
+                                                data: chartData,
+                                                backgroundColor: [
+                                                    'rgba(255, 99, 132, 0.2)',
+                                                    'rgba(54, 162, 235, 0.2)',
+                                                    'rgba(255, 206, 86, 0.2)',
+                                                    'rgba(75, 192, 192, 0.2)',
+                                                    'rgba(153, 102, 255, 0.2)',
+                                                    'rgba(255, 159, 64, 0.2)'
+                                                ],
+                                                borderColor: [
+                                                    'rgba(255, 99, 132, 1)',
+                                                    'rgba(54, 162, 235, 1)',
+                                                    'rgba(255, 206, 86, 1)',
+                                                    'rgba(75, 192, 192, 1)',
+                                                    'rgba(153, 102, 255, 1)',
+                                                    'rgba(255, 159, 64, 1)'
+                                                ],
+                                                borderWidth: 1
+                                            }]
+                                        },
+                                        options: {
+                                            scales: {
+                                                yAxes: [{
+                                                    ticks: {
+                                                        beginAtZero: true
+                                                    }
+                                                }]
+                                            }
+                                        }
+                                    });
+                                },
+                                error: function(request, status, error) {
+                                    console.log(request.status + "\n" + request.responseText + "\n" + error);
+                                }
+                            });
+                        }
+                    };
+
+                    var receptionAddr = "${detail.dsCtrtPlc.get(0).CTRT_PLC_ADR}";
+                    var complexAddr;
+                    if("${detail.dsSbd.get(0).LCT_ARA_ADR}" == "") {
+                        complexAddr = "${detail.dsSbd.get(0).LGDN_ADR}";
+                    } else {
+                        complexAddr = "${detail.dsSbd.get(0).LCT_ARA_ADR}";
+                    }
+
+                    if(receptionAddr == "" && complexAddr == "") {
+                        $("#map").remove();
+                    }
+
+                    if(complexAddr != "") {
+                        geocoder.addressSearch(complexAddr, callback);
+                    } else if(receptionAddr != "") {
+                        geocoder.addressSearch(receptionAddr, callback);
+                    }
+                </script>
+            </div>
         </div>
         <jsp:include page="footer.jsp"/>
     </div>
@@ -487,5 +517,11 @@
     .attachTable {
         border: 1px solid #CDC4B3;
         border-collapse: collapse;
+    }
+
+    #chart {
+        width: 50%;
+        height: 300px;
+        margin: 0 auto;
     }
 </style>

@@ -73,6 +73,7 @@ public class SubLeaseNoticeController {
         return "subLeaseNoticeList";
     }
 
+    // 분양임대 공고문 상세 화면으로 이동
     @RequestMapping(value = "/detail", method = RequestMethod.GET)
     public String subLeaseNoticeDetail(Model model, SubLeaseNoticeDetailSearchDto subLeaseNoticeDetailSearchDto, RedirectAttributes redirect) {
         logger.info("분양임대 공고문 상세 - " + subLeaseNoticeDetailSearchDto.toString());
@@ -88,6 +89,7 @@ public class SubLeaseNoticeController {
         }
     }
 
+    // 분양임대 공고문 상세 화면 중 500m 반경 이내 상권 정보 조회
     @RequestMapping(value = "/store", method = RequestMethod.GET, produces = "application/text; charset=UTF-8")
     @ResponseBody
     public String subLeaseNoticeDetailStore(Model model, String x, String y) {
