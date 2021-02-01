@@ -18,7 +18,6 @@
 <body>
 <div class="container">
     <jsp:include page="header.jsp"/>
-    <jsp:include page="menu.jsp"/>
     <div id="selectBoxArea">
         <form id="subLeaseNoticeSelectForm" action="/subleasenotice/list" method="get">
             <div class="selectFormLine">
@@ -84,7 +83,7 @@
             <c:choose>
                 <c:when test="${subLeaseNoticeList.size() < 1}">
                     <tr>
-                        <td colspan="8" id="noInfomation">해당 임대단지 조회 정보가 없습니다.</td>
+                        <td colspan="8" id="noInfomation">해당 공고문 조회 정보가 없습니다.</td>
                     </tr>
                 </c:when>
                 <c:otherwise>
