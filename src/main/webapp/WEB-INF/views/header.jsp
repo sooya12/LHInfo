@@ -7,7 +7,6 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<c:set var="path" value="${pageContext.request.contextPath}"/>
 <html>
 <head>
     <script src="https://kit.fontawesome.com/8962e3bb2c.js" crossorigin="anonymous"></script>
@@ -23,8 +22,8 @@
                 <div class="navbar-header">
                     <a class="navbar-brand" href="/home"><i class="fas fa-home-lg"></i></a>
                 </div>
-                <ul class="nav navbar-nav">
-                    <li class="active"><a href="/leasecomplex">임대단지</a></li>
+                <ul id="menu" class="nav navbar-nav">
+                    <li><a href="/leasecomplex">임대단지</a></li>
                     <li><a href="/subleasenotice/list">분양임대 공고문</a></li>
                     <li><a href="/lhnotice">청약센터 공고문</a></li>
                 </ul>
@@ -37,7 +36,7 @@
                     </c:when>
                     <c:otherwise>
                         <ul class="nav navbar-nav navbar-right">
-                            <li><a href="${path}/account/signout"><i class="fad fa-user-times"></i> 로그아웃</a></li>
+                            <li><a href="/account/signout"><i class="fad fa-user-times"></i> 로그아웃</a></li>
                         </ul>
                     </c:otherwise>
                 </c:choose>
@@ -49,7 +48,22 @@
 <script>
     $("#header-titleArea p").hover(function() {
         $(this).css("cursor", "pointer");
-    })
+    });
+
+    $(document).ready(function() {
+        const uri = "<%=request.getRequestURI()%>";
+
+        if(uri.indexOf("leaseComplex") >= 0) {
+            $("li:eq(0)").addClass("active");
+        } else if(uri.indexOf("subLeaseNotice") >= 0) {
+            $("li:eq(1)").addClass("active");
+        } else if(uri.indexOf("lhNotice") >= 0) {
+            $("li:eq(2)").addClass("active");
+        } else if(uri.indexOf("home") >= 0) {
+            $(".navbar-brand").css("color", "#ffffff");
+        }
+    });
+
 </script>
 <style>
     body {
@@ -64,7 +78,7 @@
 
     #header-titleArea {
         width: 100%;
-        height: 90%;
+        height: 85%;
         text-align: center;
         color: black;
         margin: 0 auto;
