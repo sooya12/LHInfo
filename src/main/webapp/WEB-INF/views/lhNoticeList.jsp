@@ -80,6 +80,7 @@
     #noticeArea {
         width: 70%;
         margin: 20px auto;
+        margin-top: 50px;
         text-align: center;
     }
 

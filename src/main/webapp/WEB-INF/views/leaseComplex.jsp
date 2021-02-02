@@ -121,6 +121,7 @@
         height: 50px;
         text-align: center;
         margin: 20px auto;
+        margin-top: 50px;
     }
 
     .form-group {
