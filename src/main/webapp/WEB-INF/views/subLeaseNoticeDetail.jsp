@@ -292,7 +292,7 @@
                     </div>
                 </div>
             </c:if>
-            <div>
+            <div id="mapAndStore">
                 <header>
                     <p><i class="fad fa-map-marked-alt"></i> 지도 및 상권 정보</p>
                 </header>
@@ -392,6 +392,8 @@
 
                     if(receptionAddr == "" && complexAddr == "") {
                         $("#map").remove();
+                        $("#myChart").remove();
+                        $("#mapAndStore").remove();
                     }
 
                     if(complexAddr != "") {
