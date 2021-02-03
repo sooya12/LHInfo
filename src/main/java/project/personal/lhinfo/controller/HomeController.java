@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import project.personal.lhinfo.service.LHNoticeService;
 import project.personal.lhinfo.service.SubLeaseNoticeService;
 import project.personal.lhinfo.service.TypeService;
 
@@ -24,6 +25,9 @@ public class HomeController {
 
 	@Autowired
 	SubLeaseNoticeService subLeaseNoticeService;
+
+	@Autowired
+	LHNoticeService lhNoticeService;
 
 	// 로그인, 회원가입 안내 화면으로 이동
 	@RequestMapping(value = "/", method = RequestMethod.GET)
@@ -48,6 +52,7 @@ public class HomeController {
 
 		try {
 			model.addAttribute("subLeaseNoticeList", subLeaseNoticeService.subLeaseNoticeSmallList());
+			model.addAttribute("lhNoticeList", lhNoticeService.lhNoticeSmallList());
 		} catch (IOException e) {
 			e.printStackTrace();
 			return "redirect:/home";

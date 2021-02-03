@@ -8,4 +8,6 @@ import java.util.List;
 public interface LHNoticeService {
 
     List<LHNoticeDto> lhNoticeList() throws IOException;
+
+    List<LHNoticeDto> lhNoticeSmallList() throws IOException;
 }
