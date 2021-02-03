@@ -52,8 +52,8 @@
                     </form>
                 </div>
             </div>
-            <div id="noticeArea">
-                <div class="subLeaseNoticeArea" id="subLeaseNoticeArea">
+            <div id="subLeaseNoticeArea">
+                <div class="subLeaseNoticeArea">
                     <div class="noticeTitle">
                         <header>
                             <p>최신 분양임대 공고문</p>
@@ -65,12 +65,14 @@
                     <div class="noticeList">
                         <ul>
                             <c:forEach var="subLeaseNotice" items="${subLeaseNoticeList}">
-                                <li>${subLeaseNotice.PAN_NM}</li>
+                                <li><i class="fal fa-newspaper"></i> ${subLeaseNotice.PAN_NM}</li>
                             </c:forEach>
                         </ul>
                     </div>
                 </div>
-                <div class="LHNoticeArea" id="LHNoticeArea">
+            </div>
+            <div id="LHNoticeArea">
+                <div class="LHNoticeArea">
                     <div class="noticeTitle">
                         <header>
                             <p>최신 LH 청약센터 공고문</p>
@@ -78,6 +80,13 @@
                     </div>
                     <div class="noticeContent">
                         <span>LH 청약센터 공지사항 정보를 제공</span>
+                    </div>
+                    <div class="noticeList">
+                        <ul>
+                            <c:forEach var="lhNotice" items="${lhNoticeList}">
+                                <li><i class="fal fa-newspaper"></i> ${lhNotice.BBS_TL}</li>
+                            </c:forEach>
+                        </ul>
                     </div>
                 </div>
             </div>
@@ -88,21 +97,22 @@
 </html>
 <style>
     #mainArea {
-        width: 70%;
-        height: 600px;
-        margin: 50px auto;
+        width: 100%;
+        min-height: 850px;
+        margin: 0 auto;
     }
 
     #leaseComplexArea {
-        border: 1px solid #2c1112;
+        border-bottom: 3px solid #996C66;
         width: 100%;
-        height: 30%;
-        margin: 20px auto;
+        min-height: 250px;
+        margin: 0 auto;
+        color: #996C66;
     }
 
     #leaseComplexTitle, .noticeTitle {
         width: 90%;
-        height: auto;
+        min-height: auto;
         float: none;
         margin: 0 auto;
     }
@@ -154,22 +164,25 @@
         margin-right: 10px;
     }
 
-   #noticeArea {
-        border: 1px solid #2c1112;
+    .subLeaseNoticeArea {
+        border-bottom: 3px solid #73746E;
         width: 100%;
-        height: 50%;
-        margin: 20px auto;
-        display: flex;
-        align-items: center;
-        justify-content: center;
+        min-height: 300px;
+        margin: 0 auto;
+        color: #73746E;
     }
 
-    .subLeaseNoticeArea, .LHNoticeArea {
-        border: 1px solid #2c1112;
-        width: 48%;
-        height: 90%;
-        margin: 5px auto;
-        float: left;
+    .LHNoticeArea {
+        border-bottom: 3px solid #957767;
+        width: 100%;
+        min-height: 300px;
+        margin: 0 auto;
+        color: #957767;
+    }
+
+    .noticeList {
+        margin: 0 auto;
+        text-align: center;
     }
 
     .noticeList li {
@@ -179,4 +192,14 @@
         margin-bottom: 5px;
     }
 
+    #mainArea header {
+        margin: 10px auto;
+        font-size: max(2vw, 20px);
+        font-weight: bold;
+        text-align: center;
+    }
+
+    #footer-backgroundArea {
+        margin: 0;
+    }
 </style>
