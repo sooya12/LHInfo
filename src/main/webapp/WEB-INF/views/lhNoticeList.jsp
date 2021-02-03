@@ -58,7 +58,9 @@
                                             });
 
                                             $(line).click(function() {
-                                                window.open("${notice.LINK_URL}");
+                                                let link = "${notice.LINK_URL}";
+                                                link = link.replace("http", "https");
+                                                window.open(link);
                                             });
                                         });
                                     </script>
