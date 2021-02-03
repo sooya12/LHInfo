@@ -68,19 +68,24 @@
 <style>
     body {
         width: 100%;
+        height: auto;
     }
 
     #header-backgroundArea {
         width: 100%;
-        height: 250px;
-        background: url('/resources/img/lichtraum-1560788_1920.jpg') no-repeat right center;
+        min-height: 500px;
+        max-height: 775px;
+        background-image: url('/resources/img/jack-prommel-T2wAe8qXy4w-unsplash_cut.jpg');
+        background-size: cover;
+        background-position: top;
     }
 
     #header-titleArea {
         width: 100%;
-        height: 85%;
+        min-height: 449px;
         text-align: center;
-        color: black;
+        color: #000000;
+        text-shadow: 0 0 3px #eeeeee;
         margin: 0 auto;
         display: flex;
         align-items: center;
@@ -91,6 +96,10 @@
         margin: 0;
         font-size: 50px;
         font-weight: bold;
+        float: none;
     }
 
+    nav, .navbar {
+        margin: 0;
+    }
 </style>
