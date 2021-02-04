@@ -18,22 +18,22 @@
 <body>
     <div class="menu-container">
         <header>
-            <p><i class="fas fa-folders"></i></p>
+            <p>제공 서비스</p>
         </header>
         <ul id="menuContentArea">
             <li>
                 <span onclick="location.href='/leasecomplex'">
-                    <i class="fad fa-folder-open"></i> 임대단지
+                    임대단지
                 </span>
             </li>
             <li>
                 <span onclick="location.href='/subleasenotice/list'">
-                    <i class="fad fa-folder-open"></i> 분양임대 공고문
+                    분양임대 공고문
                 </span>
             </li>
             <li>
                 <span onclick="location.href='#'">
-                    <i class="fad fa-folder-open"></i> 청약센터 공고문
+                    청약센터 공고문
                 </span>
             </li>
         </ul>
@@ -52,8 +52,8 @@
 </script>
 <style>
     .menu-container {
-        width: min(max(10%, 100px), 200px);
-        height: 280px;
+        width: min(max(10%, 120px), 200px);
+        height: 300px;
         margin: 20px auto;
         float: left;
         background-color: #CDC4B3;
@@ -68,7 +68,7 @@
 
     #menuContentArea {
         list-style: none;
-        font-size: 1vw;
+        font-size: max(1vw, 12px);
         text-align: center;
         padding: 0;
     }

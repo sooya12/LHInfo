@@ -19,7 +19,6 @@
 <body>
     <div class="container">
         <jsp:include page="header.jsp"/>
-        <jsp:include page="menu.jsp"/>
         <div id="selectBoxArea">
             <form id="leaseComplexSelectForm" action="/leasecomplex" method="get">
                 <div class="form-group">
@@ -122,6 +121,7 @@
         height: 50px;
         text-align: center;
         margin: 20px auto;
+        margin-top: 50px;
     }
 
     .form-group {

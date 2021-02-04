@@ -31,7 +31,7 @@ public class LeaseComplexServiceImpl implements LeaseComplexService {
 
         StringBuilder urlBuilder = new StringBuilder("http://apis.data.go.kr/B552555/lhLeaseInfo/lhLeaseInfo"); /*URL*/
         urlBuilder.append("?" + URLEncoder.encode("ServiceKey","UTF-8") + "=" + serviceKey); /*Service Key*/
-        urlBuilder.append("&" + URLEncoder.encode("PG_SZ","UTF-8") + "=" + URLEncoder.encode("100", "UTF-8")); /*한 페이지 결과 수*/
+        urlBuilder.append("&" + URLEncoder.encode("PG_SZ","UTF-8") + "=" + URLEncoder.encode("50", "UTF-8")); /*한 페이지 결과 수*/
         urlBuilder.append("&" + URLEncoder.encode("PAGE","UTF-8") + "=" + URLEncoder.encode(leaseComplexTypeDto.getPage(), "UTF-8")); /*페이지 번호*/
         urlBuilder.append("&" + URLEncoder.encode("CNP_CD","UTF-8") + "=" + URLEncoder.encode(leaseComplexTypeDto.getLocation(), "UTF-8")); /*지역코드*/
         urlBuilder.append("&" + URLEncoder.encode("SPL_TP_CD","UTF-8") + "=" + URLEncoder.encode(leaseComplexTypeDto.getSupplyType(), "UTF-8")); /*공급유형코드*/

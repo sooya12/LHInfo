@@ -8,8 +8,8 @@
 	<packaging>war</packaging>
 	<version>1.0.0-BUILD-SNAPSHOT</version>
 	<properties>
-		<java-version>1.11</java-version>
-		<org.springframework-version>3.2.8.RELEASE</org.springframework-version>
+		<java-version>11</java-version>
+		<org.springframework-version>5.2.9.RELEASE</org.springframework-version>
 		<org.aspectj-version>1.9.2</org.aspectj-version>
 		<org.slf4j-version>1.7.30</org.slf4j-version>
 		<com.fasterxml.jackson.core-version>2.12.0</com.fasterxml.jackson.core-version>
@@ -36,7 +36,8 @@
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-jdbc</artifactId>
-			<version>${org.springframework-version}</version>
+			<version>5.3.3</version>
+			<!-- <version>${org.springframework-version}</version> -->
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -45,6 +46,7 @@
 		</dependency>
 				
 		<!-- AspectJ -->
+
 		<dependency>
 			<groupId>org.aspectj</groupId>
 			<artifactId>aspectjrt</artifactId>
@@ -150,7 +152,6 @@
 			<version>2.7.0</version>
 		</dependency>
 
-
 		<!-- JSON - Gson & Jackson -->
 		<dependency>
 			<groupId>com.google.code.gson</groupId>
@@ -202,22 +203,20 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.7.0</version>
+                <version>3.8.0</version>
                 <configuration>
-                    <source>8</source>
-                    <target>8</target>
-                    <compilerArgument>-Xlint:all</compilerArgument>
-                    <showWarnings>true</showWarnings>
-                    <showDeprecation>true</showDeprecation>
+                    <release>11</release>
+<!--					<source>8</source>-->
+<!--					<target>8</target>-->
+<!--                    <compilerArgument>-Xlint:all</compilerArgument>-->
+<!--                    <showWarnings>true</showWarnings>-->
+<!--                    <showDeprecation>true</showDeprecation>-->
                 </configuration>
             </plugin>
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>exec-maven-plugin</artifactId>
                 <version>1.2.1</version>
-                <configuration>
-                    <mainClass>org.test.int1.Main</mainClass>
-                </configuration>
             </plugin>
         </plugins>
     </build>
