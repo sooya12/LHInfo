@@ -64,8 +64,26 @@
                     </div>
                     <div class="noticeList">
                         <ul>
-                            <c:forEach var="subLeaseNotice" items="${subLeaseNoticeList}">
+                            <c:forEach var="subLeaseNotice" items="${subLeaseNoticeList}" varStatus="idx">
                                 <li><i class="fal fa-newspaper"></i> ${subLeaseNotice.PAN_NM}</li>
+
+                                <script type="text/javascript">
+                                    $(document).ready(function() {
+                                        const line = $("#subLeaseNoticeArea li:eq('${idx.count - 1}')");
+
+                                        const submitForm = makeForm("${subLeaseNotice.AIS_TP_CD}", "${subLeaseNotice.SPL_INF_TP_CD}", "${subLeaseNotice.PAN_ID}", "${subLeaseNotice.UPP_AIS_TP_CD}", "${subLeaseNotice.CCR_CNNT_SYS_DS_CD}");
+                                        document.body.appendChild(submitForm);
+
+                                        $(line).click(function () {
+                                            sessionStorage.setItem("noticeName", "${subLeaseNotice.PAN_NM}");
+                                            sessionStorage.setItem("noticeType", "${subLeaseNotice.UPP_AIS_TP_NM}");
+                                            sessionStorage.setItem("noticeDetailType", "${subLeaseNotice.AIS_TP_CD_NM}");
+                                            sessionStorage.setItem("locationName", "${subLeaseNotice.CNP_CD_NM}");
+                                            sessionStorage.setItem("noticeStatus", "${subLeaseNotice.PAN_SS}");
+                                            submitForm.submit();
+                                        });
+                                    });
+                                </script>
                             </c:forEach>
                         </ul>
                     </div>
@@ -83,8 +101,21 @@
                     </div>
                     <div class="noticeList">
                         <ul>
-                            <c:forEach var="lhNotice" items="${lhNoticeList}">
+                            <c:forEach var="lhNotice" items="${lhNoticeList}" varStatus="idx">
                                 <li><i class="fal fa-newspaper"></i> ${lhNotice.BBS_TL}</li>
+
+                                <script type="text/javascript">
+                                    $(document).ready(function() {
+                                       const line = $("#LHNoticeArea li:eq('${idx.count - 1}')");
+
+                                       $(line).click(function() {
+                                           let url = "${lhNotice.LINK_URL}";
+                                           url = url.replace("http", "https");
+
+                                           window.open(url);
+                                       });
+                                    });
+                                </script>
                             </c:forEach>
                         </ul>
                     </div>
@@ -95,6 +126,69 @@
     </div>
 </body>
 </html>
+<script>
+    $("#leaseComplexSelectArea .form-button button").hover(function() {
+        $(this).css("background-color", "#996C66");
+        $(this).css("color", "#ffffff");
+    });
+
+    $("#leaseComplexSelectArea .form-button button").mouseout(function() {
+        $(this).css("background-color", "#000000");
+        $(this).css("color", "#ffffff");
+    });
+
+    $(".noticeList li").hover(function() {
+        $(this).css("cursor", "pointer");
+        $(this).css("color", "#000000");
+    });
+
+    $("#subLeaseNoticeArea .noticeList li").mouseout(function() {
+        $(this).css("color", "#73746E");
+    });
+
+    $("#lhNoticeArea .noticeList li").mouseout(function() {
+        $(this).css("color", "#957767");
+    });
+
+    function makeForm(a, s, p, u, c) {
+        const form = document.createElement("form");
+        form.setAttribute("action", "/subleasenotice/detail");
+        form.setAttribute("method", "get");
+        document.charset = "UTF-8";
+
+        const AIS_TP_CD = document.createElement("input");
+        AIS_TP_CD.setAttribute("type", "hidden");
+        AIS_TP_CD.setAttribute("name", "AIS_TP_CD");
+        AIS_TP_CD.setAttribute("value", a);
+        form.appendChild(AIS_TP_CD);
+
+        const SPL_INF_TP_CD = document.createElement("input");
+        SPL_INF_TP_CD.setAttribute("type", "hidden");
+        SPL_INF_TP_CD.setAttribute("name", "SPL_INF_TP_CD");
+        SPL_INF_TP_CD.setAttribute("value", s);
+        form.appendChild(SPL_INF_TP_CD);
+
+        const PAN_ID = document.createElement("input");
+        PAN_ID.setAttribute("type", "hidden");
+        PAN_ID.setAttribute("name", "PAN_ID");
+        PAN_ID.setAttribute("value", p);
+        form.appendChild(PAN_ID);
+
+        const UPP_AIS_TP_CD = document.createElement("input");
+        UPP_AIS_TP_CD.setAttribute("type", "hidden");
+        UPP_AIS_TP_CD.setAttribute("name", "UPP_AIS_TP_CD");
+        UPP_AIS_TP_CD.setAttribute("value", u);
+        form.appendChild(UPP_AIS_TP_CD);
+
+        const CCR_CNNT_SYS_DS_CD = document.createElement("input");
+        CCR_CNNT_SYS_DS_CD.setAttribute("type", "hidden");
+        CCR_CNNT_SYS_DS_CD.setAttribute("name", "CCR_CNNT_SYS_DS_CD");
+        CCR_CNNT_SYS_DS_CD.setAttribute("value", c);
+        form.appendChild(CCR_CNNT_SYS_DS_CD);
+
+        return form;
+    }
+</script>
 <style>
     #mainArea {
         width: 100%;
@@ -155,6 +249,7 @@
     #leaseComplexSelectArea select {
         float: left;
         width: auto;
+        color: #996C66;
     }
 
     #leaseComplexSelectArea .form-button {
@@ -162,6 +257,11 @@
         float: left;
         margin-left: 10px;
         margin-right: 10px;
+    }
+
+    #leaseComplexSelectArea .form-button button {
+        background-color: #000000;
+        color: #ffffff;
     }
 
     .subLeaseNoticeArea {
