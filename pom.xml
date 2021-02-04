@@ -203,7 +203,7 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.8.0</version>
                 <configuration>
-                    <release>8</release>
+                    <release>11</release>
 <!--					<source>8</source>-->
 <!--					<target>8</target>-->
 <!--                    <compilerArgument>-Xlint:all</compilerArgument>-->

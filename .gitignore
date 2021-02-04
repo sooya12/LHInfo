@@ -2,7 +2,7 @@
 /target/
 
 # Project security
-/src/main/webapp/WEB-INF/spring/root-context.xml
+#/src/main/webapp/WEB-INF/spring/root-context.xml
 
 # Project testing
 /src/main/webapp/WEB-INF/views/test.jsp

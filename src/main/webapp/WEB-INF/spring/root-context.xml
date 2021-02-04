@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd">
+	
+	<!-- MySQL dataSource -->
+	<bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource">
+		<property name="driverClassName" value="com.mysql.cj.jdbc.Driver"/>
+		<property name="url" value="jdbc:mysql://localhost:3306/lhinfo?characterEncoding=UTF-8&amp;serverTimezone=UTC"/>
+		<property name="username" value="lhauth"/>
+		<property name="password" value="lhauth0#"/>
+
+		<property name="initialSize" value="0"/>
+		<property name="minIdle" value="0"/>
+		<property name="maxIdle" value="10"/>
+		<property name="maxTotal" value="10"/>
+		<property name="maxWaitMillis" value="1000"/>
+	</bean>
+
+	<!-- MySQL SqlSessionFactoryBean -->
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource"/>
+		<property name="configLocation" value="classpath:mybatis/mybatis-config.xml"/>
+		<property name="mapperLocations" value="classpath:mybatis/mybatis-mapper.xml"/>
+	</bean>
+
+<!--	<bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate" destroy-method="clearCache">-->
+	<bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
+		<constructor-arg name="sqlSessionFactory" ref="sqlSessionFactory"/>
+	</bean>
+
+</beans>
