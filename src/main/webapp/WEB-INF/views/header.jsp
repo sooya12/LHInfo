@@ -43,6 +43,9 @@
             </div>
         </nav>
     </div>
+    <div id="move-top">
+        <i class="fad fa-arrow-circle-up"></i>
+    </div>
 </body>
 </html>
 <script>
@@ -101,5 +104,17 @@
 
     nav, .navbar {
         margin: 0;
+    }
+
+    #move-top {
+        width: 100%;
+        position: fixed;
+        float: right;
+        bottom: 50px;
+        margin: 10px;
+    }
+
+    #move-top i {
+        font-size: large;
     }
 </style>
