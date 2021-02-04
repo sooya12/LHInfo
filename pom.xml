@@ -201,22 +201,20 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.7.0</version>
+                <version>3.8.0</version>
                 <configuration>
-                    <source>8</source>
-                    <target>8</target>
-                    <compilerArgument>-Xlint:all</compilerArgument>
-                    <showWarnings>true</showWarnings>
-                    <showDeprecation>true</showDeprecation>
+                    <release>8</release>
+<!--					<source>8</source>-->
+<!--					<target>8</target>-->
+<!--                    <compilerArgument>-Xlint:all</compilerArgument>-->
+<!--                    <showWarnings>true</showWarnings>-->
+<!--                    <showDeprecation>true</showDeprecation>-->
                 </configuration>
             </plugin>
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>exec-maven-plugin</artifactId>
                 <version>1.2.1</version>
-                <configuration>
-                    <mainClass>org.test.int1.Main</mainClass>
-                </configuration>
             </plugin>
         </plugins>
     </build>
