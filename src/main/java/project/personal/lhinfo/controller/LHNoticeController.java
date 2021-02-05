@@ -7,7 +7,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import project.personal.lhinfo.dto.LHNoticeDto;
+import project.personal.lhinfo.dto.LHNoticeSearchDto;
+import project.personal.lhinfo.entity.NoticeType;
+import project.personal.lhinfo.entity.SupplyType;
 import project.personal.lhinfo.service.LHNoticeService;
+import project.personal.lhinfo.service.TypeService;
 
 import java.util.List;
 
@@ -19,13 +23,34 @@ public class LHNoticeController {
     @Autowired
     LHNoticeService lhNoticeService;
 
+    @Autowired
+    TypeService typeService;
+
     @RequestMapping("/lhnotice")
-    public String lhNoticeList(Model model) {
-        logger.info("청약센터 공고문 조회");
+    public String lhNoticeList(Model model, LHNoticeSearchDto lhNoticeSearchDto) {
+        logger.info("청약센터 공고문 조회 - " + lhNoticeSearchDto.toString());
 
         try {
-            List<LHNoticeDto> noticeList = lhNoticeService.lhNoticeList();
-            model.addAttribute("noticeList", noticeList);
+            List<LHNoticeDto> lhnoticeList = lhNoticeService.lhNoticeList(lhNoticeSearchDto);
+            model.addAttribute("lhnoticeList", lhnoticeList);
+
+            int totalCnt = 0;
+            if(lhnoticeList.size() > 0) {
+                totalCnt = Integer.parseInt(lhnoticeList.get(0).ALL_CNT);
+            }
+
+            int pageCnt = totalCnt / 50 + 1;
+
+            if(pageCnt < 2) {
+                pageCnt = 1;
+                lhNoticeSearchDto.setPage("1");
+            }
+            model.addAttribute("pageCnt", pageCnt);
+
+            List<NoticeType> noticeTypeList = typeService.noticeTypeList();
+            model.addAttribute("noticeTypeList", noticeTypeList);
+
+            model.addAttribute("currentValue", lhNoticeSearchDto);
         } catch (Exception e) {
             e.printStackTrace();
         }
