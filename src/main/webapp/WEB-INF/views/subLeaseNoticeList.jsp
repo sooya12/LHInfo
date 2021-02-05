@@ -19,7 +19,7 @@
 <div class="container">
     <jsp:include page="header.jsp"/>
     <div id="selectBoxArea">
-        <form id="subLeaseNoticeSelectForm" action="/subleasenotice/list" method="get">
+        <form id="subLeaseNoticeSearchForm" action="/subleasenotice/list" method="get">
             <div class="selectFormLine">
                 <div class="form-group">
                     <label for="selLocation">지역 </label>
