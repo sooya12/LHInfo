@@ -67,6 +67,14 @@
         }
     });
 
+    $("#move-top i").hover(function() {
+        $(this).css("cursor", "pointer");
+    });
+
+    $("#move-top i").click(function() {
+        window.scrollTo(0, 0);
+    });
+
 </script>
 <style>
     body {
@@ -107,14 +115,14 @@
     }
 
     #move-top {
-        width: 100%;
+        width: 95%;
         position: fixed;
-        float: right;
-        bottom: 50px;
+        bottom: 140px;
         margin: 10px;
     }
 
     #move-top i {
-        font-size: large;
+        font-size: x-large;
+        float: right;
     }
 </style>
