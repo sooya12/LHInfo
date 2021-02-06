@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import project.personal.lhinfo.dto.LeaseComplexDto;
 import project.personal.lhinfo.dto.LeaseComplexTypeDto;
 import project.personal.lhinfo.entity.Location;
@@ -29,36 +30,36 @@ public class LeaseComplexController {
 
     // 임대단지 목록 조회 화면으로 이동
     @RequestMapping(value = "/leasecomplex", method = RequestMethod.GET)
-    public String leaseComplexList(Model model, LeaseComplexTypeDto leaseComplexTypeDto) {
-        String location = leaseComplexTypeDto.getLocation();
-        String supplyType = leaseComplexTypeDto.getSupplyType();
-        String page = leaseComplexTypeDto.getPage();
-
-        logger.info(location + ", " + supplyType + ", " + page);
-
+    public String leaseComplexList(Model model, LeaseComplexTypeDto leaseComplexTypeDto, RedirectAttributes redirect) {
         List<Location> locationList = typeService.locationList();
-        logger.info("지역 정보 - " + locationList.toString());
         model.addAttribute("locationList", locationList);
 
         List<SupplyType> supplyTypeList = typeService.supplyTypeList();
-        logger.info("공급유형 정보 - " + supplyTypeList.toString());
         model.addAttribute("supplyTypeList", supplyTypeList);
 
         try {
             List<LeaseComplexDto> leaseComplexList = leaseComplexService.leaseComplexList(leaseComplexTypeDto);
-            System.out.println(leaseComplexList.toString());
-            model.addAttribute("leaseComplexList", leaseComplexList);
 
-            int totalCnt = Integer.parseInt(leaseComplexList.get(0).ALL_CNT);
+            int totalCnt = 0;
+            if(leaseComplexList.size() > 0) {
+                totalCnt = Integer.parseInt(leaseComplexList.get(0).ALL_CNT);
+            }
             int pageCnt = totalCnt / 100 + 1;
 
             if(pageCnt < 2) {
                 pageCnt = 1;
                 leaseComplexTypeDto.setPage("1");
+                leaseComplexList = leaseComplexService.leaseComplexList(leaseComplexTypeDto);
             }
             model.addAttribute("pageCnt", pageCnt);
+            model.addAttribute("leaseComplexList", leaseComplexList);
         } catch (Exception e) {
             e.printStackTrace();
+            redirect.addAttribute("location", leaseComplexTypeDto.location);
+            redirect.addAttribute("supplyType", leaseComplexTypeDto.supplyType);
+            redirect.addAttribute("page", leaseComplexTypeDto.page);
+
+            return "redirect:/leasecomplex";
         }
 
         model.addAttribute("currentValue", leaseComplexTypeDto);

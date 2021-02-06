@@ -36,7 +36,9 @@
 	body {
 		width: 90%;
 		height: 500px;
-		background: url("/resources/img/lichtraum-1560788_1920.jpg") no-repeat center center;
+		background-image: url("/resources/img/jack-prommel-T2wAe8qXy4w-unsplash_opacity.jpg");
+		background-position: top;
+		background-size: cover;
 	}
 
 	#home-titleArea {
@@ -74,6 +76,8 @@
 
 	.account-button span {
 		cursor: pointer;
+		color: #000000;
+		text-shadow: 0 0 4px #ffffff;
 	}
 
 	.account-button i {
