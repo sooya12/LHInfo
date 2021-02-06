@@ -92,7 +92,7 @@ public class SubLeaseNoticeController {
     // 분양임대 공고문 상세 화면 중 500m 반경 이내 상권 정보 조회
     @RequestMapping(value = "/store", method = RequestMethod.GET, produces = "application/text; charset=UTF-8")
     @ResponseBody
-    public String subLeaseNoticeDetailStore(Model model, String x, String y) {
+    public String subLeaseNoticeDetailStore(String x, String y) {
         logger.info("분야임대 공고문 상세 상권 조회");
 
         try {
