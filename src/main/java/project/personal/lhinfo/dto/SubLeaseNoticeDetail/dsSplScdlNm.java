@@ -30,6 +30,15 @@ public class dsSplScdlNm {                  // 공급 정보
     public String RQS_SCD_3;                // 신청일시
     public String UST_ACP_CLSG_DTTM;        // 접수기간종료일
     public String UST_ACP_ST_DTTM;          // 접수기간시작일
+    public String TOY;                      // 구분
+    public String GMY_PYM_CLSG_HR;          // 입찰보증금마감시간
+    public String OPB_ST_HR;                // 개찰시간
+    public String OPB_ST_SCD;               // 개찰일정
+    public String GMY_PYM_CLSG_SCD;         // 입찰보증금마감일정
+    public String OPB_ED_HR;                // 개찰결과게시시간
+    public String RQS_SCD;                  // 신청일정
+    public String RQS_HR;                   // 신청시간
+    public String OPB_ED_SCD;               // 개찰결과게시일정
 
     @Override
     public String toString() {
@@ -58,6 +67,15 @@ public class dsSplScdlNm {                  // 공급 정보
                 ", RQS_SCD_3='" + RQS_SCD_3 + '\'' +
                 ", UST_ACP_CLSG_DTTM='" + UST_ACP_CLSG_DTTM + '\'' +
                 ", UST_ACP_ST_DTTM='" + UST_ACP_ST_DTTM + '\'' +
+                ", TOY='" + TOY + '\'' +
+                ", GMY_PYM_CLSG_HR='" + GMY_PYM_CLSG_HR + '\'' +
+                ", OPB_ST_HR='" + OPB_ST_HR + '\'' +
+                ", OPB_ST_SCD='" + OPB_ST_SCD + '\'' +
+                ", GMY_PYM_CLSG_SCD='" + GMY_PYM_CLSG_SCD + '\'' +
+                ", OPB_ED_HR='" + OPB_ED_HR + '\'' +
+                ", RQS_SCD='" + RQS_SCD + '\'' +
+                ", RQS_HR='" + RQS_HR + '\'' +
+                ", OPB_ED_SCD='" + OPB_ED_SCD + '\'' +
                 '}';
     }
 }
