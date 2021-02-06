@@ -32,7 +32,6 @@ public class LHNoticeController {
 
         try {
             List<LHNoticeDto> lhnoticeList = lhNoticeService.lhNoticeList(lhNoticeSearchDto);
-            model.addAttribute("lhnoticeList", lhnoticeList);
 
             int totalCnt = 0;
             if(lhnoticeList.size() > 0) {
@@ -44,8 +43,11 @@ public class LHNoticeController {
             if(pageCnt < 2) {
                 pageCnt = 1;
                 lhNoticeSearchDto.setPage("1");
+                lhnoticeList = lhNoticeService.lhNoticeList(lhNoticeSearchDto);
             }
             model.addAttribute("pageCnt", pageCnt);
+
+            model.addAttribute("lhnoticeList", lhnoticeList);
 
             List<NoticeType> noticeTypeList = typeService.noticeTypeList();
             model.addAttribute("noticeTypeList", noticeTypeList);

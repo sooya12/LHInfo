@@ -12,12 +12,21 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <link rel="stylesheet" href="/resources/main.css">
+    <link rel="stylesheet" href="/resources/datepicker.css">
     <title>청약센터 공지사항 조회</title>
 </head>
 <body>
     <div class="container">
         <jsp:include page="header.jsp"/>
+        <div id="titleArea">
+            <header>
+                <p>청약센터 공고문 조회</p>
+            </header>
+        </div>
         <div id="selectBoxArea">
             <form id="lhNoticeSearchForm" action="/lhnotice" method="get">
                 <div class="selectFormLine">
@@ -36,8 +45,15 @@
                             <option value="내용">내용</option>
                         </select>
                     </div>
-                    <div>
+                    <div id="searchContentArea">
                         <input type="text" class="form-control" id="searchContent" name="searchContent"/>
+                    </div>
+                    <div>
+                        <label for="datepicker">공고게시일 </label>
+                        <input type="text" class="form-control" id="datepicker" name="startDate"/>
+                    </div>
+                    <div class="form-button">
+                        <button type="submit" class="btn btn-basic" id="inquiryButton">공고문 조회</button>
                     </div>
                     <div class="form-group">
                         <label for="selPage">페이지 </label>
@@ -46,9 +62,6 @@
                                 <option value="${idx.count}">${idx.count}</option>
                             </c:forEach>
                         </select>
-                    </div>
-                    <div class="form-button">
-                        <button type="submit" class="btn btn-basic" id="inquiryButton">공고문 조회</button>
                     </div>
                 </div>
             </form>
@@ -123,9 +136,38 @@
         $("#searchContent").val("${currentValue.searchContent}");
 
         $("#selPage option[value=${currentValue.page}]").attr("selected", true);
+
+        $("#datepicker").val("${currentValue.startDate}");
+    });
+
+    $(function() {
+        $("#datepicker").datepicker({
+            changeMonth: true,
+            changeYear: true,
+            autoSize: true,
+            dayNamesMin: ["일", "월", "화", "수", "목", "금", "토"],
+            monthNamesShort: ["1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"],
+            showAnim: "slideDown",
+            dateFormat: "yy-mm-dd",
+            maxDate: "0",
+            hideIfNoPrevNext: true,
+        });
     });
 </script>
 <style>
+    #titleArea {
+        width: 70%;
+        margin: 10px auto;
+        margin-top: 50px;
+        text-align: center;
+        color: #957767;
+    }
+
+    #titleArea p {
+        font-size: min(max(3vw, 20px), 40px);
+        font-weight: bold;
+    }
+
     #selectBoxArea {
         width: 70%;
         height: auto;
@@ -150,12 +192,12 @@
     #selectBoxArea form {
         width: 100%;
         height: auto;
-        /*border-bottom: solid darkgrey 1px;*/
     }
 
     #selectBoxArea label {
         float: left;
         padding: 6px 12px 6px 12px;
+        color: #957767;
     }
 
     #selectBoxArea select {
@@ -167,12 +209,31 @@
         float: right;
     }
 
+    #searchContent {
+        margin-left: 6px;
+    }
+
+    #inquiryButton {
+        background-color: #957767;
+        color: #ffffff;
+    }
+
     .selectFormLine {
         float: left;
     }
 
     .selectFormLine .form-control {
-        width: min(70%, 600px);
+        width: min(50%, 600px);
+        float: left;
+    }
+
+    .selectFormLine #searchContent {
+        width: min(20%, 400px);
+        float: left;
+    }
+
+    .selectFormLine #datepicker {
+        width: 110px;
         float: left;
     }
 
@@ -186,10 +247,11 @@
     #noticeArea table {
         width: 100%;
         margin: 0 auto;
-        font-size: min(max(10px, 1vw), 14px);
+        font-size: min(max(12px, 1vw), 14px);
     }
 
     #noInfomation {
         text-align: center;
     }
+
 </style>

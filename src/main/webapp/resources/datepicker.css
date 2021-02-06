@@ -1,0 +1,28 @@
+.ui-datepicker {
+    font-family: "MapoPeacefull";
+}
+
+.ui-datepicker-header {
+    background-color: #CDC4B3;
+}
+
+select.ui-datepicker-month, select.ui-datepicker-year {
+    font-family: "MapoPeacefull";
+}
+
+.ui-datepicker-calendar > tbody tr td a.ui-state-default {
+    background-color: #ffffff;
+    color: #6F362D;
+}
+
+.ui-datepicker-calendar > tbody tr td a.ui-state-highlight {
+    background-color: #CDC4B3;
+    border: #CDC4B3;
+    color: #6F362D;
+}
+
+.ui-datepicker-calendar > tbody tr td a.ui-state-active {
+    background-color: #6F362D;
+    border: #6F362D;
+    color: #ffffff;
+}

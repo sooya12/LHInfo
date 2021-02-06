@@ -13,6 +13,7 @@ public class LHNoticeSearchDto {
     public String searchContent;
     public String noticeType;
     public String page;
+    public String startDate;
 
     public String getSearchType() {
         if(searchType == null) {
@@ -42,6 +43,13 @@ public class LHNoticeSearchDto {
         return page;
     }
 
+    public String getStartDate() {
+        if(startDate == null) {
+            return "";
+        }
+        return startDate;
+    }
+
     @Override
     public String toString() {
         return "LHNoticeSearchDto{" +
@@ -49,6 +57,7 @@ public class LHNoticeSearchDto {
                 ", searchContent='" + searchContent + '\'' +
                 ", noticeType='" + noticeType + '\'' +
                 ", page='" + page + '\'' +
+                ", startDate='" + startDate + '\'' +
                 '}';
     }
 }
