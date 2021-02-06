@@ -159,6 +159,14 @@
                                 <tr><th>${detail.dsSplScdlNm.get(0).HS_VIE_ST_DT         }</th><td>${supply.HS_VIE_ST_DT         }</td></tr>
                                 <tr><th>${detail.dsSplScdlNm.get(0).HS_VIE_ED_DT         }</th><td>${supply.HS_VIE_ED_DT         }</td></tr>
                                 <tr><th>${detail.dsSplScdlNm.get(0).SPL_SCD_GUD_FCTS     }</th><td>${supply.SPL_SCD_GUD_FCTS     }</td></tr>
+                                <tr><th>${detail.dsSplScdlNm.get(0).RQS_SCD              }</th><td>${supply.RQS_SCD              }</td></tr>
+                                <tr><th>${detail.dsSplScdlNm.get(0).RQS_HR               }</th><td>${supply.RQS_HR               }</td></tr>
+                                <tr><th>${detail.dsSplScdlNm.get(0).OPB_ST_SCD           }</th><td>${supply.OPB_ST_SCD           }</td></tr>
+                                <tr><th>${detail.dsSplScdlNm.get(0).OPB_ST_HR            }</th><td>${supply.OPB_ST_HR            }</td></tr>
+                                <tr><th>${detail.dsSplScdlNm.get(0).OPB_ED_SCD           }</th><td>${supply.OPB_ED_SCD           }</td></tr>
+                                <tr><th>${detail.dsSplScdlNm.get(0).OPB_ED_HR            }</th><td>${supply.OPB_ED_HR            }</td></tr>
+                                <tr><th>${detail.dsSplScdlNm.get(0).GMY_PYM_CLSG_SCD     }</th><td>${supply.GMY_PYM_CLSG_SCD     }</td></tr>
+                                <tr><th>${detail.dsSplScdlNm.get(0).GMY_PYM_CLSG_HR      }</th><td>${supply.GMY_PYM_CLSG_HR      }</td></tr>
                             </table>
                         </c:forEach>
                     </div>
