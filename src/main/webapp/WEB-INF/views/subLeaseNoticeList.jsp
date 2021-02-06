@@ -18,6 +18,11 @@
 <body>
 <div class="container">
     <jsp:include page="header.jsp"/>
+    <div id="titleArea">
+        <header>
+            <p>분양임대 공고문 조회</p>
+        </header>
+    </div>
     <div id="selectBoxArea">
         <form id="subLeaseNoticeSearchForm" action="/subleasenotice/list" method="get">
             <div class="selectFormLine">
@@ -193,6 +198,19 @@
     }
 </script>
 <style>
+    #titleArea {
+        width: 70%;
+        margin: 10px auto;
+        margin-top: 50px;
+        text-align: center;
+        color: #73746E;
+    }
+
+    #titleArea p {
+        font-size: min(max(3vw, 20px), 40px);
+        font-weight: bold;
+    }
+
     #selectBoxArea {
         width: 70%;
         height: auto;
@@ -217,12 +235,12 @@
     #selectBoxArea form {
         width: 100%;
         height: auto;
-        /*border-bottom: solid darkgrey 1px;*/
     }
 
     #selectBoxArea label {
         float: left;
         padding: 6px 12px 6px 12px;
+        color: #73746E;
     }
 
     #selectBoxArea select {
@@ -243,6 +261,11 @@
         float: left;
     }
 
+    #inquiryButton {
+        background-color: #73746E;
+        color: #ffffff;
+    }
+
     #subLeaseNoticeArea {
         width: 70%;
         margin: 20px auto;
@@ -252,7 +275,7 @@
     #subLeaseNoticeArea table {
         width: 100%;
         margin: 0 auto;
-        font-size: min(max(10px, 1vw), 14px);
+        font-size: min(max(12px, 1vw), 14px);
     }
 
     #noInfomation {
