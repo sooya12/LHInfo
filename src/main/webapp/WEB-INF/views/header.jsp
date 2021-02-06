@@ -96,7 +96,7 @@
         min-height: 449px;
         text-align: center;
         color: #000000;
-        text-shadow: 0 0 3px #eeeeee;
+        text-shadow: 0 0 10px #eeeeee;
         margin: 0 auto;
         display: flex;
         align-items: center;
