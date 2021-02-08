@@ -15,7 +15,7 @@
 <body>
     <div id="header-backgroundArea">
         <div id="header-titleArea">
-            <p onclick="location.href='/'">분양임대 정보 제공 서비스</p>
+            <p onclick="location.href='/home'">분양임대 정보 제공 서비스</p>
         </div>
         <nav class="navbar navbar-inverse">
             <div class="container-fluid">
