@@ -50,7 +50,7 @@
                     </div>
                     <div>
                         <label for="datepicker">공고게시일 </label>
-                        <input type="text" class="form-control" id="datepicker" name="startDate"/>
+                        <input type="text" class="form-control" id="datepicker" name="startDate" autocomplete="off"/>
                     </div>
                     <div class="form-button">
                         <button type="submit" class="btn btn-basic" id="inquiryButton">공고문 조회</button>
