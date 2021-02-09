@@ -36,6 +36,7 @@
                     </c:when>
                     <c:otherwise>
                         <ul class="nav navbar-nav navbar-right">
+                            <li><a>${account.name}</a></li>
                             <li><a href="/account/signout"><i class="fad fa-user-times"></i> 로그아웃</a></li>
                         </ul>
                     </c:otherwise>
