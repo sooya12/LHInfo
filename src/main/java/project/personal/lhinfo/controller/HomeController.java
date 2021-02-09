@@ -65,9 +65,10 @@ public class HomeController {
 		return "home";
 	}
 
+	// Error 처리
 	@ExceptionHandler
-	public String error(Model model, Exception e) {
-		model.addAttribute("errorMessage", e.getMessage());
+	public String error(Exception e) {
+		e.printStackTrace();
 
 		return "error";
 	}
