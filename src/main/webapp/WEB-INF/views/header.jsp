@@ -36,7 +36,7 @@
                     </c:when>
                     <c:otherwise>
                         <ul class="nav navbar-nav navbar-right">
-                            <li><a>${account.name}</a></li>
+                            <li><a id="accountName" aria-disabled="true"><i class="far fa-laugh-wink"></i> ${account.name}</a></li>
                             <li><a href="/account/signout"><i class="fad fa-user-times"></i> 로그아웃</a></li>
                         </ul>
                     </c:otherwise>
@@ -126,4 +126,9 @@
         font-size: x-large;
         float: right;
     }
+
+    #accountName {
+        color: #ffffff;
+    }
+
 </style>
