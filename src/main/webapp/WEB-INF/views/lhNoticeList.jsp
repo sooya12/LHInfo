@@ -164,6 +164,7 @@
             $("#datepicker-end").datepicker("option", "minDate", selectedDate);
         });
 
+        $("#datepicker-end").datepicker("option", "maxDate", "0");
         $("#datepicker-end").datepicker("option", "minDate", $("#datepicker-start").val());
         $("#datepicker-end").datepicker("option", "onClose", function(selectedDate) {
             $("#datepicker-start").datepicker("option", "maxDate", selectedDate);
