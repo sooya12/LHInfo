@@ -48,9 +48,15 @@
                     <div id="searchContentArea">
                         <input type="text" class="form-control" id="searchContent" name="searchContent"/>
                     </div>
+                </div>
+                <div class="selectFormLine">
                     <div>
-                        <label for="datepicker">공고게시일 </label>
-                        <input type="text" class="form-control" id="datepicker" name="startDate" autocomplete="off"/>
+                        <label for="datepicker-start">시작일 </label>
+                        <input type="text" class="form-control" id="datepicker-start" name="startDate" autocomplete="off"/>
+                    </div>
+                    <div>
+                        <label for="datepicker-end">종료일 </label>
+                        <input type="text" class="form-control" id="datepicker-end" name="endDate" autocomplete="off"/>
                     </div>
                     <div class="form-button">
                         <button type="submit" class="btn btn-basic" id="inquiryButton">공고문 조회</button>
@@ -137,11 +143,12 @@
 
         $("#selPage option[value=${currentValue.page}]").attr("selected", true);
 
-        $("#datepicker").val("${currentValue.startDate}");
+        $("#datepicker-start").val("${currentValue.startDate}");
+        $("#datepicker-end").val("${currentValue.endDate}");
     });
 
     $(function() {
-        $("#datepicker").datepicker({
+        $("#datepicker-start, #datepicker-end").datepicker({
             changeMonth: true,
             changeYear: true,
             autoSize: true,
@@ -149,10 +156,20 @@
             monthNamesShort: ["1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"],
             showAnim: "slideDown",
             dateFormat: "yy-mm-dd",
-            maxDate: "0",
             hideIfNoPrevNext: true,
         });
+
+        $("#datepicker-start").datepicker("option", "maxDate", $("#datepicker-end").val());
+        $("#datepicker-start").datepicker("option", "onClose", function(selectedDate) {
+            $("#datepicker-end").datepicker("option", "minDate", selectedDate);
+        });
+
+        $("#datepicker-end").datepicker("option", "minDate", $("#datepicker-start").val());
+        $("#datepicker-end").datepicker("option", "onClose", function(selectedDate) {
+            $("#datepicker-start").datepicker("option", "maxDate", selectedDate);
+        });
     });
+
 </script>
 <style>
     #titleArea {
@@ -232,7 +249,7 @@
         float: left;
     }
 
-    .selectFormLine #datepicker {
+    .selectFormLine #datepicker-start, .selectFormLine #datepicker-end {
         width: 110px;
         float: left;
     }
