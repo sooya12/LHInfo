@@ -30,8 +30,8 @@
                 <c:choose>
                     <c:when test="${account == null}">
                         <ul class="nav navbar-nav navbar-right">
-                            <li><a href="/account/signin"><i class="fas fa-user-check"></i> 로그인</a></li>
-                            <li><a href="/account/signup"><i class="fas fa-user-plus"></i> 회원가입</a></li>
+                            <li><a href="/"><i class="fas fa-user-check"></i> 로그인</a></li>
+                            <li><a href="/"><i class="fas fa-user-plus"></i> 회원가입</a></li>
                         </ul>
                     </c:when>
                     <c:otherwise>
