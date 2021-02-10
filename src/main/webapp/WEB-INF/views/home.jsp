@@ -26,7 +26,11 @@
                     </header>
                 </div>
                 <div id="leaseComplexContent">
-                    <span>LH공사에서 관리하는 공공임대주택의 단지 정보 제공</span>
+                    <span>
+                        LH공사에서 관리하는 공공임대주택의 단지 정보 제공<br><br>
+                        임대주택 단지의 지역명, 공급유형, 단지명, 총 세대수, 전용면적, 세대수, 임대보증금, 월임대료, 최초 입주년월 정보 조회가 가능합니다.<br>
+                        지역과 공급유형에 따른 조회를 하실 수 있습니다.
+                    </span>
                 </div>
                 <div id="leaseComplexSelectArea">
                     <form id="leaseComplexSelectForm" action="/leasecomplex" method="get">
@@ -56,11 +60,15 @@
                 <div class="subLeaseNoticeArea">
                     <div class="noticeTitle">
                         <header>
-                            <p>최신 분양임대 공고문</p>
+                            <p>분양임대 공고문 조회</p>
                         </header>
                     </div>
                     <div class="noticeContent">
-                        <span>LH에서 관리하는 공지사항, 채용공고, 분양임대주택 공고 등 각종 공고 정보를 제공</span>
+                        <span>
+                            LH에서 관리하는 공지사항, 채용공고, 분양임대주택 공고 등 각종 공고 정보를 제공<br><br>
+                            분양임대 공고문의 공고유형, 공고명, 지역, 공고게시일 정보 조회가 가능합니다.<br>
+                            공고명을 클릭하시면 위치와 상권 정보를 포함한 상세 정보를 조회하실 수 있습니다.
+                        </span>
                     </div>
                     <div class="noticeList">
                         <ul>
@@ -93,11 +101,15 @@
                 <div class="LHNoticeArea">
                     <div class="noticeTitle">
                         <header>
-                            <p>최신 LH 청약센터 공고문</p>
+                            <p>LH 청약센터 공고문 조회</p>
                         </header>
                     </div>
                     <div class="noticeContent">
-                        <span>LH 청약센터 공지사항 정보를 제공</span>
+                        <span>
+                            LH 청약센터 공지사항 정보를 제공<br><br>
+                            LH 청약센터 공지사항의 유형, 제목, 공고 게시일 정보 조회가 가능합니다.<br>
+                            공고 게시일과 검색어(제목/내용)에 따른 조회를 하실 수 있습니다.
+                        </span>
                     </div>
                     <div class="noticeList">
                         <ul>

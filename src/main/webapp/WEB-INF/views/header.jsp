@@ -15,7 +15,7 @@
 <body>
     <div id="header-backgroundArea">
         <div id="header-titleArea">
-            <p onclick="location.href='/'">분양임대 정보 제공 서비스</p>
+            <p onclick="location.href='/home'">분양임대 정보 제공 서비스</p>
         </div>
         <nav class="navbar navbar-inverse">
             <div class="container-fluid">
@@ -30,12 +30,13 @@
                 <c:choose>
                     <c:when test="${account == null}">
                         <ul class="nav navbar-nav navbar-right">
-                            <li><a href="/account/signin"><i class="fas fa-user-check"></i> 로그인</a></li>
-                            <li><a href="/account/signup"><i class="fas fa-user-plus"></i> 회원가입</a></li>
+                            <li><a href="/"><i class="fas fa-user-check"></i> 로그인</a></li>
+                            <li><a href="/"><i class="fas fa-user-plus"></i> 회원가입</a></li>
                         </ul>
                     </c:when>
                     <c:otherwise>
                         <ul class="nav navbar-nav navbar-right">
+                            <li><a id="accountName" aria-disabled="true"><i class="far fa-laugh-wink"></i> ${account.name}</a></li>
                             <li><a href="/account/signout"><i class="fad fa-user-times"></i> 로그아웃</a></li>
                         </ul>
                     </c:otherwise>
@@ -125,4 +126,9 @@
         font-size: x-large;
         float: right;
     }
+
+    #accountName {
+        color: #ffffff;
+    }
+
 </style>

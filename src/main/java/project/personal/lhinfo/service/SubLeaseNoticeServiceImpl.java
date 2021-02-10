@@ -31,8 +31,22 @@ public class SubLeaseNoticeServiceImpl implements SubLeaseNoticeService {
         urlBuilder.append("&" + URLEncoder.encode("UPP_AIS_TP_CD","UTF-8") + "=" + URLEncoder.encode(subLeaseNoticeSearchDto.getNoticeType(), "UTF-8")); /*공고유형코드*/
         urlBuilder.append("&" + URLEncoder.encode("CNP_CD","UTF-8") + "=" + URLEncoder.encode(subLeaseNoticeSearchDto.getLocation(), "UTF-8")); /*지역코드*/
         urlBuilder.append("&" + URLEncoder.encode("PAN_SS","UTF-8") + "=" + URLEncoder.encode(subLeaseNoticeSearchDto.getNoticeStatusType(), "UTF-8")); /*공고상태코드*/
-//        urlBuilder.append("&" + URLEncoder.encode("PAN_NT_ST_DT","UTF-8") + "=" + URLEncoder.encode("2019.12.01", "UTF-8")); /*공고게시일*/
-//        urlBuilder.append("&" + URLEncoder.encode("CLSG_DT","UTF-8") + "=" + URLEncoder.encode("2019.08.22", "UTF-8")); /*공고마감일*/
+
+        if(!"".equals(subLeaseNoticeSearchDto.getStartDate())) {
+            urlBuilder.append("&" + URLEncoder.encode("PAN_ST_DT", "UTF-8") + "=" + URLEncoder.encode(subLeaseNoticeSearchDto.getStartDate(), "UTF-8")); /*공고게시일-시작일*/
+        }
+
+        if(!"".equals(subLeaseNoticeSearchDto.getEndDate())) {
+            urlBuilder.append("&" + URLEncoder.encode("PAN_ED_DT", "UTF-8") + "=" + URLEncoder.encode(subLeaseNoticeSearchDto.getEndDate(), "UTF-8")); /*공고게시일-종료일*/
+        }
+
+        if(!"".equals(subLeaseNoticeSearchDto.getEndStartDate())) {
+            urlBuilder.append("&" + URLEncoder.encode("CLSG_ST_DT", "UTF-8") + "=" + URLEncoder.encode(subLeaseNoticeSearchDto.getEndStartDate(), "UTF-8")); /*공고마감일-시작일*/
+        }
+
+        if(!"".equals(subLeaseNoticeSearchDto.getEndEndDate())) {
+            urlBuilder.append("&" + URLEncoder.encode("CLSG_ED_DT", "UTF-8") + "=" + URLEncoder.encode(subLeaseNoticeSearchDto.getEndEndDate(), "UTF-8")); /*공고마감일-종료일*/
+        }
 
         return getNoticeList(urlBuilder.toString());
     }
