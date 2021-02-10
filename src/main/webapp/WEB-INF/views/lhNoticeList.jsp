@@ -16,7 +16,7 @@
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <link rel="stylesheet" href="/resources/main.css">
-    <link rel="stylesheet" href="/resources/datepicker.css">
+    <link rel="stylesheet" href="/resources/lhnotice-datepicker.css">
     <title>청약센터 공지사항 조회</title>
 </head>
 <body>
@@ -145,9 +145,7 @@
 
         $("#datepicker-start").val("${currentValue.startDate}");
         $("#datepicker-end").val("${currentValue.endDate}");
-    });
 
-    $(function() {
         $("#datepicker-start, #datepicker-end").datepicker({
             changeMonth: true,
             changeYear: true,
@@ -170,7 +168,6 @@
             $("#datepicker-start").datepicker("option", "maxDate", selectedDate);
         });
     });
-
 </script>
 <style>
     #titleArea {
