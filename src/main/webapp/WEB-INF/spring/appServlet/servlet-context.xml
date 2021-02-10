@@ -23,7 +23,17 @@
 
 	<!-- annotaion-scan scope -->
 	<context:component-scan base-package="project.personal.lhinfo" />
-	
-	
+
+	<!-- Login Interceptor -->
+	<beans:bean id="LoginInterceptor" class="project.personal.lhinfo.interceptor.LoginInterceptor"/>
+	<interceptors>
+		<interceptor>
+			<mapping path="/**"/>
+			<exclude-mapping path="/"/>
+			<exclude-mapping path="/resources/**"/>
+			<exclude-mapping path="/account/**"/>
+			<beans:ref bean="LoginInterceptor"/>
+		</interceptor>
+	</interceptors>
 	
 </beans:beans>
