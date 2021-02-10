@@ -12,7 +12,11 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <link rel="stylesheet" href="/resources/main.css">
+    <link rel="stylesheet" href="/resources/subleasenotice-datepicker.css">
     <title>분양임대 공고문 조회</title>
 </head>
 <body>
@@ -63,6 +67,32 @@
                 <div>
                     <label for="inputNoticeName">공고명 </label>
                     <input type="text" class="form-control" id="inputNoticeName" name="noticeName"/>
+                </div>
+            </div>
+            <div class="selectFormLine">
+                <div>
+                    <label for="datepicker-start-start">공고게시시작일 </label>
+                    <input type="text" class="form-control" id="datepicker-start-start" name="startDate" autocomplete="off"/>
+                </div>
+                <div>
+                    <label for="datepicker-start-end">공고게시종료일 </label>
+                    <input type="text" class="form-control" id="datepicker-start-end" name="endDate" autocomplete="off"/>
+                </div>
+                <div class="form-button">
+                    <button type="button" class="btn btn-basic" id="resetStartDate">초기화</button>
+                </div>
+            </div>
+            <div class="selectFormLine">
+                <div>
+                    <label for="datepicker-end-start">공고마감시작일 </label>
+                    <input type="text" class="form-control" id="datepicker-end-start" name="endStartDate" autocomplete="off"/>
+                </div>
+                <div>
+                    <label for="datepicker-end-end">공고마감종료일 </label>
+                    <input type="text" class="form-control" id="datepicker-end-end" name="endEndDate" autocomplete="off"/>
+                </div>
+                <div class="form-button">
+                    <button type="button" class="btn btn-basic" id="resetEndDate">초기화</button>
                 </div>
                 <div class="form-button">
                     <button type="submit" class="btn btn-basic" id="inquiryButton">공고문 조회</button>
@@ -156,6 +186,55 @@
 
         $("#selPage option[value=${currentValue.page}]").attr("selected", true);
         $("#inputNoticeName").val("${currentValue.noticeName}");
+
+        $("#datepicker-start-start").val("${currentValue.startDate}");
+        $("#datepicker-start-end").val("${currentValue.endDate}");
+
+        $("#datepicker-end-start").val("${currentValue.endStartDate}");
+        $("#datepicker-end-end").val("${currentValue.endEndDate}");
+
+        $("#datepicker-start-start, #datepicker-start-end, #datepicker-end-start, #datepicker-end-end").datepicker({
+            changeMonth: true,
+            changeYear: true,
+            autoSize: true,
+            dayNamesMin: ["일", "월", "화", "수", "목", "금", "토"],
+            monthNamesShort: ["1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"],
+            showAnim: "slideDown",
+            dateFormat: "yymmdd",
+            hideIfNoPrevNext: true,
+        });
+
+        $("#datepicker-start-start").datepicker("option", "maxDate", $("#datepicker-start-end").val());
+        $("#datepicker-start-start").datepicker("option", "onClose", function(selectedDate) {
+            $("#datepicker-start-end").datepicker("option", "minDate", selectedDate);
+        });
+
+        $("#datepicker-start-end").datepicker("option", "maxDate", "0");
+        $("#datepicker-start-end").datepicker("option", "minDate", $("#datepicker-start-start").val());
+        $("#datepicker-start-end").datepicker("option", "onClose", function(selectedDate) {
+            $("#datepicker-start-start").datepicker("option", "maxDate", selectedDate);
+        });
+
+        $("#datepicker-end-start").datepicker("option", "maxDate", $("#datepicker-end-end").val());
+        $("#datepicker-end-start").datepicker("option", "onClose", function(selectedDate) {
+            $("#datepicker-end-end").datepicker("option", "minDate", selectedDate);
+        });
+
+        $("#datepicker-end-end").datepicker("option", "maxDate", "0");
+        $("#datepicker-end-end").datepicker("option", "minDate", $("#datepicker-end-start").val());
+        $("#datepicker-end-end").datepicker("option", "onClose", function(selectedDate) {
+            $("#datepicker-end-start").datepicker("option", "maxDate", selectedDate);
+        });
+    });
+
+    $("#resetStartDate").click(function() {
+       $("#datepicker-start-start").val("");
+       $("#datepicker-start-end").val("");
+    });
+
+    $("#resetEndDate").click(function() {
+        $("#datepicker-end-start").val("");
+        $("#datepicker-end-end").val("");
     });
 
     function makeForm(a, s, p, u, c) {
@@ -248,7 +327,7 @@
         width: auto;
     }
 
-    #selectBoxArea .form-button {
+    #selectBoxArea .form-button #inquiryButton {
         float: right;
     }
 
@@ -259,6 +338,17 @@
     .selectFormLine .form-control {
         width: min(70%, 600px);
         float: left;
+    }
+
+    .selectFormLine #datepicker-start-start, #datepicker-start-end, #datepicker-end-start, #datepicker-end-end {
+        width: 110px;
+        float: left;
+    }
+
+    #resetStartDate, #resetEndDate {
+        float: left;
+        margin-left: 10px;
+        color: #73746E;
     }
 
     #inquiryButton {

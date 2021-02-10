@@ -13,6 +13,10 @@ public class SubLeaseNoticeSearchDto {
     public String noticeStatusType;
     public String page;
     public String noticeName;
+    public String startDate;
+    public String endDate;
+    public String endStartDate;
+    public String endEndDate;
 
     public String getLocation() {
         if(location == null || "00".equals(location)) {
@@ -49,6 +53,34 @@ public class SubLeaseNoticeSearchDto {
         return noticeName;
     }
 
+    public String getStartDate() {
+        if(startDate == null) {
+            return "";
+        }
+        return startDate;
+    }
+
+    public String getEndDate() {
+        if(endDate == null) {
+            return "";
+        }
+        return endDate;
+    }
+
+    public String getEndStartDate() {
+        if(endStartDate == null) {
+            return "";
+        }
+        return endStartDate;
+    }
+
+    public String getEndEndDate() {
+        if(endEndDate == null) {
+            return "";
+        }
+        return endEndDate;
+    }
+
     @Override
     public String toString() {
         return "SubLeaseNoticeSearchDto{" +
@@ -57,6 +89,10 @@ public class SubLeaseNoticeSearchDto {
                 ", noticeStatusType='" + noticeStatusType + '\'' +
                 ", page='" + page + '\'' +
                 ", noticeName='" + noticeName + '\'' +
+                ", startDate='" + startDate + '\'' +
+                ", endDate='" + endDate + '\'' +
+                ", endStartDate='" + endStartDate + '\'' +
+                ", endEndDate='" + endEndDate + '\'' +
                 '}';
     }
 }
