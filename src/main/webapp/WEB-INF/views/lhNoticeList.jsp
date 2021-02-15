@@ -17,6 +17,8 @@
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <link rel="stylesheet" href="/resources/main.css">
     <link rel="stylesheet" href="/resources/lhnotice-datepicker.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.1.5/pagination.min.js" integrity="sha512-1zzZ0ynR2KXnFskJ1C2s+7TIEewmkB2y+5o/+ahF7mwNj9n3PnzARpqalvtjSbUETwx6yuxP5AJXZCpnjEJkQw==" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.1.5/pagination.css" integrity="sha512-QmxybGIvkSI8+CGxkt5JAcGOKIzHDqBMs/hdemwisj4EeGLMXxCm9h8YgoCwIvndnuN1NdZxT4pdsesLXSaKaA==" crossorigin="anonymous" />
     <title>청약센터 공지사항 조회</title>
 </head>
 <body>
@@ -58,16 +60,9 @@
                         <label for="datepicker-end">종료일 </label>
                         <input type="text" class="form-control" id="datepicker-end" name="endDate" autocomplete="off"/>
                     </div>
+                    <input type="hidden" id="selPage" name="page">
                     <div class="form-button">
                         <button type="submit" class="btn btn-basic" id="inquiryButton">공고문 조회</button>
-                    </div>
-                    <div class="form-group">
-                        <label for="selPage">페이지 </label>
-                        <select class="form-control" id="selPage" name="page">
-                            <c:forEach begin="1" end="${pageCnt}" varStatus="idx">
-                                <option value="${idx.count}">${idx.count}</option>
-                            </c:forEach>
-                        </select>
                     </div>
                 </div>
             </form>
@@ -125,6 +120,7 @@
                 </tbody>
             </table>
         </div>
+        <div id="paginationArea"></div>
         <jsp:include page="footer.jsp"/>
     </div>
 </body>
@@ -167,6 +163,24 @@
         $("#datepicker-end").datepicker("option", "onClose", function(selectedDate) {
             $("#datepicker-start").datepicker("option", "maxDate", selectedDate);
         });
+    });
+
+    var dataSourceArr = [];
+    var allCnt = (${lhnoticeList.size() > 0} ? ${lhnoticeList.get(0).ALL_CNT} : 1);
+    for(var i = 0; i < allCnt; i++) {
+        dataSourceArr.push(i);
+    }
+
+    $("#paginationArea").pagination({
+        dataSource: dataSourceArr,
+        pageSize: 50,
+        pageNumber: ${currentValue.page},
+        callback: function(data, pagination) {
+            if("${currentValue.page}" != pagination.pageNumber) {
+                $("#selPage").val(pagination.pageNumber);
+                $("#lhNoticeSearchForm").submit();
+            }
+        }
     });
 </script>
 <style>
@@ -267,6 +281,12 @@
 
     #noInfomation {
         text-align: center;
+    }
+
+    #paginationArea .paginationjs {
+        width: fit-content;
+        margin: 0 auto;
+        font-family: "MapoPeacefull";
     }
 
 </style>
