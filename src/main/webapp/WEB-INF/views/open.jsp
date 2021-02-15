@@ -37,7 +37,7 @@
 								</label>
 								<input type="password" id="login-password" required autocomplete="off"/>
 							</div>
-							<p class="forgot"><a href="#">비밀번호를 모르시나요?</a></p>
+<%--							<p class="forgot"><a href="#">비밀번호를 모르시나요?</a></p>--%>
 							<button type="button" class="button button-block" id="login-button" onclick="checkAccount();"/>로그인</button>
 							<input type="hidden" id="accountId" name="id"/>
 						</form>
@@ -195,6 +195,8 @@
 		background-image: url("/resources/img/jack-prommel-T2wAe8qXy4w-unsplash_opacity.jpg");
 		background-position: top;
 		background-size: cover;
+		background-repeat: no-repeat;
+		background-color: #CDC4B3;
 	}
 
 	#home-titleArea {
