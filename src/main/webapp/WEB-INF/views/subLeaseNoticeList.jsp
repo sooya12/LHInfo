@@ -56,14 +56,6 @@
                         </c:forEach>
                     </select>
                 </div>
-<%--                <div class="form-group">--%>
-<%--                    <label for="selPage">페이지 </label>--%>
-<%--                    <select class="form-control" id="selPage" name="page">--%>
-<%--                        <c:forEach begin="1" end="${pageCnt}" varStatus="idx">--%>
-<%--                            <option value="${idx.count}">${idx.count}</option>--%>
-<%--                        </c:forEach>--%>
-<%--                    </select>--%>
-<%--                </div>--%>
             </div>
             <div class="selectFormLine">
                 <div>
