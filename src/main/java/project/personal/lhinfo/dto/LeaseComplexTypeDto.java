@@ -11,16 +11,16 @@ public class LeaseComplexTypeDto {
     public String page;
 
     public String getLocation() {
-        if(location == null) {
-            return "11";
+        if(location == null || "00".equals(location)) {
+            return "";
         } else {
             return this.location;
         }
     }
 
     public String getSupplyType() {
-        if(supplyType == null) {
-            return "07";
+        if(supplyType == null || "00".equals(supplyType)) {
+            return "";
         } else {
             return this.supplyType;
         }
