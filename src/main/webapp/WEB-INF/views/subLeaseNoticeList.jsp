@@ -17,6 +17,8 @@
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <link rel="stylesheet" href="/resources/main.css">
     <link rel="stylesheet" href="/resources/subleasenotice-datepicker.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.1.5/pagination.min.js" integrity="sha512-1zzZ0ynR2KXnFskJ1C2s+7TIEewmkB2y+5o/+ahF7mwNj9n3PnzARpqalvtjSbUETwx6yuxP5AJXZCpnjEJkQw==" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.1.5/pagination.css" integrity="sha512-QmxybGIvkSI8+CGxkt5JAcGOKIzHDqBMs/hdemwisj4EeGLMXxCm9h8YgoCwIvndnuN1NdZxT4pdsesLXSaKaA==" crossorigin="anonymous" />
     <title>분양임대 공고문 조회</title>
 </head>
 <body>
@@ -54,14 +56,14 @@
                         </c:forEach>
                     </select>
                 </div>
-                <div class="form-group">
-                    <label for="selPage">페이지 </label>
-                    <select class="form-control" id="selPage" name="page">
-                        <c:forEach begin="1" end="${pageCnt}" varStatus="idx">
-                            <option value="${idx.count}">${idx.count}</option>
-                        </c:forEach>
-                    </select>
-                </div>
+<%--                <div class="form-group">--%>
+<%--                    <label for="selPage">페이지 </label>--%>
+<%--                    <select class="form-control" id="selPage" name="page">--%>
+<%--                        <c:forEach begin="1" end="${pageCnt}" varStatus="idx">--%>
+<%--                            <option value="${idx.count}">${idx.count}</option>--%>
+<%--                        </c:forEach>--%>
+<%--                    </select>--%>
+<%--                </div>--%>
             </div>
             <div class="selectFormLine">
                 <div>
@@ -94,6 +96,7 @@
                 <div class="form-button">
                     <button type="button" class="btn btn-basic" id="resetEndDate">초기화</button>
                 </div>
+                <input type="hidden" id="selPage" name="page">
                 <div class="form-button">
                     <button type="submit" class="btn btn-basic" id="inquiryButton">공고문 조회</button>
                 </div>
@@ -166,6 +169,7 @@
             </tbody>
         </table>
     </div>
+    <div id="paginationArea"></div>
     <jsp:include page="footer.jsp"/>
 </div>
 </body>
@@ -235,6 +239,24 @@
     $("#resetEndDate").click(function() {
         $("#datepicker-end-start").val("");
         $("#datepicker-end-end").val("");
+    });
+
+    var dataSourceArr = [];
+    var allCnt = (${subLeaseNoticeList.size() > 0} ? ${subLeaseNoticeList.get(0).ALL_CNT} : 1);
+    for (var i = 0; i < allCnt; i++) {
+        dataSourceArr.push(i);
+    }
+
+    $("#paginationArea").pagination({
+        dataSource: dataSourceArr,
+        pageSize: 50,
+        pageNumber: ${currentValue.page},
+        callback: function(data, pagination) {
+            if("${currentValue.page}" != pagination.pageNumber) {
+                $("#selPage").val(pagination.pageNumber);
+                $("#subLeaseNoticeSearchForm").submit();
+            }
+        }
     });
 
     function makeForm(a, s, p, u, c) {
@@ -370,6 +392,12 @@
 
     #noInfomation {
         text-align: center;
+    }
+
+    #paginationArea .paginationjs {
+        width: fit-content;
+        margin: 0 auto;
+        font-family: "MapoPeacefull";
     }
 
 </style>
