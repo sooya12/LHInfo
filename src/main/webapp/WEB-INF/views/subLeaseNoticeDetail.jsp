@@ -418,7 +418,9 @@
                 .replaceAll("ㅇ", "\r\n ㅇ")
                 .replaceAll(" *", "\r\n\r\n *")
                 .replaceAll(" -", "\r\n -")
-                .replaceAll(" ㅁ", "\r\n ㅁ");
+                .replaceAll(" ㅁ", "\r\n ㅁ")
+                .replaceAll(" ■", "\r\n ■")
+                .replaceAll(" □", "\r\n □");
             document.getElementsByTagName("td")[i].innerText = str;
 
             if(document.getElementsByTagName("th")[i].innerText != "") {
@@ -482,7 +484,6 @@
     #detailArea div {
         width: 100%;
         height: auto;
-        /*border: #6F362D 1px solid;*/
         margin: 30px auto;
     }
 
