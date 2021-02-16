@@ -9,7 +9,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
 <head>
-    <script src="https://kit.fontawesome.com/8962e3bb2c.js" crossorigin="anonymous"></script>
+    <%@ include file="/resources/main.html" %>
+    <link rel="stylesheet" href="/resources/main.css">
     <title>Header</title>
 </head>
 <body>
