@@ -40,7 +40,7 @@ public class SubLeaseNoticeSearchDto {
     }
 
     public String getPage() {
-        if(page == null) {
+        if(page == null || "".equals(page)) {
             return "1";
         }
         return page;

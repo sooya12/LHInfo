@@ -27,7 +27,7 @@ public class LeaseComplexTypeDto {
     }
 
     public String getPage() {
-        if(page == null) {
+        if(page == null || "".equals(page)) {
             return "1";
         } else {
             return this.page;
