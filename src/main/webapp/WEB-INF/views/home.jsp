@@ -72,13 +72,16 @@
                         <ul>
                             <c:forEach var="subLeaseNotice" items="${subLeaseNoticeList}" varStatus="idx">
                                 <li><span><i class="fal fa-newspaper"></i> ${subLeaseNotice.PAN_NM}</span></li>
-
+                                <form class="submitForm" action="/subleasenotice/detail" method="get">
+                                    <input type="hidden" name="AIS_TP_CD" value="${subLeaseNotice.AIS_TP_CD}"/>
+                                    <input type="hidden" name="SPL_INF_TP_CD" value="${subLeaseNotice.SPL_INF_TP_CD}"/>
+                                    <input type="hidden" name="PAN_ID" value="${subLeaseNotice.PAN_ID}"/>
+                                    <input type="hidden" name="UPP_AIS_TP_CD" value="${subLeaseNotice.UPP_AIS_TP_CD}"/>
+                                    <input type="hidden" name="CCR_CNNT_SYS_DS_CD" value="${subLeaseNotice.CCR_CNNT_SYS_DS_CD}"/>
+                                </form>
                                 <script type="text/javascript">
                                     $(document).ready(function() {
                                         const line = $("#subLeaseNoticeArea li:eq('${idx.count - 1}') span");
-
-                                        const submitForm = makeForm("${subLeaseNotice.AIS_TP_CD}", "${subLeaseNotice.SPL_INF_TP_CD}", "${subLeaseNotice.PAN_ID}", "${subLeaseNotice.UPP_AIS_TP_CD}", "${subLeaseNotice.CCR_CNNT_SYS_DS_CD}");
-                                        document.body.appendChild(submitForm);
 
                                         $(line).click(function () {
                                             sessionStorage.setItem("noticeName", "${subLeaseNotice.PAN_NM}");
@@ -86,7 +89,7 @@
                                             sessionStorage.setItem("noticeDetailType", "${subLeaseNotice.AIS_TP_CD_NM}");
                                             sessionStorage.setItem("locationName", "${subLeaseNotice.CNP_CD_NM}");
                                             sessionStorage.setItem("noticeStatus", "${subLeaseNotice.PAN_SS}");
-                                            submitForm.submit();
+                                            $(".submitForm").submit();
                                         });
                                     });
                                 </script>
@@ -160,44 +163,6 @@
         $(this).css("color", "#957767");
     });
 
-    function makeForm(a, s, p, u, c) {
-        const form = document.createElement("form");
-        form.setAttribute("action", "/subleasenotice/detail");
-        form.setAttribute("method", "get");
-        document.charset = "UTF-8";
-
-        const AIS_TP_CD = document.createElement("input");
-        AIS_TP_CD.setAttribute("type", "hidden");
-        AIS_TP_CD.setAttribute("name", "AIS_TP_CD");
-        AIS_TP_CD.setAttribute("value", a);
-        form.appendChild(AIS_TP_CD);
-
-        const SPL_INF_TP_CD = document.createElement("input");
-        SPL_INF_TP_CD.setAttribute("type", "hidden");
-        SPL_INF_TP_CD.setAttribute("name", "SPL_INF_TP_CD");
-        SPL_INF_TP_CD.setAttribute("value", s);
-        form.appendChild(SPL_INF_TP_CD);
-
-        const PAN_ID = document.createElement("input");
-        PAN_ID.setAttribute("type", "hidden");
-        PAN_ID.setAttribute("name", "PAN_ID");
-        PAN_ID.setAttribute("value", p);
-        form.appendChild(PAN_ID);
-
-        const UPP_AIS_TP_CD = document.createElement("input");
-        UPP_AIS_TP_CD.setAttribute("type", "hidden");
-        UPP_AIS_TP_CD.setAttribute("name", "UPP_AIS_TP_CD");
-        UPP_AIS_TP_CD.setAttribute("value", u);
-        form.appendChild(UPP_AIS_TP_CD);
-
-        const CCR_CNNT_SYS_DS_CD = document.createElement("input");
-        CCR_CNNT_SYS_DS_CD.setAttribute("type", "hidden");
-        CCR_CNNT_SYS_DS_CD.setAttribute("name", "CCR_CNNT_SYS_DS_CD");
-        CCR_CNNT_SYS_DS_CD.setAttribute("value", c);
-        form.appendChild(CCR_CNNT_SYS_DS_CD);
-
-        return form;
-    }
 </script>
 <style>
     #mainArea {
