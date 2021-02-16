@@ -71,11 +71,11 @@
                     <div class="noticeList">
                         <ul>
                             <c:forEach var="subLeaseNotice" items="${subLeaseNoticeList}" varStatus="idx">
-                                <li><i class="fal fa-newspaper"></i> ${subLeaseNotice.PAN_NM}</li>
+                                <li><span><i class="fal fa-newspaper"></i> ${subLeaseNotice.PAN_NM}</span></li>
 
                                 <script type="text/javascript">
                                     $(document).ready(function() {
-                                        const line = $("#subLeaseNoticeArea li:eq('${idx.count - 1}')");
+                                        const line = $("#subLeaseNoticeArea li:eq('${idx.count - 1}') span");
 
                                         const submitForm = makeForm("${subLeaseNotice.AIS_TP_CD}", "${subLeaseNotice.SPL_INF_TP_CD}", "${subLeaseNotice.PAN_ID}", "${subLeaseNotice.UPP_AIS_TP_CD}", "${subLeaseNotice.CCR_CNNT_SYS_DS_CD}");
                                         document.body.appendChild(submitForm);
@@ -112,11 +112,11 @@
                     <div class="noticeList">
                         <ul>
                             <c:forEach var="lhNotice" items="${lhNoticeList}" varStatus="idx">
-                                <li><i class="fal fa-newspaper"></i> ${lhNotice.BBS_TL}</li>
+                                <li><span><i class="fal fa-newspaper"></i> ${lhNotice.BBS_TL}</span></li>
 
                                 <script type="text/javascript">
                                     $(document).ready(function() {
-                                       const line = $("#LHNoticeArea li:eq('${idx.count - 1}')");
+                                       const line = $("#LHNoticeArea li:eq('${idx.count - 1}') span");
 
                                        $(line).click(function() {
                                            let url = "${lhNotice.LINK_URL}";
@@ -147,16 +147,16 @@
         $(this).css("color", "#ffffff");
     });
 
-    $(".noticeList li").hover(function() {
+    $(".noticeList li span").hover(function() {
         $(this).css("cursor", "pointer");
         $(this).css("color", "#000000");
     });
 
-    $("#subLeaseNoticeArea .noticeList li").mouseout(function() {
+    $("#subLeaseNoticeArea .noticeList li span").mouseout(function() {
         $(this).css("color", "#73746E");
     });
 
-    $("#lhNoticeArea .noticeList li").mouseout(function() {
+    $("#lhNoticeArea .noticeList li span").mouseout(function() {
         $(this).css("color", "#957767");
     });
 
