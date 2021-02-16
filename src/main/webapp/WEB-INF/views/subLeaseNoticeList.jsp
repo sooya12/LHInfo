@@ -192,12 +192,13 @@
             hideIfNoPrevNext: true,
         });
 
-        $("#datepicker-start-start").datepicker("option", "maxDate", $("#datepicker-start-end").val());
+        $("#datepicker-start-end").datepicker("option", "maxDate", "0");
+
+        $("#datepicker-start-start").datepicker("option", "maxDate", $("#datepicker-start-end").datepicker("option", "maxDate"));
         $("#datepicker-start-start").datepicker("option", "onClose", function(selectedDate) {
             $("#datepicker-start-end").datepicker("option", "minDate", selectedDate);
-        });
+        })
 
-        $("#datepicker-start-end").datepicker("option", "maxDate", "0");
         $("#datepicker-start-end").datepicker("option", "minDate", $("#datepicker-start-start").val());
         $("#datepicker-start-end").datepicker("option", "onClose", function(selectedDate) {
             $("#datepicker-start-start").datepicker("option", "maxDate", selectedDate);
@@ -208,7 +209,6 @@
             $("#datepicker-end-end").datepicker("option", "minDate", selectedDate);
         });
 
-        $("#datepicker-end-end").datepicker("option", "maxDate", "0");
         $("#datepicker-end-end").datepicker("option", "minDate", $("#datepicker-end-start").val());
         $("#datepicker-end-end").datepicker("option", "onClose", function(selectedDate) {
             $("#datepicker-end-start").datepicker("option", "maxDate", selectedDate);
@@ -376,6 +376,35 @@
 
     #noInfomation {
         text-align: center;
+    }
+
+    .ui-datepicker {
+        font-family: "MapoPeacefull";
+    }
+
+    .ui-datepicker-header {
+        background-color: #73746E;
+    }
+
+    select.ui-datepicker-month, select.ui-datepicker-year {
+        font-family: "MapoPeacefull";
+    }
+
+    .ui-datepicker-calendar > tbody tr td a.ui-state-default {
+        background-color: #ffffff;
+        color: #73746E;
+    }
+
+    .ui-datepicker-calendar > tbody tr td a.ui-state-highlight {
+        background-color: #73746E;
+        border: #73746E;
+        color: #3a3b38;
+    }
+
+    .ui-datepicker-calendar > tbody tr td a.ui-state-active {
+        background-color: #3a3b38;
+        border: #3a3b38;
+        color: #ffffff;
     }
 
     #paginationArea .paginationjs {

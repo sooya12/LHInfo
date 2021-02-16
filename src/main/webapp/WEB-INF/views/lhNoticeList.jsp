@@ -45,11 +45,11 @@
                 </div>
                 <div class="selectFormLine">
                     <div>
-                        <label for="datepicker-start">시작일 </label>
+                        <label for="datepicker-start">검색시작일 </label>
                         <input type="text" class="form-control" id="datepicker-start" name="startDate" autocomplete="off"/>
                     </div>
                     <div>
-                        <label for="datepicker-end">종료일 </label>
+                        <label for="datepicker-end">검색종료일 </label>
                         <input type="text" class="form-control" id="datepicker-end" name="endDate" autocomplete="off"/>
                     </div>
                     <input type="hidden" id="selPage" name="page">
@@ -145,12 +145,13 @@
             hideIfNoPrevNext: true,
         });
 
-        $("#datepicker-start").datepicker("option", "maxDate", $("#datepicker-end").val());
+        $("#datepicker-end").datepicker("option", "maxDate", "0");
+
+        $("#datepicker-start").datepicker("option", "maxDate", $("#datepicker-end").datepicker("option", "maxDate"));
         $("#datepicker-start").datepicker("option", "onClose", function(selectedDate) {
             $("#datepicker-end").datepicker("option", "minDate", selectedDate);
         });
 
-        $("#datepicker-end").datepicker("option", "maxDate", "0");
         $("#datepicker-end").datepicker("option", "minDate", $("#datepicker-start").val());
         $("#datepicker-end").datepicker("option", "onClose", function(selectedDate) {
             $("#datepicker-start").datepicker("option", "maxDate", selectedDate);
@@ -273,6 +274,35 @@
 
     #noInfomation {
         text-align: center;
+    }
+
+    .ui-datepicker {
+        font-family: "MapoPeacefull";
+    }
+
+    .ui-datepicker-header {
+        background-color: #CDC4B3;
+    }
+
+    select.ui-datepicker-month, select.ui-datepicker-year {
+        font-family: "MapoPeacefull";
+    }
+
+    .ui-datepicker-calendar > tbody tr td a.ui-state-default {
+        background-color: #ffffff;
+        color: #6F362D;
+    }
+
+    .ui-datepicker-calendar > tbody tr td a.ui-state-highlight {
+        background-color: #CDC4B3;
+        border: #CDC4B3;
+        color: #6F362D;
+    }
+
+    .ui-datepicker-calendar > tbody tr td a.ui-state-active {
+        background-color: #6F362D;
+        border: #6F362D;
+        color: #ffffff;
     }
 
     #paginationArea .paginationjs {
