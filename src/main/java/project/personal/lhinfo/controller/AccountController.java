@@ -26,18 +26,6 @@ public class AccountController {
     @Autowired
     AccountService accountService;
 
-    // 회원가입 화면으로 이동
-    @RequestMapping(value = "/signup", method = RequestMethod.GET)
-    public String signup() {
-        return "/account/signup";
-    }
-
-    // 로그인 화면으로 이동
-    @RequestMapping(value = "/signin", method = RequestMethod.GET)
-    public String signin() {
-        return "/account/signin";
-    }
-
     // 회원가입 기능. AccountSignupDto로 identify, password를 받음
     @RequestMapping(value = "/", method = RequestMethod.POST)
     public String createAccount(Model model, AccountSignupDto accountSignupDto) {
