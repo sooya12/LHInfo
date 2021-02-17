@@ -9,14 +9,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
 <head>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-    <link rel="stylesheet" href="/resources/main.css">
-    <link rel="stylesheet" href="/resources/subleasenotice-datepicker.css">
+    <%@ include file="/resources/main.html" %>
+    <link rel="stylesheet" href="/resources/main.css"/>
     <title>분양임대 공고문 조회</title>
 </head>
 <body>
@@ -54,14 +48,6 @@
                         </c:forEach>
                     </select>
                 </div>
-                <div class="form-group">
-                    <label for="selPage">페이지 </label>
-                    <select class="form-control" id="selPage" name="page">
-                        <c:forEach begin="1" end="${pageCnt}" varStatus="idx">
-                            <option value="${idx.count}">${idx.count}</option>
-                        </c:forEach>
-                    </select>
-                </div>
             </div>
             <div class="selectFormLine">
                 <div>
@@ -94,6 +80,7 @@
                 <div class="form-button">
                     <button type="button" class="btn btn-basic" id="resetEndDate">초기화</button>
                 </div>
+                <input type="hidden" id="selPage" name="page">
                 <div class="form-button">
                     <button type="submit" class="btn btn-basic" id="inquiryButton">공고문 조회</button>
                 </div>
@@ -132,13 +119,16 @@
                             <td>${subLeaseNotice.PAN_NT_ST_DT}</td>
                             <td>${subLeaseNotice.CLSG_DT}</td>
                             <td>${subLeaseNotice.PAN_SS}</td>
-
+                            <form class="submitForm" action="/subleasenotice/detail" method="get">
+                                <input type="hidden" name="AIS_TP_CD" value="${subLeaseNotice.AIS_TP_CD}"/>
+                                <input type="hidden" name="SPL_INF_TP_CD" value="${subLeaseNotice.SPL_INF_TP_CD}"/>
+                                <input type="hidden" name="PAN_ID" value="${subLeaseNotice.PAN_ID}"/>
+                                <input type="hidden" name="UPP_AIS_TP_CD" value="${subLeaseNotice.UPP_AIS_TP_CD}"/>
+                                <input type="hidden" name="CCR_CNNT_SYS_DS_CD" value="${subLeaseNotice.CCR_CNNT_SYS_DS_CD}"/>
+                            </form>
                             <script type="text/javascript">
                                 $(document).ready(function () {
                                     const line = $("#subLeaseNoticeTable tr:eq(${idx.count}) td:eq(2)");
-
-                                    const submitForm = makeForm("${subLeaseNotice.AIS_TP_CD}", "${subLeaseNotice.SPL_INF_TP_CD}", "${subLeaseNotice.PAN_ID}", "${subLeaseNotice.UPP_AIS_TP_CD}", "${subLeaseNotice.CCR_CNNT_SYS_DS_CD}");
-                                    document.body.appendChild(submitForm);
 
                                     $(line).hover(function() {
                                         $(this).css("cursor", "pointer");
@@ -155,7 +145,7 @@
                                         sessionStorage.setItem("noticeDetailType", "${subLeaseNotice.AIS_TP_CD_NM}");
                                         sessionStorage.setItem("locationName", "${subLeaseNotice.CNP_CD_NM}");
                                         sessionStorage.setItem("noticeStatus", "${subLeaseNotice.PAN_SS}");
-                                        submitForm.submit();
+                                        $(".submitForm").submit();
                                     });
                                 });
                             </script>
@@ -166,6 +156,7 @@
             </tbody>
         </table>
     </div>
+    <div id="paginationArea"></div>
     <jsp:include page="footer.jsp"/>
 </div>
 </body>
@@ -204,12 +195,13 @@
             hideIfNoPrevNext: true,
         });
 
-        $("#datepicker-start-start").datepicker("option", "maxDate", $("#datepicker-start-end").val());
+        $("#datepicker-start-end").datepicker("option", "maxDate", "0");
+
+        $("#datepicker-start-start").datepicker("option", "maxDate", $("#datepicker-start-end").datepicker("option", "maxDate"));
         $("#datepicker-start-start").datepicker("option", "onClose", function(selectedDate) {
             $("#datepicker-start-end").datepicker("option", "minDate", selectedDate);
-        });
+        })
 
-        $("#datepicker-start-end").datepicker("option", "maxDate", "0");
         $("#datepicker-start-end").datepicker("option", "minDate", $("#datepicker-start-start").val());
         $("#datepicker-start-end").datepicker("option", "onClose", function(selectedDate) {
             $("#datepicker-start-start").datepicker("option", "maxDate", selectedDate);
@@ -220,7 +212,6 @@
             $("#datepicker-end-end").datepicker("option", "minDate", selectedDate);
         });
 
-        $("#datepicker-end-end").datepicker("option", "maxDate", "0");
         $("#datepicker-end-end").datepicker("option", "minDate", $("#datepicker-end-start").val());
         $("#datepicker-end-end").datepicker("option", "onClose", function(selectedDate) {
             $("#datepicker-end-start").datepicker("option", "maxDate", selectedDate);
@@ -237,44 +228,24 @@
         $("#datepicker-end-end").val("");
     });
 
-    function makeForm(a, s, p, u, c) {
-        const form = document.createElement("form");
-        form.setAttribute("action", "/subleasenotice/detail");
-        form.setAttribute("method", "get");
-        document.charset = "UTF-8";
-
-        const AIS_TP_CD = document.createElement("input");
-        AIS_TP_CD.setAttribute("type", "hidden");
-        AIS_TP_CD.setAttribute("name", "AIS_TP_CD");
-        AIS_TP_CD.setAttribute("value", a);
-        form.appendChild(AIS_TP_CD);
-
-        const SPL_INF_TP_CD = document.createElement("input");
-        SPL_INF_TP_CD.setAttribute("type", "hidden");
-        SPL_INF_TP_CD.setAttribute("name", "SPL_INF_TP_CD");
-        SPL_INF_TP_CD.setAttribute("value", s);
-        form.appendChild(SPL_INF_TP_CD);
-
-        const PAN_ID = document.createElement("input");
-        PAN_ID.setAttribute("type", "hidden");
-        PAN_ID.setAttribute("name", "PAN_ID");
-        PAN_ID.setAttribute("value", p);
-        form.appendChild(PAN_ID);
-
-        const UPP_AIS_TP_CD = document.createElement("input");
-        UPP_AIS_TP_CD.setAttribute("type", "hidden");
-        UPP_AIS_TP_CD.setAttribute("name", "UPP_AIS_TP_CD");
-        UPP_AIS_TP_CD.setAttribute("value", u);
-        form.appendChild(UPP_AIS_TP_CD);
-
-        const CCR_CNNT_SYS_DS_CD = document.createElement("input");
-        CCR_CNNT_SYS_DS_CD.setAttribute("type", "hidden");
-        CCR_CNNT_SYS_DS_CD.setAttribute("name", "CCR_CNNT_SYS_DS_CD");
-        CCR_CNNT_SYS_DS_CD.setAttribute("value", c);
-        form.appendChild(CCR_CNNT_SYS_DS_CD);
-
-        return form;
+    var dataSourceArr = [];
+    var allCnt = (${subLeaseNoticeList.size() > 0} ? ${subLeaseNoticeList.get(0).ALL_CNT} : 1);
+    for (var i = 0; i < allCnt; i++) {
+        dataSourceArr.push(i);
     }
+
+    $("#paginationArea").pagination({
+        dataSource: dataSourceArr,
+        pageSize: 50,
+        pageNumber: ${currentValue.page},
+        callback: function(data, pagination) {
+            if("${currentValue.page}" != pagination.pageNumber) {
+                $("#selPage").val(pagination.pageNumber);
+                $("#subLeaseNoticeSearchForm").submit();
+            }
+        }
+    });
+
 </script>
 <style>
     #titleArea {
@@ -370,6 +341,41 @@
 
     #noInfomation {
         text-align: center;
+    }
+
+    .ui-datepicker {
+        font-family: "MapoPeacefull";
+    }
+
+    .ui-datepicker-header {
+        background-color: #73746E;
+    }
+
+    select.ui-datepicker-month, select.ui-datepicker-year {
+        font-family: "MapoPeacefull";
+    }
+
+    .ui-datepicker-calendar > tbody tr td a.ui-state-default {
+        background-color: #ffffff;
+        color: #73746E;
+    }
+
+    .ui-datepicker-calendar > tbody tr td a.ui-state-highlight {
+        background-color: #73746E;
+        border: #73746E;
+        color: #3a3b38;
+    }
+
+    .ui-datepicker-calendar > tbody tr td a.ui-state-active {
+        background-color: #3a3b38;
+        border: #3a3b38;
+        color: #ffffff;
+    }
+
+    #paginationArea .paginationjs {
+        width: fit-content;
+        margin: 0 auto;
+        font-family: "MapoPeacefull";
     }
 
 </style>

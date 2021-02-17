@@ -44,7 +44,7 @@ public class LeaseComplexController {
             if(leaseComplexList.size() > 0) {
                 totalCnt = Integer.parseInt(leaseComplexList.get(0).ALL_CNT);
             }
-            int pageCnt = totalCnt / 100 + 1;
+            int pageCnt = totalCnt / 50 + 1;
 
             if(pageCnt < 2) {
                 pageCnt = 1;

@@ -3,11 +3,8 @@
 <%@ page session="false" %>
 <html>
 <head>
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+	<%@ include file="/resources/main.html" %>
 	<link rel="stylesheet" href="/resources/main.css">
-	<script src="https://kit.fontawesome.com/8962e3bb2c.js" crossorigin="anonymous"></script>
 	<title>분양임대 정보 제공 서비스</title>
 </head>
 <body>
@@ -37,7 +34,7 @@
 								</label>
 								<input type="password" id="login-password" required autocomplete="off"/>
 							</div>
-							<p class="forgot"><a href="#">비밀번호를 모르시나요?</a></p>
+<%--							<p class="forgot"><a href="#">비밀번호를 모르시나요?</a></p>--%>
 							<button type="button" class="button button-block" id="login-button" onclick="checkAccount();"/>로그인</button>
 							<input type="hidden" id="accountId" name="id"/>
 						</form>
@@ -171,8 +168,6 @@
 	});
 
 	$("#signup-repeat-password").on("change keyup paste", function() {
-		console.log($(this).val());
-		console.log($("#signup-password").val());
 		if($(this).val() && $(this).val().length >= $("#signup-password").val().length) {
 			if($(this).val() == $("#signup-password").val()) {
 				$("#signup-button").attr("disabled", false);
@@ -195,6 +190,8 @@
 		background-image: url("/resources/img/jack-prommel-T2wAe8qXy4w-unsplash_opacity.jpg");
 		background-position: top;
 		background-size: cover;
+		background-repeat: no-repeat;
+		background-color: #CDC4B3;
 	}
 
 	#home-titleArea {

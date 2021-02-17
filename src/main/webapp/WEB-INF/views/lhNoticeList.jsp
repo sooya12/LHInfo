@@ -9,14 +9,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
 <head>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <%@ include file="/resources/main.html" %>
     <link rel="stylesheet" href="/resources/main.css">
-    <link rel="stylesheet" href="/resources/lhnotice-datepicker.css">
     <title>청약센터 공지사항 조회</title>
 </head>
 <body>
@@ -51,23 +45,16 @@
                 </div>
                 <div class="selectFormLine">
                     <div>
-                        <label for="datepicker-start">시작일 </label>
+                        <label for="datepicker-start">검색시작일 </label>
                         <input type="text" class="form-control" id="datepicker-start" name="startDate" autocomplete="off"/>
                     </div>
                     <div>
-                        <label for="datepicker-end">종료일 </label>
+                        <label for="datepicker-end">검색종료일 </label>
                         <input type="text" class="form-control" id="datepicker-end" name="endDate" autocomplete="off"/>
                     </div>
+                    <input type="hidden" id="selPage" name="page">
                     <div class="form-button">
                         <button type="submit" class="btn btn-basic" id="inquiryButton">공고문 조회</button>
-                    </div>
-                    <div class="form-group">
-                        <label for="selPage">페이지 </label>
-                        <select class="form-control" id="selPage" name="page">
-                            <c:forEach begin="1" end="${pageCnt}" varStatus="idx">
-                                <option value="${idx.count}">${idx.count}</option>
-                            </c:forEach>
-                        </select>
                     </div>
                 </div>
             </form>
@@ -125,6 +112,7 @@
                 </tbody>
             </table>
         </div>
+        <div id="paginationArea"></div>
         <jsp:include page="footer.jsp"/>
     </div>
 </body>
@@ -157,16 +145,35 @@
             hideIfNoPrevNext: true,
         });
 
-        $("#datepicker-start").datepicker("option", "maxDate", $("#datepicker-end").val());
+        $("#datepicker-end").datepicker("option", "maxDate", "0");
+
+        $("#datepicker-start").datepicker("option", "maxDate", $("#datepicker-end").datepicker("option", "maxDate"));
         $("#datepicker-start").datepicker("option", "onClose", function(selectedDate) {
             $("#datepicker-end").datepicker("option", "minDate", selectedDate);
         });
 
-        $("#datepicker-end").datepicker("option", "maxDate", "0");
         $("#datepicker-end").datepicker("option", "minDate", $("#datepicker-start").val());
         $("#datepicker-end").datepicker("option", "onClose", function(selectedDate) {
             $("#datepicker-start").datepicker("option", "maxDate", selectedDate);
         });
+    });
+
+    var dataSourceArr = [];
+    var allCnt = (${lhnoticeList.size() > 0} ? ${lhnoticeList.get(0).ALL_CNT} : 1);
+    for(var i = 0; i < allCnt; i++) {
+        dataSourceArr.push(i);
+    }
+
+    $("#paginationArea").pagination({
+        dataSource: dataSourceArr,
+        pageSize: 50,
+        pageNumber: ${currentValue.page},
+        callback: function(data, pagination) {
+            if("${currentValue.page}" != pagination.pageNumber) {
+                $("#selPage").val(pagination.pageNumber);
+                $("#lhNoticeSearchForm").submit();
+            }
+        }
     });
 </script>
 <style>
@@ -267,6 +274,41 @@
 
     #noInfomation {
         text-align: center;
+    }
+
+    .ui-datepicker {
+        font-family: "MapoPeacefull";
+    }
+
+    .ui-datepicker-header {
+        background-color: #CDC4B3;
+    }
+
+    select.ui-datepicker-month, select.ui-datepicker-year {
+        font-family: "MapoPeacefull";
+    }
+
+    .ui-datepicker-calendar > tbody tr td a.ui-state-default {
+        background-color: #ffffff;
+        color: #6F362D;
+    }
+
+    .ui-datepicker-calendar > tbody tr td a.ui-state-highlight {
+        background-color: #CDC4B3;
+        border: #CDC4B3;
+        color: #6F362D;
+    }
+
+    .ui-datepicker-calendar > tbody tr td a.ui-state-active {
+        background-color: #6F362D;
+        border: #6F362D;
+        color: #ffffff;
+    }
+
+    #paginationArea .paginationjs {
+        width: fit-content;
+        margin: 0 auto;
+        font-family: "MapoPeacefull";
     }
 
 </style>

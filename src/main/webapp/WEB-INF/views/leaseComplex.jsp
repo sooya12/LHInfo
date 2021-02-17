@@ -10,9 +10,7 @@
 <%@ page session="false" %>
 <html>
 <head>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <%@ include file="/resources/main.html" %>
     <link rel="stylesheet" href="/resources/main.css">
     <title>임대단지 조회</title>
 </head>
@@ -42,14 +40,7 @@
                         </c:forEach>
                     </select>
                 </div>
-                <div class="form-group">
-                    <label for="selPage">페이지 </label>
-                    <select class="form-control" id="selPage" name="page">
-                        <c:forEach begin="1" end="${pageCnt}" varStatus="idx">
-                            <option value="${idx.count}">${idx.count}</option>
-                        </c:forEach>
-                    </select>
-                </div>
+                <input type="hidden" id="selPage" name="page">
                 <div class="form-button">
                     <button type="submit" class="btn btn-basic" id="inquiryButton">임대단지 조회</button>
                 </div>
@@ -109,16 +100,47 @@
                 </tbody>
             </table>
         </div>
+        <div id="paginationArea">
+        </div>
         <jsp:include page="footer.jsp"/>
     </div>
 </body>
 </html>
 <script>
+    var dataSourceArr = [];
+    var allCnt = (${leaseComplexList.size() > 0} ? ${leaseComplexList.get(0).ALL_CNT} : 1);
+    for(var i = 0; i < allCnt; i++) {
+        dataSourceArr.push(i);
+    }
+
     $(document).ready(function () {
-        $("#selLocation option[value=${currentValue.location}]").attr("selected", true);
-        $("#selSupplyType option[value=${currentValue.supplyType}]").attr("selected", true);
+        if(${currentValue.location != ""}) {
+            $("#selLocation option[value=${currentValue.location}]").attr("selected", true);
+        } else {
+            $("#selLocation option[value=00]").attr("selected", true);
+        }
+
+        if(${currentValue.supplyType != ""}) {
+            $("#selSupplyType option[value=${currentValue.supplyType}]").attr("selected", true);
+        } else {
+            $("#selSupplyType option[value=00]").attr("selected", true);
+        }
+
         $("#selPage option[value=${currentValue.page}]").attr("selected", true);
     });
+
+    $("#paginationArea").pagination({
+        dataSource: dataSourceArr,
+        pageSize: 50,
+        pageNumber: ${currentValue.page},
+        callback: function(data, pagination) {
+            if("${currentValue.page}" != pagination.pageNumber) {
+                $("#selPage").val(pagination.pageNumber);
+                $("#leaseComplexSelectForm").submit();
+            }
+        }
+    });
+
 </script>
 <style>
     #titleArea {
@@ -186,6 +208,12 @@
 
     #noInfomation {
         text-align: center;
+    }
+
+    #paginationArea .paginationjs {
+        width: fit-content;
+        margin: 0 auto;
+        font-family: "MapoPeacefull";
     }
 
 </style>

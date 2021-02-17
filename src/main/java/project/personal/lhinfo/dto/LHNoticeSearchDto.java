@@ -37,7 +37,7 @@ public class LHNoticeSearchDto {
     }
 
     public String getPage() {
-        if(page == null || Integer.parseInt(page) < 1) {
+        if(page == null || "".equals(page) || Integer.parseInt(page) < 1) {
             return "1";
         }
         return page;

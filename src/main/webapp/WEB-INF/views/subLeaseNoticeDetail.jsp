@@ -9,14 +9,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
 <head>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="/resources/main.css">
-    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f71a931fcbbd7c297a88e94cacd0b2e4&libraries=services,clusterer,drawing"></script>
-    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
-    <meta charset="UTF-8"/>
+    <%@ include file="/resources/main.html" %>
+    <link rel="stylesheet" href="/resources/main.css"/>
     <title>분양임대 공고문 조회</title>
 </head>
 <body>
@@ -419,7 +413,14 @@
 
         for (let i = 0; i < tmp; i++) {
             let str = document.getElementsByTagName("td")[i].innerText;
-            str = str.replaceAll(" o", "\r\n o").replaceAll("※", "\r\n ※").replaceAll("ㅇ", "\r\n ㅇ").replaceAll(" *", "\r\n\r\n *").replaceAll(" -", "\r\n -");
+            str = str.replaceAll(" o", "\r\n o")
+                .replaceAll("※", "\r\n ※")
+                .replaceAll("ㅇ", "\r\n ㅇ")
+                .replaceAll(" *", "\r\n\r\n *")
+                .replaceAll(" -", "\r\n -")
+                .replaceAll(" ㅁ", "\r\n ㅁ")
+                .replaceAll(" ■", "\r\n ■")
+                .replaceAll(" □", "\r\n □");
             document.getElementsByTagName("td")[i].innerText = str;
 
             if(document.getElementsByTagName("th")[i].innerText != "") {
@@ -483,7 +484,6 @@
     #detailArea div {
         width: 100%;
         height: auto;
-        /*border: #6F362D 1px solid;*/
         margin: 30px auto;
     }
 

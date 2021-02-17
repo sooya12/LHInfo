@@ -27,6 +27,7 @@ public class LHNoticeController {
     @Autowired
     TypeService typeService;
 
+    // 청약센터 공고문 조회 화면으로 이동
     @RequestMapping("/lhnotice")
     public String lhNoticeList(Model model, LHNoticeSearchDto lhNoticeSearchDto, RedirectAttributes redirect) {
         logger.info("청약센터 공고문 조회 - " + lhNoticeSearchDto.toString());
