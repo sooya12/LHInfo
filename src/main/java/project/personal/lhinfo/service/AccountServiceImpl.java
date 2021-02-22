@@ -3,8 +3,10 @@ package project.personal.lhinfo.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import project.personal.lhinfo.dao.AccountDao;
+import project.personal.lhinfo.dto.AccountFindPwdDto;
 import project.personal.lhinfo.dto.AccountSigninDto;
 import project.personal.lhinfo.dto.AccountSignupDto;
+import project.personal.lhinfo.dto.AccountUpdatePwdDto;
 import project.personal.lhinfo.entity.Account;
 
 @Service
@@ -31,5 +33,15 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public String checkExistence(AccountSigninDto accountSigninDto) {
         return accountDao.checkExistence(accountSigninDto);
+    }
+
+    @Override
+    public String checkExistenceByEmail(AccountFindPwdDto accountFindPwdDto) {
+        return accountDao.checkExistenceByEmail(accountFindPwdDto);
+    }
+
+    @Override
+    public int updatePassword(AccountUpdatePwdDto accountUpdatePwdDto) {
+        return accountDao.updatePassword(accountUpdatePwdDto);
     }
 }

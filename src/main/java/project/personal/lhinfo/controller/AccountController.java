@@ -5,17 +5,17 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
+import project.personal.lhinfo.dto.AccountFindPwdDto;
 import project.personal.lhinfo.dto.AccountSigninDto;
 import project.personal.lhinfo.dto.AccountSignupDto;
+import project.personal.lhinfo.dto.AccountUpdatePwdDto;
 import project.personal.lhinfo.entity.Account;
 import project.personal.lhinfo.service.AccountService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.regex.Pattern;
 
 @Controller
 @RequestMapping(value = "/account")
@@ -86,4 +86,41 @@ public class AccountController {
 
         return "redirect:/";
     }
+
+    @RequestMapping(value = "/checkExistenceByEmail", method = RequestMethod.GET)
+    @ResponseBody
+    public String checkExistenceByEmail(AccountFindPwdDto accountFindPwdDto) {
+        String id = accountService.checkExistenceByEmail(accountFindPwdDto);
+        if(id == null || "".equals(id)) {
+            return "re-enter";
+        } else {
+            return id;
+        }
+    }
+
+    @RequestMapping(value = "updatePassword", method = RequestMethod.PUT)
+    @ResponseBody
+    public String updatePassword(@RequestBody String id) {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < 6; i++) {
+            int idx = (int)(Math.random() * 2);
+
+            if(idx == 0) {
+                sb.append((char)(Math.random() * 10 + '0'));
+            } else {
+                sb.append((char)(Math.random() * 26 + 'a'));
+            }
+        }
+
+        String tempPwd = sb.toString();
+        AccountUpdatePwdDto accountUpdatePwdDto = new AccountUpdatePwdDto(id, tempPwd);
+
+        int result = accountService.updatePassword(accountUpdatePwdDto);
+        if(result == 1) {
+            return tempPwd;
+        } else {
+            return "fail";
+        }
+    }
+
 }
