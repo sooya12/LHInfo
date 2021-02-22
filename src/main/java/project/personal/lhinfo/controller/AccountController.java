@@ -87,6 +87,7 @@ public class AccountController {
         return "redirect:/";
     }
 
+    // 임시 비밀번호 발급 시, 회원정보 존재 확인 기능
     @RequestMapping(value = "/checkExistenceByEmail", method = RequestMethod.GET)
     @ResponseBody
     public String checkExistenceByEmail(AccountFindPwdDto accountFindPwdDto) {
@@ -98,6 +99,7 @@ public class AccountController {
         }
     }
 
+    // 임시 비밀번호 발급 시, 회원정보 비밀번호 변경 기능
     @RequestMapping(value = "updatePassword", method = RequestMethod.PUT)
     @ResponseBody
     public String updatePassword(@RequestBody String id) {
