@@ -181,7 +181,6 @@
 			data: {identify: $(this).val()},
 			dataType: "text",
 			success: function(data) {
-				console.log(data);
 				if(data == "available") {
 					$("#checkIdentifyNotice").val("");
 					$("#signup-button").attr("disabled", false);
@@ -259,15 +258,9 @@
 								$("#tempPwd").val("임시 비밀번호는 " + data + "입니다.");
 								$("#tempPwd").show();
 							}
-						},
-						error: function(err) {
-							console.log(err);
 						}
 					});
 				}
-			},
-			error: function(err) {
-				console.log(err);
 			}
 		});
 	})
