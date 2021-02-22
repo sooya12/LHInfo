@@ -29,8 +29,6 @@ public class AccountController {
     // 회원가입 기능. AccountSignupDto로 identify, password를 받음
     @RequestMapping(value = "/", method = RequestMethod.POST)
     public String createAccount(Model model, AccountSignupDto accountSignupDto) {
-        logger.info("회원 입력 정보 - " + accountSignupDto.toString());
-
         if(accountService.createAccount(accountSignupDto) >= 1) {
             model.addAttribute("accountName", accountSignupDto.name);
             return "open";
@@ -45,8 +43,6 @@ public class AccountController {
     public String checkIdentify(@RequestParam("identify") String identify) {
         int result = accountService.checkIdentify(identify);
 
-        logger.info("회원 아이디 중복 확인 - " + identify + " / " + result);
-
         if(result < 1) {
             return "available";
         }
@@ -60,8 +56,6 @@ public class AccountController {
     public String checkExistence(AccountSigninDto accountSigninDto) {
         String result = accountService.checkExistence(accountSigninDto);
 
-        logger.info("존재하는 회원 정보 확인 - " + result);
-
         if(result != null) {
             return result;
         }
@@ -72,9 +66,8 @@ public class AccountController {
     // 로그인 시, 회원정보 조회 기능. 세션에 회원정보 저장
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String readAccount(@RequestParam("id") String id, HttpServletRequest request) {
+        logger.info("회원 로그인");
         Account account = accountService.readAccount(id);
-
-        logger.info("회원 로그인 - " + account.toString());
 
         HttpSession session = request.getSession();
         session.setAttribute("account", account);
@@ -86,7 +79,7 @@ public class AccountController {
     @RequestMapping(value = "/signout", method = RequestMethod.GET)
     public String signout(HttpServletRequest request) {
         logger.info("회원 로그아웃");
-        
+
         HttpSession session = request.getSession();
         session.removeAttribute("account");
         session.invalidate();
