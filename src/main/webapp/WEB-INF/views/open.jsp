@@ -104,8 +104,7 @@
 </body>
 </html>
 <script>
-	$('.form').find('input, textarea').on('keyup blur focus', function (e) {
-
+	$('.form').find('input, textarea').on('keyup blur focus change paste', function (e) {
 		var $this = $(this),
 			label = $this.prev('label');
 
@@ -147,7 +146,8 @@
 	$(document).ready(function() {
 		$("#findPwd").hide();
 		$("#tempPwd").hide();
-		$("#findPwd-button").attr("disabled", "true");
+		$("button").attr("disabled", "true");
+		$("button").css("background-color", "#d9d9d9");
 	});
 
 	$(".forgot").click(function() {
@@ -201,7 +201,9 @@
 				$("#signup-button").attr("disabled", false);
 				$("button").css("background-color", "#CDC4B3");
 			} else {
-				$("#signup-repeat-password-label").val("틀렸습니다. 다시 입력해주세요.");
+				$("#signup-repeat-password-label").text("비밀번호와 일치하지 않습니다.");
+				$("#signup-repeat-password").val("");
+				$("#signup-repeat-password").focus();
 				$("#signup-button").attr("disabled", true);
 				$("button").css("background-color", "#d9d9d9");
 			}
