@@ -32,6 +32,7 @@
 			<exclude-mapping path="/"/>
 			<exclude-mapping path="/resources/**"/>
 			<exclude-mapping path="/account/**"/>
+			<exclude-mapping path="/error"/>
 			<beans:ref bean="LoginInterceptor"/>
 		</interceptor>
 	</interceptors>
