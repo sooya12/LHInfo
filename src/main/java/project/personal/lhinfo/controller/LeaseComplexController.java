@@ -40,18 +40,6 @@ public class LeaseComplexController {
         try {
             List<LeaseComplexDto> leaseComplexList = leaseComplexService.leaseComplexList(leaseComplexTypeDto);
 
-            int totalCnt = 0;
-            if(leaseComplexList.size() > 0) {
-                totalCnt = Integer.parseInt(leaseComplexList.get(0).ALL_CNT);
-            }
-            int pageCnt = totalCnt / 50 + 1;
-
-            if(pageCnt < 2) {
-                pageCnt = 1;
-                leaseComplexTypeDto.setPage("1");
-                leaseComplexList = leaseComplexService.leaseComplexList(leaseComplexTypeDto);
-            }
-            model.addAttribute("pageCnt", pageCnt);
             model.addAttribute("leaseComplexList", leaseComplexList);
         } catch (Exception e) {
             e.printStackTrace();
