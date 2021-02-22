@@ -54,6 +54,7 @@
 							<input type="text" required autocomplete="off" name="email" id="findPwd-email"/>
 						</div>
 						<button class="button button-block" id="findPwd-button">임시 비밀번호 발급</button>
+						<input type="text" readonly disabled id="tempPwd"/>
 					</div>
 					<div id="signup">
 						<h2>회원정보를 입력해주세요</h2>
@@ -145,6 +146,8 @@
 
 	$(document).ready(function() {
 		$("#findPwd").hide();
+		$("#tempPwd").hide();
+		$("#findPwd-button").attr("disabled", "true");
 	});
 
 	$(".forgot").click(function() {
@@ -184,7 +187,7 @@
 					$("#signup-button").attr("disabled", false);
 					$("button").css("background-color", "#CDC4B3");
 				} else if(data == "re-enter") {
-					$("#checkIdentifyNotice").val("중복된 아이디입니다");
+					$("#checkIdentifyNotice").val("중복된 아이디입니다.");
 					$("#signup-button").attr("disabled", true);
 					$("button").css("background-color", "#d9d9d9");
 				}
@@ -198,7 +201,7 @@
 				$("#signup-button").attr("disabled", false);
 				$("button").css("background-color", "#CDC4B3");
 			} else {
-				$("#signup-repeat-password-label").val("틀렸습니다. 다시 입력해주세요");
+				$("#signup-repeat-password-label").val("틀렸습니다. 다시 입력해주세요.");
 				$("#signup-button").attr("disabled", true);
 				$("button").css("background-color", "#d9d9d9");
 			}
@@ -207,6 +210,65 @@
 			$("button").css("background-color", "#d9d9d9");
 		}
 	});
+
+	$("#findPwd-identify").on("change keyup paste", function() {
+		if($("#findPwd-identify").val().length > 0 && $("#findPwd-email").val().length > 0) {
+			$("#findPwd-button").attr("disabled", false);
+			$("#findPwd-button").css("background-color", "#CDC4B3");
+		} else {
+			$("#findPwd-button").attr("disabled", true);
+			$("#findPwd-button").css("background-color", "#d9d9d9");
+		}
+	});
+
+	$("#findPwd-email").on("change keyup paste", function() {
+		if($("#findPwd-identify").val().length > 0 && $("#findPwd-email").val().length > 0) {
+			$("#findPwd-button").attr("disabled", false);
+			$("#findPwd-button").css("background-color", "#CDC4B3");
+		} else {
+			$("#findPwd-button").attr("disabled", true);
+			$("#findPwd-button").css("background-color", "#d9d9d9");
+		}
+	});
+
+	$("#findPwd-button").click(function() {
+		$.ajax({
+			type: "GET",
+			url: "/account/checkExistenceByEmail",
+			data: {identify: $("#findPwd-identify").val(), email: $("#findPwd-email").val()},
+			dataType: "text",
+			success: function(data) {
+				if(data == "re-enter") {
+					$("#findPwd h3").text("잘못된 회원정보입니다.");
+					$("#findPwd-button").attr("disabled", true);
+					$("#findPwd-button").css("background-color", "#d9d9d9");
+				} else if(data != "re-enter" && data != null) {
+					$.ajax({
+						type: "PUT",
+						url: "/account/updatePassword",
+						data: data,
+						dataType: "text",
+						success: function(data) {
+							if(data == "fail") {
+								location.href = "/error";
+							} else {
+								$("#findPwd h3").text("비밀번호가 변경되었습니다.");
+								$("#findPwd-button").hide();
+								$("#tempPwd").val("임시 비밀번호는 " + data + "입니다.");
+								$("#tempPwd").show();
+							}
+						},
+						error: function(err) {
+							console.log(err);
+						}
+					});
+				}
+			},
+			error: function(err) {
+				console.log(err);
+			}
+		});
+	})
 </script>
 <style>
 	body {
@@ -414,7 +476,7 @@
 		text-align: right;
 	}
 
-	#checkIdentifyNotice {
+	#checkIdentifyNotice, #tempPwd {
 		width: 100%;
 		height: 30px;
 		float: right;
