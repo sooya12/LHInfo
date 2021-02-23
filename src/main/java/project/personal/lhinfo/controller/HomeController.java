@@ -63,6 +63,7 @@ public class HomeController {
     }
 
     // Error 처리
+    @RequestMapping(value = "/error", method = RequestMethod.GET)
     @ExceptionHandler
     public String error(Exception e) {
         e.printStackTrace();

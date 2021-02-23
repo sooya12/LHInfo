@@ -52,18 +52,6 @@ public class SubLeaseNoticeController {
 
             List<NoticeStatusType> noticeStatusTypeList = typeService.noticeStatusTypeList();
             model.addAttribute("noticeStatusTypeList", noticeStatusTypeList);
-
-            int pageCnt = 0;
-
-            if (subLeaseNoticeList.size() > 0) {
-                int totalCnt = Integer.parseInt(subLeaseNoticeList.get(0).ALL_CNT);
-                pageCnt = totalCnt / 50 + 1;
-            }
-
-            if (pageCnt < 2) {
-                pageCnt = 1;
-            }
-            model.addAttribute("pageCnt", pageCnt);
         } catch (IOException e) {
             e.printStackTrace();
             redirect.addAttribute("location", subLeaseNoticeSearchDto.location);

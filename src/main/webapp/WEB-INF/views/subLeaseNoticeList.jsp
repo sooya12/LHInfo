@@ -229,7 +229,7 @@
     });
 
     var dataSourceArr = [];
-    var allCnt = (${subLeaseNoticeList.size() > 0} ? ${subLeaseNoticeList.get(0).ALL_CNT} : 1);
+    var allCnt = (${subLeaseNoticeList.size() < 0} ? 1 : ${subLeaseNoticeList.get(0).ALL_CNT});
     for (var i = 0; i < allCnt; i++) {
         dataSourceArr.push(i);
     }

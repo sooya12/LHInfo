@@ -20,7 +20,7 @@
 				</ul>
 				<div class="tab-content">
 					<div id="login">
-						<h3>서비스 사용을 위해 로그인해주세요</h3>
+						<h3>서비스 사용을 위해<br> 로그인해주세요</h3>
 						<form id="loginForm" action="/account/" method="get">
 							<div class="field-wrap">
 								<label>
@@ -34,10 +34,27 @@
 								</label>
 								<input type="password" id="login-password" required autocomplete="off"/>
 							</div>
-<%--							<p class="forgot"><a href="#">비밀번호를 모르시나요?</a></p>--%>
-							<button type="button" class="button button-block" id="login-button" onclick="checkAccount();"/>로그인</button>
+							<p class="forgot"><a href="#">비밀번호를 모르시나요?</a></p>
+							<button type="button" class="button button-block" id="login-button" onclick="checkAccount();">로그인</button>
 							<input type="hidden" id="accountId" name="id"/>
 						</form>
+					</div>
+					<div id="findPwd">
+						<h3>비밀번호 찾기</h3>
+						<div class="field-wrap">
+							<label>
+								아이디<span class="req">*</span>
+							</label>
+							<input type="text" required autocomplete="off" name="identify" id="findPwd-identify"/>
+						</div>
+						<div class="field-wrap">
+							<label>
+								이메일<span class="req">*</span>
+							</label>
+							<input type="text" required autocomplete="off" name="email" id="findPwd-email"/>
+						</div>
+						<button class="button button-block" id="findPwd-button">임시 비밀번호 발급</button>
+						<input type="text" readonly disabled id="tempPwd"/>
 					</div>
 					<div id="signup">
 						<h2>회원정보를 입력해주세요</h2>
@@ -50,7 +67,7 @@
 									<input type="text" required autocomplete="off" name="identify" id="signup-identify"/>
 								</div>
 								<div class="field-wrap">
-									<input type="text" id="checkIdentifyNotice"/>
+									<input type="text" id="checkIdentifyNotice" readonly onfocus="this.blur();"/>
 								</div>
 							</div>
 							<div class="field-wrap">
@@ -77,7 +94,7 @@
 								</label>
 								<input type="email" required autocomplete="off" name="email" id="email"/>
 							</div>
-							<button class="button button-block" id="signup-button"/>가입하기</button>
+							<button class="button button-block" id="signup-button">가입하기</button>
 						</form>
 					</div>
 				</div>
@@ -87,8 +104,7 @@
 </body>
 </html>
 <script>
-	$('.form').find('input, textarea').on('keyup blur focus', function (e) {
-
+	$('.form').find('input, textarea').on('keyup blur focus change paste', function (e) {
 		var $this = $(this),
 			label = $this.prev('label');
 
@@ -127,6 +143,38 @@
 		$(target).fadeIn(600);
 	});
 
+	$(document).ready(function() {
+		$("#findPwd").hide();
+		$("#tempPwd").hide();
+		$("button").attr("disabled", true);
+		$("button").css("background-color", "#d9d9d9");
+	});
+
+	$(".forgot").click(function() {
+		$("#login").hide();
+		$("#findPwd").show();
+	});
+
+	$("#login-identify").on("change keyup paste", function() {
+	   if($(this).val().length > 0 && $("#login-password").val().length > 0) {
+	       $("#login-button").attr("disabled", false);
+	       $("#login-button").css("background-color", "CDC4B3");
+       } else {
+           $("#login-button").attr("disabled", true);
+           $("#login-button").css("background-color", "d9d9d9");
+       }
+    });
+
+    $("#login-password").on("change keyup paste", function() {
+        if($(this).val().length > 0 && $("#login-identify").val().length > 0) {
+            $("#login-button").attr("disabled", false);
+            $("#login-button").css("background-color", "CDC4B3");
+        } else {
+            $("#login-button").attr("disabled", true);
+            $("#login-button").css("background-color", "d9d9d9");
+        }
+    });
+
 	function checkAccount() {
 		$.ajax({
 			type: "POST",
@@ -153,13 +201,12 @@
 			data: {identify: $(this).val()},
 			dataType: "text",
 			success: function(data) {
-				console.log(data);
 				if(data == "available") {
 					$("#checkIdentifyNotice").val("");
 					$("#signup-button").attr("disabled", false);
 					$("button").css("background-color", "#CDC4B3");
 				} else if(data == "re-enter") {
-					$("#checkIdentifyNotice").val("중복된 아이디입니다");
+					$("#checkIdentifyNotice").val("중복된 아이디입니다.");
 					$("#signup-button").attr("disabled", true);
 					$("button").css("background-color", "#d9d9d9");
 				}
@@ -173,7 +220,9 @@
 				$("#signup-button").attr("disabled", false);
 				$("button").css("background-color", "#CDC4B3");
 			} else {
-				$("#signup-repeat-password-label").val("틀렸습니다. 다시 입력해주세요");
+				$("#signup-repeat-password-label").text("비밀번호와 일치하지 않습니다.");
+				$("#signup-repeat-password").val("");
+				$("#signup-repeat-password").focus();
 				$("#signup-button").attr("disabled", true);
 				$("button").css("background-color", "#d9d9d9");
 			}
@@ -182,6 +231,59 @@
 			$("button").css("background-color", "#d9d9d9");
 		}
 	});
+
+	$("#findPwd-identify").on("change keyup paste", function() {
+		if($("#findPwd-identify").val().length > 0 && $("#findPwd-email").val().length > 0) {
+			$("#findPwd-button").attr("disabled", false);
+			$("#findPwd-button").css("background-color", "#CDC4B3");
+		} else {
+			$("#findPwd-button").attr("disabled", true);
+			$("#findPwd-button").css("background-color", "#d9d9d9");
+		}
+	});
+
+	$("#findPwd-email").on("change keyup paste", function() {
+		if($("#findPwd-identify").val().length > 0 && $("#findPwd-email").val().length > 0) {
+			$("#findPwd-button").attr("disabled", false);
+			$("#findPwd-button").css("background-color", "#CDC4B3");
+		} else {
+			$("#findPwd-button").attr("disabled", true);
+			$("#findPwd-button").css("background-color", "#d9d9d9");
+		}
+	});
+
+	$("#findPwd-button").click(function() {
+		$.ajax({
+			type: "GET",
+			url: "/account/checkExistenceByEmail",
+			data: {identify: $("#findPwd-identify").val(), email: $("#findPwd-email").val()},
+			dataType: "text",
+			success: function(data) {
+				if(data == "re-enter") {
+					$("#findPwd h3").text("잘못된 회원정보입니다.");
+					$("#findPwd-button").attr("disabled", true);
+					$("#findPwd-button").css("background-color", "#d9d9d9");
+				} else if(data != "re-enter" && data != null) {
+					$.ajax({
+						type: "PUT",
+						url: "/account/updatePassword",
+						data: data,
+						dataType: "text",
+						success: function(data) {
+							if(data == "fail") {
+								location.href = "/error";
+							} else {
+								$("#findPwd h3").text("비밀번호가 변경되었습니다.");
+								$("#findPwd-button").hide();
+								$("#tempPwd").val("임시 비밀번호는 " + data + "입니다.");
+								$("#tempPwd").show();
+							}
+						}
+					});
+				}
+			}
+		});
+	})
 </script>
 <style>
 	body {
@@ -242,7 +344,8 @@
 	.form {
 		background: rgba(19, 35, 47, 0.9);
 		padding: 40px;
-		max-width: 600px;
+		/*max-width: 600px;*/
+		width: 400px;
 		margin: 40px auto;
 		border-radius: 4px;
 		box-shadow: 0 4px 10px 4px rgba(19, 35, 47, 0.3);
@@ -388,7 +491,7 @@
 		text-align: right;
 	}
 
-	#checkIdentifyNotice {
+	#checkIdentifyNotice, #tempPwd {
 		width: 100%;
 		height: 30px;
 		float: right;

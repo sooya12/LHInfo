@@ -5,17 +5,17 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
+import project.personal.lhinfo.dto.AccountFindPwdDto;
 import project.personal.lhinfo.dto.AccountSigninDto;
 import project.personal.lhinfo.dto.AccountSignupDto;
+import project.personal.lhinfo.dto.AccountUpdatePwdDto;
 import project.personal.lhinfo.entity.Account;
 import project.personal.lhinfo.service.AccountService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.regex.Pattern;
 
 @Controller
 @RequestMapping(value = "/account")
@@ -29,8 +29,6 @@ public class AccountController {
     // 회원가입 기능. AccountSignupDto로 identify, password를 받음
     @RequestMapping(value = "/", method = RequestMethod.POST)
     public String createAccount(Model model, AccountSignupDto accountSignupDto) {
-        logger.info("회원 입력 정보 - " + accountSignupDto.toString());
-
         if(accountService.createAccount(accountSignupDto) >= 1) {
             model.addAttribute("accountName", accountSignupDto.name);
             return "open";
@@ -45,8 +43,6 @@ public class AccountController {
     public String checkIdentify(@RequestParam("identify") String identify) {
         int result = accountService.checkIdentify(identify);
 
-        logger.info("회원 아이디 중복 확인 - " + identify + " / " + result);
-
         if(result < 1) {
             return "available";
         }
@@ -60,8 +56,6 @@ public class AccountController {
     public String checkExistence(AccountSigninDto accountSigninDto) {
         String result = accountService.checkExistence(accountSigninDto);
 
-        logger.info("존재하는 회원 정보 확인 - " + result);
-
         if(result != null) {
             return result;
         }
@@ -72,9 +66,8 @@ public class AccountController {
     // 로그인 시, 회원정보 조회 기능. 세션에 회원정보 저장
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String readAccount(@RequestParam("id") String id, HttpServletRequest request) {
+        logger.info("회원 로그인");
         Account account = accountService.readAccount(id);
-
-        logger.info("회원 로그인 - " + account.toString());
 
         HttpSession session = request.getSession();
         session.setAttribute("account", account);
@@ -86,11 +79,50 @@ public class AccountController {
     @RequestMapping(value = "/signout", method = RequestMethod.GET)
     public String signout(HttpServletRequest request) {
         logger.info("회원 로그아웃");
-        
+
         HttpSession session = request.getSession();
         session.removeAttribute("account");
         session.invalidate();
 
         return "redirect:/";
     }
+
+    // 임시 비밀번호 발급 시, 회원정보 존재 확인 기능
+    @RequestMapping(value = "/checkExistenceByEmail", method = RequestMethod.GET)
+    @ResponseBody
+    public String checkExistenceByEmail(AccountFindPwdDto accountFindPwdDto) {
+        String id = accountService.checkExistenceByEmail(accountFindPwdDto);
+        if(id == null || "".equals(id)) {
+            return "re-enter";
+        } else {
+            return id;
+        }
+    }
+
+    // 임시 비밀번호 발급 시, 회원정보 비밀번호 변경 기능
+    @RequestMapping(value = "updatePassword", method = RequestMethod.PUT)
+    @ResponseBody
+    public String updatePassword(@RequestBody String id) {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < 6; i++) {
+            int idx = (int)(Math.random() * 2);
+
+            if(idx == 0) {
+                sb.append((char)(Math.random() * 10 + '0'));
+            } else {
+                sb.append((char)(Math.random() * 26 + 'a'));
+            }
+        }
+
+        String tempPwd = sb.toString();
+        AccountUpdatePwdDto accountUpdatePwdDto = new AccountUpdatePwdDto(id, tempPwd);
+
+        int result = accountService.updatePassword(accountUpdatePwdDto);
+        if(result == 1) {
+            return tempPwd;
+        } else {
+            return "fail";
+        }
+    }
+
 }

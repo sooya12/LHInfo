@@ -45,4 +45,16 @@
         FROM account
         WHERE identify=#{identify} and password=md5(#{password})
     </select>
+
+    <select id="checkExistenceByEmail" resultType="java.lang.String">
+        SELECT id
+        FROM account
+        WHERE identify=#{identify} and email=#{email}
+    </select>
+
+    <update id="updatePassword" parameterType="UpdatePwdDto">
+        UPDATE account
+        SET password=md5(#{password})
+        WHERE id=#{id}
+    </update>
 </mapper>
