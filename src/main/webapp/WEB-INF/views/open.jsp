@@ -146,7 +146,7 @@
 	$(document).ready(function() {
 		$("#findPwd").hide();
 		$("#tempPwd").hide();
-		$("button").attr("disabled", "true");
+		$("button").attr("disabled", true);
 		$("button").css("background-color", "#d9d9d9");
 	});
 
@@ -154,6 +154,26 @@
 		$("#login").hide();
 		$("#findPwd").show();
 	});
+
+	$("#login-identify").on("change keyup paste", function() {
+	   if($(this).val().length > 0 && $("#login-password").val().length > 0) {
+	       $("#login-button").attr("disabled", false);
+	       $("#login-button").css("background-color", "CDC4B3");
+       } else {
+           $("#login-button").attr("disabled", true);
+           $("#login-button").css("background-color", "d9d9d9");
+       }
+    });
+
+    $("#login-password").on("change keyup paste", function() {
+        if($(this).val().length > 0 && $("#login-identify").val().length > 0) {
+            $("#login-button").attr("disabled", false);
+            $("#login-button").css("background-color", "CDC4B3");
+        } else {
+            $("#login-button").attr("disabled", true);
+            $("#login-button").css("background-color", "d9d9d9");
+        }
+    });
 
 	function checkAccount() {
 		$.ajax({
