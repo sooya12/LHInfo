@@ -228,9 +228,9 @@
         $("#datepicker-end-end").val("");
     });
 
-    var dataSourceArr = [];
-    var allCnt = (${subLeaseNoticeList.size() < 0} ? 1 : ${subLeaseNoticeList.get(0).ALL_CNT});
-    for (var i = 0; i < allCnt; i++) {
+    var dataSourceArr = [1];
+    var allCnt = "${totalCnt}";
+    for (var i = 2; i <= allCnt; i++) {
         dataSourceArr.push(i);
     }
 

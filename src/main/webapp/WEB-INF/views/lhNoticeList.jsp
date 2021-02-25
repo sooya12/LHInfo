@@ -158,9 +158,9 @@
         });
     });
 
-    var dataSourceArr = [];
-    var allCnt = (${lhnoticeList.size() > 0} ? ${lhnoticeList.get(0).ALL_CNT} : 1);
-    for(var i = 0; i < allCnt; i++) {
+    var dataSourceArr = [1];
+    var allCnt = "${totalCnt}";
+    for(var i = 2; i <= allCnt; i++) {
         dataSourceArr.push(i);
     }
 

@@ -61,6 +61,43 @@ public class SubLeaseNoticeServiceImpl implements SubLeaseNoticeService {
         return getNoticeList(urlBuilder.toString());
     }
 
+    private List<SubLeaseNoticeDto> getNoticeList(String urlStr) throws IOException {
+        URL url = new URL(urlStr);
+        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+        conn.setRequestMethod("GET");
+        conn.setRequestProperty("Content-type", "application/json");
+        System.out.println("Response code: " + conn.getResponseCode());
+        BufferedReader rd;
+        if(conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
+            rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+        } else {
+            rd = new BufferedReader(new InputStreamReader(conn.getErrorStream()));
+        }
+        StringBuilder sb = new StringBuilder();
+        String line;
+        while ((line = rd.readLine()) != null) {
+            sb.append(line);
+        }
+        rd.close();
+        conn.disconnect();
+        System.out.println(sb.toString());
+
+        List<SubLeaseNoticeDto> resultList = new ArrayList<>();
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        JsonArray jsonArray = JsonParser.parseString(sb.toString()).getAsJsonArray();
+        JsonObject jsonObject = jsonArray.get(1).getAsJsonObject();
+
+        JsonArray subLeaseNoticeArray = jsonObject.get("dsList").getAsJsonArray();
+
+        for (int i = 0; i < subLeaseNoticeArray.size(); i++) {
+            resultList.add(objectMapper.readValue(subLeaseNoticeArray.get(i).getAsJsonObject().toString(), SubLeaseNoticeDto.class));
+        }
+        System.out.println(resultList.toString());
+
+        return resultList;
+    }
+
     @Override
     public SubLeaseNoticeDetailDto subLeaseNoticeDetail(SubLeaseNoticeDetailSearchDto subLeaseNoticeDetailSearchDto) throws IOException {
         StringBuilder urlBuilder = new StringBuilder("http://apis.data.go.kr/B552555/lhLeaseNoticeDtlInfo/getLeaseNoticeDtlInfo"); /*URL*/
@@ -134,51 +171,7 @@ public class SubLeaseNoticeServiceImpl implements SubLeaseNoticeService {
 
         JsonObject jsonObject = JsonParser.parseString(sb.toString()).getAsJsonObject().get("body").getAsJsonObject();
         JsonArray storeInfoArray = jsonObject.get("items").getAsJsonArray();
-        System.out.println(storeInfoArray);
-
-//        for (int i = 0; i < storeInfoArray.size(); i++) {
-//            result.add(objectMapper.readValue(storeInfoArray.get(i).getAsJsonObject().toString(), SubLeaseNoticeDetailStoreDto.class));
-//        }
-//
-//        System.out.println(result.toString());
 
         return storeInfoArray;
-    }
-
-    private List<SubLeaseNoticeDto> getNoticeList(String urlStr) throws IOException {
-        URL url = new URL(urlStr);
-        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-        conn.setRequestMethod("GET");
-        conn.setRequestProperty("Content-type", "application/json");
-        System.out.println("Response code: " + conn.getResponseCode());
-        BufferedReader rd;
-        if(conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
-            rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-        } else {
-            rd = new BufferedReader(new InputStreamReader(conn.getErrorStream()));
-        }
-        StringBuilder sb = new StringBuilder();
-        String line;
-        while ((line = rd.readLine()) != null) {
-            sb.append(line);
-        }
-        rd.close();
-        conn.disconnect();
-        System.out.println(sb.toString());
-
-        List<SubLeaseNoticeDto> resultList = new ArrayList<>();
-        ObjectMapper objectMapper = new ObjectMapper();
-
-        JsonArray jsonArray = JsonParser.parseString(sb.toString()).getAsJsonArray();
-        JsonObject jsonObject = jsonArray.get(1).getAsJsonObject();
-
-        JsonArray subLeaseNoticeArray = jsonObject.get("dsList").getAsJsonArray();
-
-        for (int i = 0; i < subLeaseNoticeArray.size(); i++) {
-            resultList.add(objectMapper.readValue(subLeaseNoticeArray.get(i).getAsJsonObject().toString(), SubLeaseNoticeDto.class));
-        }
-        System.out.println(resultList.toString());
-
-        return resultList;
     }
 }

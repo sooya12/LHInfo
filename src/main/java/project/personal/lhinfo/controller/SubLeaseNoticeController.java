@@ -1,6 +1,8 @@
 package project.personal.lhinfo.controller;
 
 import com.google.gson.JsonArray;
+import com.google.gson.JsonSyntaxException;
+import com.google.gson.stream.MalformedJsonException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,6 +46,12 @@ public class SubLeaseNoticeController {
             List<SubLeaseNoticeDto> subLeaseNoticeList = subLeaseNoticeService.subLeaseNoticeList(subLeaseNoticeSearchDto);
             model.addAttribute("subLeaseNoticeList", subLeaseNoticeList);
 
+            if(subLeaseNoticeList.isEmpty()) {
+                model.addAttribute("totalCnt", 0);
+            } else {
+                model.addAttribute("totalCnt", subLeaseNoticeList.get(0).ALL_CNT);
+            }
+
             List<Location> locationList = typeService.locationList();
             model.addAttribute("locationList", locationList);
 
@@ -54,6 +62,7 @@ public class SubLeaseNoticeController {
             model.addAttribute("noticeStatusTypeList", noticeStatusTypeList);
         } catch (IOException e) {
             e.printStackTrace();
+
             redirect.addAttribute("location", subLeaseNoticeSearchDto.location);
             redirect.addAttribute("noticeType", subLeaseNoticeSearchDto.noticeType);
             redirect.addAttribute("noticeStatusType", subLeaseNoticeSearchDto.noticeStatusType);

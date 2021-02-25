@@ -36,6 +36,12 @@ public class LHNoticeController {
             List<LHNoticeDto> lhnoticeList = lhNoticeService.lhNoticeList(lhNoticeSearchDto);
             model.addAttribute("lhnoticeList", lhnoticeList);
 
+            if(lhnoticeList.isEmpty()) {
+                model.addAttribute("totalCnt", 0);
+            } else {
+                model.addAttribute("totalCnt", lhnoticeList.get(0).ALL_CNT);
+            }
+
             List<NoticeType> noticeTypeList = typeService.noticeTypeList();
             model.addAttribute("noticeTypeList", noticeTypeList);
 

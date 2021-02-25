@@ -39,8 +39,13 @@ public class LeaseComplexController {
 
         try {
             List<LeaseComplexDto> leaseComplexList = leaseComplexService.leaseComplexList(leaseComplexTypeDto);
-
             model.addAttribute("leaseComplexList", leaseComplexList);
+
+            if(leaseComplexList.isEmpty()) {
+                model.addAttribute("totalCnt", 0);
+            } else {
+                model.addAttribute("totalCnt", leaseComplexList.get(0).ALL_CNT);
+            }
         } catch (Exception e) {
             e.printStackTrace();
             redirect.addAttribute("location", leaseComplexTypeDto.location);
