@@ -3,11 +3,7 @@ package project.personal.lhinfo.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import project.personal.lhinfo.dao.AccountDao;
-import project.personal.lhinfo.dto.AccountFindPwdDto;
-import project.personal.lhinfo.dto.AccountSigninDto;
-import project.personal.lhinfo.dto.AccountSignupDto;
-import project.personal.lhinfo.dto.AccountUpdatePwdDto;
-import project.personal.lhinfo.entity.Account;
+import project.personal.lhinfo.dto.*;
 
 @Service
 public class AccountServiceImpl implements AccountService {
@@ -21,7 +17,7 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public Account readAccount(String id) {
+    public AccountInfoDto readAccount(String id) {
         return accountDao.readAccount(id);
     }
 

@@ -6,16 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import project.personal.lhinfo.dto.AccountFindPwdDto;
-import project.personal.lhinfo.dto.AccountSigninDto;
-import project.personal.lhinfo.dto.AccountSignupDto;
-import project.personal.lhinfo.dto.AccountUpdatePwdDto;
-import project.personal.lhinfo.entity.Account;
+import project.personal.lhinfo.dto.*;
 import project.personal.lhinfo.service.AccountService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.util.regex.Pattern;
 
 @Controller
 @RequestMapping(value = "/account")
@@ -67,7 +62,7 @@ public class AccountController {
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String readAccount(@RequestParam("id") String id, HttpServletRequest request) {
         logger.info("회원 로그인");
-        Account account = accountService.readAccount(id);
+        AccountInfoDto account = accountService.readAccount(id);
 
         HttpSession session = request.getSession();
         session.setAttribute("account", account);
@@ -100,7 +95,7 @@ public class AccountController {
     }
 
     // 임시 비밀번호 발급 시, 회원정보 비밀번호 변경 기능
-    @RequestMapping(value = "updatePassword", method = RequestMethod.PUT)
+    @RequestMapping(value = "/updatePassword", method = RequestMethod.PUT)
     @ResponseBody
     public String updatePassword(@RequestBody String id) {
         StringBuilder sb = new StringBuilder();
