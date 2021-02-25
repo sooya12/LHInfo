@@ -1,8 +1,6 @@
 package project.personal.lhinfo.controller;
 
 import com.google.gson.JsonArray;
-import com.google.gson.JsonSyntaxException;
-import com.google.gson.stream.MalformedJsonException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,7 +38,7 @@ public class SubLeaseNoticeController {
     // 분양임대 공고문 목록 화면으로 이동
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public String subLeaseNoticeList(Model model, SubLeaseNoticeSearchDto subLeaseNoticeSearchDto, RedirectAttributes redirect) {
-        logger.info("분양임대 공고문 목록 - " + subLeaseNoticeSearchDto.toString());
+        logger.info("분양임대 공고문 목록 조회 - " + subLeaseNoticeSearchDto.toString());
 
         try {
             List<SubLeaseNoticeDto> subLeaseNoticeList = subLeaseNoticeService.subLeaseNoticeList(subLeaseNoticeSearchDto);
@@ -80,7 +78,7 @@ public class SubLeaseNoticeController {
     // 분양임대 공고문 상세 화면으로 이동
     @RequestMapping(value = "/detail", method = RequestMethod.GET)
     public String subLeaseNoticeDetail(Model model, SubLeaseNoticeDetailSearchDto subLeaseNoticeDetailSearchDto, RedirectAttributes redirect) {
-        logger.info("분양임대 공고문 상세 - " + subLeaseNoticeDetailSearchDto.toString());
+        logger.info("분양임대 공고문 상세 조회 - " + subLeaseNoticeDetailSearchDto.toString());
 
         try {
             SubLeaseNoticeDetailDto subLeaseNoticeDetailDto = subLeaseNoticeService.subLeaseNoticeDetail(subLeaseNoticeDetailSearchDto);
@@ -103,7 +101,7 @@ public class SubLeaseNoticeController {
     @RequestMapping(value = "/store", method = RequestMethod.GET, produces = "application/text; charset=UTF-8")
     @ResponseBody
     public String subLeaseNoticeDetailStore(String x, String y, RedirectAttributes redirect) {
-        logger.info("분야임대 공고문 상세 상권 조회");
+        logger.info("분양임대 공고문 상세 상권 조회");
 
         try {
             JsonArray store = subLeaseNoticeService.subLeaseNoticeDetailStore(x, y);

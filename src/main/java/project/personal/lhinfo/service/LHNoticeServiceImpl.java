@@ -4,6 +4,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import project.personal.lhinfo.dto.LHNoticeDto;
 import project.personal.lhinfo.dto.LHNoticeSearchDto;
@@ -19,6 +21,9 @@ import java.util.List;
 
 @Service
 public class LHNoticeServiceImpl implements LHNoticeService {
+
+    private static final Logger logger = LoggerFactory.getLogger(LeaseComplexServiceImpl.class);
+
     public String serviceKey = "IhlOKKhbrN3s3DDJbBOWAXyGUX8JND9y16Yg%2Fbrs3nGCYyPxywXIyC%2Fu4Uzi9xUd4AR8XYpnGlcm2E%2FgskkKiQ%3D%3D";
 
     @Override
@@ -51,7 +56,7 @@ public class LHNoticeServiceImpl implements LHNoticeService {
         conn.setRequestMethod("GET");
         conn.setRequestProperty("Content-type", "application/json");
 
-        System.out.println("Response code: " + conn.getResponseCode());
+        logger.info("Response code: " + conn.getResponseCode());
 
         BufferedReader rd;
         if (conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
@@ -68,8 +73,7 @@ public class LHNoticeServiceImpl implements LHNoticeService {
 
         rd.close();
         conn.disconnect();
-
-        System.out.println(sb.toString());
+        logger.info(sb.toString());
 
         List<LHNoticeDto> result = new ArrayList<>();
         ObjectMapper objectMapper = new ObjectMapper();
@@ -79,12 +83,13 @@ public class LHNoticeServiceImpl implements LHNoticeService {
 
         if(jsonObject.get("dsList") != null) {
             JsonArray noticeInfoArray = jsonObject.get("dsList").getAsJsonArray();
+
             for (int i = 0; i < noticeInfoArray.size(); i++) {
                 result.add(objectMapper.readValue(noticeInfoArray.get(i).getAsJsonObject().toString(), LHNoticeDto.class));
             }
         }
 
-        System.out.println(result.toString());
+        logger.info(result.toString());
 
         return result;
     }
@@ -96,11 +101,15 @@ public class LHNoticeServiceImpl implements LHNoticeService {
         urlBuilder.append("&" + URLEncoder.encode("PG_SZ", "UTF-8") + "=" + URLEncoder.encode("10", "UTF-8")); /*한 페이지 결과 수*/
         urlBuilder.append("&" + URLEncoder.encode("SCH_ST_DT", "UTF-8") + "=" + URLEncoder.encode("2019-01-01", "UTF-8")); /*기간검색-시작일*/
         urlBuilder.append("&" + URLEncoder.encode("PAGE", "UTF-8") + "=" + URLEncoder.encode("1", "UTF-8")); /*페이지번호*/
+
         URL url = new URL(urlBuilder.toString());
+
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setRequestMethod("GET");
         conn.setRequestProperty("Content-type", "application/json");
-        System.out.println("Response code: " + conn.getResponseCode());
+
+        logger.info("Response code: " + conn.getResponseCode());
+
         BufferedReader rd;
         if (conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
             rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
@@ -114,7 +123,7 @@ public class LHNoticeServiceImpl implements LHNoticeService {
         }
         rd.close();
         conn.disconnect();
-        System.out.println(sb.toString());
+        logger.info(sb.toString());
 
         List<LHNoticeDto> result = new ArrayList<>();
         ObjectMapper objectMapper = new ObjectMapper();
@@ -127,7 +136,7 @@ public class LHNoticeServiceImpl implements LHNoticeService {
             result.add(objectMapper.readValue(noticeInfoArray.get(i).getAsJsonObject().toString(), LHNoticeDto.class));
         }
 
-        System.out.println(result.toString());
+        logger.info(result.toString());
 
         return result;
     }

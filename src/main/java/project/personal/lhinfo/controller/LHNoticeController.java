@@ -10,7 +10,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import project.personal.lhinfo.dto.LHNoticeDto;
 import project.personal.lhinfo.dto.LHNoticeSearchDto;
 import project.personal.lhinfo.entity.NoticeType;
-import project.personal.lhinfo.entity.SupplyType;
 import project.personal.lhinfo.service.LHNoticeService;
 import project.personal.lhinfo.service.TypeService;
 

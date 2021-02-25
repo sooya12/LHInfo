@@ -5,6 +5,7 @@ import lombok.*;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 public class LeaseComplexDto {
     public String DDO_AR;       // 전용면적
     public String RFE;          // 월임대료

@@ -3,55 +3,65 @@
 
 <mapper namespace="lhinfoDB">
 
+    <!-- 지역 목록 조회 -->
     <select id="selectLocations" resultType="Location">
         SELECT *
         FROM location
     </select>
 
+    <!-- 공급유형 목록 조회 -->
     <select id="selectSupplyTypes" resultType="SupplyType">
         SELECT *
         FROM supplytype
     </select>
 
+    <!-- 공고유형 목록 조회 -->
     <select id="selectNoticeTypes" resultType="NoticeType">
         SELECT *
         FROM noticetype
     </select>
 
+    <!-- 공고상태 목록 조회 -->
     <select id="selectNoticeStatusTypes" resultType="NoticeStatusType">
         SELECT *
         FROM noticestatustype
     </select>
 
+    <!-- 회원 등록 -->
     <insert id="insertAccount" parameterType="Account">
         INSERT INTO account (identify, password, name, email)
         VALUES (#{identify}, md5(#{password}), #{name}, #{email})
     </insert>
 
+    <!-- 회원정보 조회 -->
     <select id="selectAccount" resultType="AccountInfoDto">
         SELECT id, identify, name, email
         FROM account
         WHERE id=#{id}
     </select>
 
+    <!-- identify 중복확인 -->
     <select id="checkIdentify" resultType="java.lang.Integer">
         SELECT count(*)
         FROM account
         WHERE identify=#{identify}
     </select>
 
+    <!-- 회원정보 존재 확인 (identify, password) - 로그인 -->
     <select id="checkExistence" resultType="java.lang.String">
         SELECT id
         FROM account
         WHERE identify=#{identify} and password=md5(#{password})
     </select>
 
+    <!-- 회원정보 존재 확인 (identify, email) - 임시 비밀번호 발급 -->
     <select id="checkExistenceByEmail" resultType="java.lang.String">
         SELECT id
         FROM account
         WHERE identify=#{identify} and email=#{email}
     </select>
 
+    <!-- 회원정보 비밀번호 변경 - 임시 비밀번호 발급 -->
     <update id="updatePassword" parameterType="UpdatePwdDto">
         UPDATE account
         SET password=md5(#{password})

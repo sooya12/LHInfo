@@ -42,7 +42,7 @@ public class LeaseComplexServiceImpl implements LeaseComplexService {
         conn.setRequestMethod("GET");
         conn.setRequestProperty("Content-type", "application/json");
 
-        System.out.println("Response code: " + conn.getResponseCode());
+        logger.info("Response code: " + conn.getResponseCode());
 
         BufferedReader rd;
         if(conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
@@ -59,6 +59,7 @@ public class LeaseComplexServiceImpl implements LeaseComplexService {
         }
         rd.close();
         conn.disconnect();
+        logger.info(sb.toString());
 
         List<LeaseComplexDto> resultList = new ArrayList<>();
         ObjectMapper objectMapper = new ObjectMapper();

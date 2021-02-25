@@ -1,5 +1,6 @@
 package project.personal.lhinfo.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -7,6 +8,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 public class SubLeaseNoticeDetailStoreDto {
     public String indsLclsCd;   // 상권업종 대분류 코드
     public String indsLclsNm;   // 상권업종 대분류 이름
