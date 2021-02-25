@@ -32,7 +32,7 @@ public class HomeController {
 
     // 로그인, 회원가입 안내 화면으로 이동
     @RequestMapping(value = "/", method = RequestMethod.GET)
-    public String open(HttpServletRequest request) throws FileNotFoundException {
+    public String open(HttpServletRequest request) {
         logger.info("분양임대 정보 제공 서비스 - open");
 
         HttpSession session = request.getSession();
