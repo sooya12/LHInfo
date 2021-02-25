@@ -10,7 +10,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import project.personal.lhinfo.dto.LHNoticeDto;
 import project.personal.lhinfo.dto.LHNoticeSearchDto;
 import project.personal.lhinfo.entity.NoticeType;
-import project.personal.lhinfo.entity.SupplyType;
 import project.personal.lhinfo.service.LHNoticeService;
 import project.personal.lhinfo.service.TypeService;
 
@@ -35,6 +34,12 @@ public class LHNoticeController {
         try {
             List<LHNoticeDto> lhnoticeList = lhNoticeService.lhNoticeList(lhNoticeSearchDto);
             model.addAttribute("lhnoticeList", lhnoticeList);
+
+            if(lhnoticeList.isEmpty()) {
+                model.addAttribute("totalCnt", 0);
+            } else {
+                model.addAttribute("totalCnt", lhnoticeList.get(0).ALL_CNT);
+            }
 
             List<NoticeType> noticeTypeList = typeService.noticeTypeList();
             model.addAttribute("noticeTypeList", noticeTypeList);

@@ -9,15 +9,19 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class AccountUpdatePwdDto {
+public class AccountInfoDto {
     public String id;
-    public String password;
+    public String identify;
+    public String name;
+    public String email;
 
     @Override
     public String toString() {
-        return "AccountUpdatePwdDto{" +
+        return "AccountInfoDto{" +
                 "id='" + id + '\'' +
-                ", password='" + password + '\'' +
+                ", identify='" + identify + '\'' +
+                ", name='" + name + '\'' +
+                ", email='" + email + '\'' +
                 '}';
     }
 }

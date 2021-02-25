@@ -1,16 +1,12 @@
 package project.personal.lhinfo.service;
 
-import project.personal.lhinfo.dto.AccountFindPwdDto;
-import project.personal.lhinfo.dto.AccountSigninDto;
-import project.personal.lhinfo.dto.AccountSignupDto;
-import project.personal.lhinfo.dto.AccountUpdatePwdDto;
-import project.personal.lhinfo.entity.Account;
+import project.personal.lhinfo.dto.*;
 
 public interface AccountService {
 
     int createAccount(AccountSignupDto accountSignupDto);
 
-    Account readAccount(String id);
+    AccountInfoDto readAccount(String id);
 
     int checkIdentify(String identify);
 

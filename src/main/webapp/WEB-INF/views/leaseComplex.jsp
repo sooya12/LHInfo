@@ -107,12 +107,6 @@
 </body>
 </html>
 <script>
-    var dataSourceArr = [];
-    var allCnt = (${leaseComplexList.size() > 0} ? ${leaseComplexList.get(0).ALL_CNT} : 1);
-    for(var i = 0; i < allCnt; i++) {
-        dataSourceArr.push(i);
-    }
-
     $(document).ready(function () {
         if(${currentValue.location != ""}) {
             $("#selLocation option[value=${currentValue.location}]").attr("selected", true);
@@ -128,6 +122,12 @@
 
         $("#selPage option[value=${currentValue.page}]").attr("selected", true);
     });
+
+    var dataSourceArr = [1];
+    var allCnt = "${totalCnt}";
+    for(var i = 2; i <= allCnt; i++) {
+        dataSourceArr.push(i);
+    }
 
     $("#paginationArea").pagination({
         dataSource: dataSourceArr,

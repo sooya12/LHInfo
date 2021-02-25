@@ -1,5 +1,6 @@
 package project.personal.lhinfo.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -7,6 +8,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 public class SubLeaseNoticeDto {
     public String PAN_SS;               // 공고상태
     public String RNUM;                 // 순번

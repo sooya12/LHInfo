@@ -31,6 +31,8 @@ public class LeaseComplexController {
     // 임대단지 목록 조회 화면으로 이동
     @RequestMapping(value = "/leasecomplex", method = RequestMethod.GET)
     public String leaseComplexList(Model model, LeaseComplexTypeDto leaseComplexTypeDto, RedirectAttributes redirect) {
+        logger.info("임대단지 목록 조회 - " + leaseComplexTypeDto.toString());
+
         List<Location> locationList = typeService.locationList();
         model.addAttribute("locationList", locationList);
 
@@ -39,8 +41,13 @@ public class LeaseComplexController {
 
         try {
             List<LeaseComplexDto> leaseComplexList = leaseComplexService.leaseComplexList(leaseComplexTypeDto);
-
             model.addAttribute("leaseComplexList", leaseComplexList);
+
+            if(leaseComplexList.isEmpty()) {
+                model.addAttribute("totalCnt", 0);
+            } else {
+                model.addAttribute("totalCnt", leaseComplexList.get(0).ALL_CNT);
+            }
         } catch (Exception e) {
             e.printStackTrace();
             redirect.addAttribute("location", leaseComplexTypeDto.location);

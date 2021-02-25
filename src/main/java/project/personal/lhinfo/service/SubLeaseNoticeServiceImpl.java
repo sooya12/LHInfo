@@ -4,6 +4,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import project.personal.lhinfo.dto.*;
 
@@ -18,6 +20,8 @@ import java.util.List;
 
 @Service
 public class SubLeaseNoticeServiceImpl implements SubLeaseNoticeService {
+
+    private static final Logger logger = LoggerFactory.getLogger(LeaseComplexServiceImpl.class);
 
     private static String serviceKey = "IhlOKKhbrN3s3DDJbBOWAXyGUX8JND9y16Yg%2Fbrs3nGCYyPxywXIyC%2Fu4Uzi9xUd4AR8XYpnGlcm2E%2FgskkKiQ%3D%3D";
 
@@ -61,96 +65,15 @@ public class SubLeaseNoticeServiceImpl implements SubLeaseNoticeService {
         return getNoticeList(urlBuilder.toString());
     }
 
-    @Override
-    public SubLeaseNoticeDetailDto subLeaseNoticeDetail(SubLeaseNoticeDetailSearchDto subLeaseNoticeDetailSearchDto) throws IOException {
-        StringBuilder urlBuilder = new StringBuilder("http://apis.data.go.kr/B552555/lhLeaseNoticeDtlInfo/getLeaseNoticeDtlInfo"); /*URL*/
-        urlBuilder.append("?" + URLEncoder.encode("ServiceKey", "UTF-8") + "=" + serviceKey); /*Service Key*/
-        urlBuilder.append("&" + URLEncoder.encode("SPL_INF_TP_CD", "UTF-8") + "=" + URLEncoder.encode(subLeaseNoticeDetailSearchDto.SPL_INF_TP_CD, "UTF-8")); /*분양임대공고문조회 API의 특정 공고의 응답 메시지 중 공급정보구분코드*/
-        urlBuilder.append("&" + URLEncoder.encode("CCR_CNNT_SYS_DS_CD", "UTF-8") + "=" + URLEncoder.encode(subLeaseNoticeDetailSearchDto.CCR_CNNT_SYS_DS_CD, "UTF-8")); /*분양임대공고문조회 API의 특정 공고의 응답 메시지 중 고객센터연계시스템구분코드*/
-        urlBuilder.append("&" + URLEncoder.encode("PAN_ID", "UTF-8") + "=" + URLEncoder.encode(subLeaseNoticeDetailSearchDto.PAN_ID, "UTF-8")); /*분양임대공고문조회 API의 특정 공고의 응답 메시지 중 공고아이디*/
-        urlBuilder.append("&" + URLEncoder.encode("UPP_AIS_TP_CD", "UTF-8") + "=" + URLEncoder.encode(subLeaseNoticeDetailSearchDto.UPP_AIS_TP_CD, "UTF-8")); /*분양임대공고문조회 API의 특정 공고의 응답 메시지 중 상위매물유형코드*/
-        urlBuilder.append("&" + URLEncoder.encode("AIS_TP_CD", "UTF-8") + "=" + URLEncoder.encode(subLeaseNoticeDetailSearchDto.AIS_TP_CD, "UTF-8")); /*분양임대공고문조회 API의 특정 공고의 응답 메시지 중 매물유형코드*/
-        URL url = new URL(urlBuilder.toString());
-        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-        conn.setRequestMethod("GET");
-        conn.setRequestProperty("Content-type", "application/json");
-        System.out.println("Response code: " + conn.getResponseCode());
-        BufferedReader rd;
-        if (conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
-            rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-        } else {
-            rd = new BufferedReader(new InputStreamReader(conn.getErrorStream()));
-        }
-        StringBuilder sb = new StringBuilder();
-        String line;
-        while ((line = rd.readLine()) != null) {
-            sb.append(line);
-        }
-        rd.close();
-        conn.disconnect();
-        System.out.println(sb.toString());
-
-        ObjectMapper objectMapper = new ObjectMapper();
-        objectMapper.configure(com.fasterxml.jackson.core.JsonParser.Feature.ALLOW_UNQUOTED_CONTROL_CHARS, true);
-        JsonArray jsonArray = JsonParser.parseString(sb.toString()).getAsJsonArray();
-        JsonObject jsonObject = jsonArray.get(1).getAsJsonObject();
-
-        SubLeaseNoticeDetailDto detail = objectMapper.readValue(jsonObject.toString(), SubLeaseNoticeDetailDto.class);
-        System.out.println(detail.toString());
-
-        return detail;
-    }
-
-    @Override
-    public JsonArray subLeaseNoticeDetailStore(String x, String y) throws IOException {
-        StringBuilder urlBuilder = new StringBuilder("http://apis.data.go.kr/B553077/api/open/sdsc/storeStatsUpjongInRadius"); /*URL*/
-        urlBuilder.append("?" + URLEncoder.encode("ServiceKey", "UTF-8") + "=" + serviceKey); /*Service Key*/
-        urlBuilder.append("&" + URLEncoder.encode("radius", "UTF-8") + "=" + URLEncoder.encode("500", "UTF-8")); /* 반경 */
-        urlBuilder.append("&" + URLEncoder.encode("cy", "UTF-8") + "=" + URLEncoder.encode(y, "UTF-8")); /* 경도 */
-        urlBuilder.append("&" + URLEncoder.encode("cx", "UTF-8") + "=" + URLEncoder.encode(x, "UTF-8")); /* 위도 */
-        urlBuilder.append("&" + URLEncoder.encode("type", "UTF-8") + "=" + URLEncoder.encode("json", "UTF-8")); /* 결과 형식 */
-        URL url = new URL(urlBuilder.toString());
-        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-        conn.setRequestMethod("GET");
-        conn.setRequestProperty("Content-type", "application/json");
-        System.out.println("Response code: " + conn.getResponseCode());
-        BufferedReader rd;
-        if (conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
-            rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-        } else {
-            rd = new BufferedReader(new InputStreamReader(conn.getErrorStream()));
-        }
-        StringBuilder sb = new StringBuilder();
-        String line;
-        while ((line = rd.readLine()) != null) {
-            sb.append(line);
-        }
-        rd.close();
-        conn.disconnect();
-        System.out.println(sb.toString());
-
-        List<SubLeaseNoticeDetailStoreDto> result = new ArrayList<>();
-        ObjectMapper objectMapper = new ObjectMapper();
-
-        JsonObject jsonObject = JsonParser.parseString(sb.toString()).getAsJsonObject().get("body").getAsJsonObject();
-        JsonArray storeInfoArray = jsonObject.get("items").getAsJsonArray();
-        System.out.println(storeInfoArray);
-
-//        for (int i = 0; i < storeInfoArray.size(); i++) {
-//            result.add(objectMapper.readValue(storeInfoArray.get(i).getAsJsonObject().toString(), SubLeaseNoticeDetailStoreDto.class));
-//        }
-//
-//        System.out.println(result.toString());
-
-        return storeInfoArray;
-    }
-
     private List<SubLeaseNoticeDto> getNoticeList(String urlStr) throws IOException {
         URL url = new URL(urlStr);
+
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setRequestMethod("GET");
         conn.setRequestProperty("Content-type", "application/json");
-        System.out.println("Response code: " + conn.getResponseCode());
+
+        logger.info("Response code: " + conn.getResponseCode());
+
         BufferedReader rd;
         if(conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
             rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
@@ -164,7 +87,7 @@ public class SubLeaseNoticeServiceImpl implements SubLeaseNoticeService {
         }
         rd.close();
         conn.disconnect();
-        System.out.println(sb.toString());
+        logger.info(sb.toString());
 
         List<SubLeaseNoticeDto> resultList = new ArrayList<>();
         ObjectMapper objectMapper = new ObjectMapper();
@@ -177,8 +100,90 @@ public class SubLeaseNoticeServiceImpl implements SubLeaseNoticeService {
         for (int i = 0; i < subLeaseNoticeArray.size(); i++) {
             resultList.add(objectMapper.readValue(subLeaseNoticeArray.get(i).getAsJsonObject().toString(), SubLeaseNoticeDto.class));
         }
-        System.out.println(resultList.toString());
+        logger.info(resultList.toString());
 
         return resultList;
+    }
+
+    @Override
+    public SubLeaseNoticeDetailDto subLeaseNoticeDetail(SubLeaseNoticeDetailSearchDto subLeaseNoticeDetailSearchDto) throws IOException {
+        StringBuilder urlBuilder = new StringBuilder("http://apis.data.go.kr/B552555/lhLeaseNoticeDtlInfo/getLeaseNoticeDtlInfo"); /*URL*/
+        urlBuilder.append("?" + URLEncoder.encode("ServiceKey", "UTF-8") + "=" + serviceKey); /*Service Key*/
+        urlBuilder.append("&" + URLEncoder.encode("SPL_INF_TP_CD", "UTF-8") + "=" + URLEncoder.encode(subLeaseNoticeDetailSearchDto.SPL_INF_TP_CD, "UTF-8")); /*분양임대공고문조회 API의 특정 공고의 응답 메시지 중 공급정보구분코드*/
+        urlBuilder.append("&" + URLEncoder.encode("CCR_CNNT_SYS_DS_CD", "UTF-8") + "=" + URLEncoder.encode(subLeaseNoticeDetailSearchDto.CCR_CNNT_SYS_DS_CD, "UTF-8")); /*분양임대공고문조회 API의 특정 공고의 응답 메시지 중 고객센터연계시스템구분코드*/
+        urlBuilder.append("&" + URLEncoder.encode("PAN_ID", "UTF-8") + "=" + URLEncoder.encode(subLeaseNoticeDetailSearchDto.PAN_ID, "UTF-8")); /*분양임대공고문조회 API의 특정 공고의 응답 메시지 중 공고아이디*/
+        urlBuilder.append("&" + URLEncoder.encode("UPP_AIS_TP_CD", "UTF-8") + "=" + URLEncoder.encode(subLeaseNoticeDetailSearchDto.UPP_AIS_TP_CD, "UTF-8")); /*분양임대공고문조회 API의 특정 공고의 응답 메시지 중 상위매물유형코드*/
+        urlBuilder.append("&" + URLEncoder.encode("AIS_TP_CD", "UTF-8") + "=" + URLEncoder.encode(subLeaseNoticeDetailSearchDto.AIS_TP_CD, "UTF-8")); /*분양임대공고문조회 API의 특정 공고의 응답 메시지 중 매물유형코드*/
+
+        URL url = new URL(urlBuilder.toString());
+
+        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+        conn.setRequestMethod("GET");
+        conn.setRequestProperty("Content-type", "application/json");
+
+        logger.info("Response code: " + conn.getResponseCode());
+
+        BufferedReader rd;
+        if (conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
+            rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+        } else {
+            rd = new BufferedReader(new InputStreamReader(conn.getErrorStream()));
+        }
+        StringBuilder sb = new StringBuilder();
+        String line;
+        while ((line = rd.readLine()) != null) {
+            sb.append(line);
+        }
+        rd.close();
+        conn.disconnect();
+        logger.info(sb.toString());
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.configure(com.fasterxml.jackson.core.JsonParser.Feature.ALLOW_UNQUOTED_CONTROL_CHARS, true);
+        JsonArray jsonArray = JsonParser.parseString(sb.toString()).getAsJsonArray();
+        JsonObject jsonObject = jsonArray.get(1).getAsJsonObject();
+
+        SubLeaseNoticeDetailDto detail = objectMapper.readValue(jsonObject.toString(), SubLeaseNoticeDetailDto.class);
+        logger.info(detail.toString());
+
+        return detail;
+    }
+
+    @Override
+    public JsonArray subLeaseNoticeDetailStore(String x, String y) throws IOException {
+        StringBuilder urlBuilder = new StringBuilder("http://apis.data.go.kr/B553077/api/open/sdsc/storeStatsUpjongInRadius"); /*URL*/
+        urlBuilder.append("?" + URLEncoder.encode("ServiceKey", "UTF-8") + "=" + serviceKey); /*Service Key*/
+        urlBuilder.append("&" + URLEncoder.encode("radius", "UTF-8") + "=" + URLEncoder.encode("500", "UTF-8")); /* 반경 */
+        urlBuilder.append("&" + URLEncoder.encode("cy", "UTF-8") + "=" + URLEncoder.encode(y, "UTF-8")); /* 경도 */
+        urlBuilder.append("&" + URLEncoder.encode("cx", "UTF-8") + "=" + URLEncoder.encode(x, "UTF-8")); /* 위도 */
+        urlBuilder.append("&" + URLEncoder.encode("type", "UTF-8") + "=" + URLEncoder.encode("json", "UTF-8")); /* 결과 형식 */
+
+        URL url = new URL(urlBuilder.toString());
+
+        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+        conn.setRequestMethod("GET");
+        conn.setRequestProperty("Content-type", "application/json");
+
+        logger.info("Response code: " + conn.getResponseCode());
+
+        BufferedReader rd;
+        if (conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
+            rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+        } else {
+            rd = new BufferedReader(new InputStreamReader(conn.getErrorStream()));
+        }
+        StringBuilder sb = new StringBuilder();
+        String line;
+        while ((line = rd.readLine()) != null) {
+            sb.append(line);
+        }
+        rd.close();
+        conn.disconnect();
+        logger.info(sb.toString());
+
+        JsonObject jsonObject = JsonParser.parseString(sb.toString()).getAsJsonObject().get("body").getAsJsonObject();
+        JsonArray storeInfoArray = jsonObject.get("items").getAsJsonArray();
+
+        return storeInfoArray;
     }
 }

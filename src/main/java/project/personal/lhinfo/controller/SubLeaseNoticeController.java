@@ -38,11 +38,17 @@ public class SubLeaseNoticeController {
     // 분양임대 공고문 목록 화면으로 이동
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public String subLeaseNoticeList(Model model, SubLeaseNoticeSearchDto subLeaseNoticeSearchDto, RedirectAttributes redirect) {
-        logger.info("분양임대 공고문 목록 - " + subLeaseNoticeSearchDto.toString());
+        logger.info("분양임대 공고문 목록 조회 - " + subLeaseNoticeSearchDto.toString());
 
         try {
             List<SubLeaseNoticeDto> subLeaseNoticeList = subLeaseNoticeService.subLeaseNoticeList(subLeaseNoticeSearchDto);
             model.addAttribute("subLeaseNoticeList", subLeaseNoticeList);
+
+            if(subLeaseNoticeList.isEmpty()) {
+                model.addAttribute("totalCnt", 0);
+            } else {
+                model.addAttribute("totalCnt", subLeaseNoticeList.get(0).ALL_CNT);
+            }
 
             List<Location> locationList = typeService.locationList();
             model.addAttribute("locationList", locationList);
@@ -54,6 +60,7 @@ public class SubLeaseNoticeController {
             model.addAttribute("noticeStatusTypeList", noticeStatusTypeList);
         } catch (IOException e) {
             e.printStackTrace();
+
             redirect.addAttribute("location", subLeaseNoticeSearchDto.location);
             redirect.addAttribute("noticeType", subLeaseNoticeSearchDto.noticeType);
             redirect.addAttribute("noticeStatusType", subLeaseNoticeSearchDto.noticeStatusType);
@@ -71,7 +78,7 @@ public class SubLeaseNoticeController {
     // 분양임대 공고문 상세 화면으로 이동
     @RequestMapping(value = "/detail", method = RequestMethod.GET)
     public String subLeaseNoticeDetail(Model model, SubLeaseNoticeDetailSearchDto subLeaseNoticeDetailSearchDto, RedirectAttributes redirect) {
-        logger.info("분양임대 공고문 상세 - " + subLeaseNoticeDetailSearchDto.toString());
+        logger.info("분양임대 공고문 상세 조회 - " + subLeaseNoticeDetailSearchDto.toString());
 
         try {
             SubLeaseNoticeDetailDto subLeaseNoticeDetailDto = subLeaseNoticeService.subLeaseNoticeDetail(subLeaseNoticeDetailSearchDto);
@@ -94,7 +101,7 @@ public class SubLeaseNoticeController {
     @RequestMapping(value = "/store", method = RequestMethod.GET, produces = "application/text; charset=UTF-8")
     @ResponseBody
     public String subLeaseNoticeDetailStore(String x, String y, RedirectAttributes redirect) {
-        logger.info("분야임대 공고문 상세 상권 조회");
+        logger.info("분양임대 공고문 상세 상권 조회");
 
         try {
             JsonArray store = subLeaseNoticeService.subLeaseNoticeDetailStore(x, y);

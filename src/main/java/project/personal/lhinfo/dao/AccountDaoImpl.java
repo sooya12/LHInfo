@@ -3,11 +3,7 @@ package project.personal.lhinfo.dao;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import project.personal.lhinfo.dto.AccountFindPwdDto;
-import project.personal.lhinfo.dto.AccountSigninDto;
-import project.personal.lhinfo.dto.AccountSignupDto;
-import project.personal.lhinfo.dto.AccountUpdatePwdDto;
-import project.personal.lhinfo.entity.Account;
+import project.personal.lhinfo.dto.*;
 
 @Repository
 public class AccountDaoImpl implements AccountDao{
@@ -15,17 +11,14 @@ public class AccountDaoImpl implements AccountDao{
     @Autowired
     private SqlSessionTemplate session;
 
-    @Autowired
-    Account account;
-
     @Override
     public int createAccount(AccountSignupDto accountSignupDto) {
         return session.insert("lhinfoDB.insertAccount", accountSignupDto);
     }
 
     @Override
-    public Account readAccount(String id) {
-        account = session.selectOne("lhinfoDB.selectAccount", id);
+    public AccountInfoDto readAccount(String id) {
+        AccountInfoDto account = session.selectOne("lhinfoDB.selectAccount", id);
         return account;
     }
 

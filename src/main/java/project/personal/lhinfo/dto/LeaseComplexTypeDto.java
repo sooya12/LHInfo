@@ -1,10 +1,12 @@
 package project.personal.lhinfo.dto;
 
-import lombok.Getter;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class LeaseComplexTypeDto {
     public String location;
     public String supplyType;

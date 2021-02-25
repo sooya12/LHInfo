@@ -1,5 +1,6 @@
 package project.personal.lhinfo.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -7,6 +8,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 public class SubLeaseNoticeDetailSearchDto {
     public String AIS_TP_CD;            // 매물유형코드
     public String SPL_INF_TP_CD;        // 공급정보구분코드
