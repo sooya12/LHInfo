@@ -28,8 +28,8 @@
         VALUES (#{identify}, md5(#{password}), #{name}, #{email})
     </insert>
 
-    <select id="selectAccount" resultType="Account">
-        SELECT *
+    <select id="selectAccount" resultType="AccountInfoDto">
+        SELECT id, identify, name, email
         FROM account
         WHERE id=#{id}
     </select>
