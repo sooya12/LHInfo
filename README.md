@@ -38,7 +38,7 @@
 
 - ###### API
 
-  ![](https://img.shields.io/badge/Kakao Maps API-Kakao-black) ![](https://img.shields.io/badge/임대주택단지 조회 API-공공데이터포털-black) ![](https://img.shields.io/badge/분양임대 공고문 조회 API-공공데이터포털-black) ![](https://img.shields.io/badge/분양임대공고별 상세 정보 조회 API-공공데이터포털-black) ![](https://img.shields.io/badge/청약센터 공지사항 목록 조회 API-공공데이터포털-black) ![](https://img.shields.io/badge/소상공인진흥공단 상가(상권) 정보 API-공공데이터포털-black) 
+  ![](https://img.shields.io/badge/KakaoMapsAPI-Kakao-black) ![](https://img.shields.io/badge/임대주택단지조회API-공공데이터포털-black) ![](https://img.shields.io/badge/분양임대공고문조회API-공공데이터포털-black) ![](https://img.shields.io/badge/분양임대공고별상세정보조회API-공공데이터포털-black) ![](https://img.shields.io/badge/청약센터공지사항목록조회API-공공데이터포털-black) ![](https://img.shields.io/badge/소상공인진흥공단상가(상권)정보API-공공데이터포털-black) 
 
 
 
@@ -48,7 +48,7 @@
 
 ### :electric_plug: 배포 환경
 
-![](https://img.shields.io/badge/AWS EC2-_-purple) ![](https://img.shields.io/badge/Ubuntu-20.04-purple) ![](https://img.shields.io/badge/NginX-_-purple) ![](https://img.shields.io/badge/Tomcat-8.5.63-purple) ![](https://img.shields.io/badge/Java-1.11-purple) ![](https://img.shields.io/badge/Docker-_-purple) ![](https://img.shields.io/badge/MySQL-latest-purple)
+![](https://img.shields.io/badge/AWS_EC2-_-purple) ![](https://img.shields.io/badge/Ubuntu-20.04-purple) ![](https://img.shields.io/badge/NginX-_-purple) ![](https://img.shields.io/badge/Tomcat-8.5.63-purple) ![](https://img.shields.io/badge/Java-1.11-purple) ![](https://img.shields.io/badge/Docker-_-purple) ![](https://img.shields.io/badge/MySQL-latest-purple)
 
 
 
@@ -71,61 +71,7 @@
   파일의 내용을 수정했으나, 기능적인 부분이 아닌 주석, 불필요한 코드 등 코드 정리의 목적일 경우
 
 
-
 ---
-
-
-
-### :date: 일정계획표 _ Gantt
-
-```mermaid
-gantt
-	dateFormat 	YYYY-MM-DD
-	title		분양임대 정보 제공 서비스 _ TimeSchedule
-	excludes 	sunday
-	
-	section		프로젝트 기획 및 설계
-	주제 선정	:2020-12-30,	1d
-	기획		:2020-12-31, 3d
-	기능 설계  :2021-01-02, 2d
-    Open API Test	:2021-01-04, 3d
-    TimeSchedule 작성 :2021-01-05, 3h
-    Entity 설계		:2021-01-05, 2d
-    DB 설계		:2021-01-07, 1d
-    API 설계			:2021-01-07, 2d
-    Class 설계		:2021-01-08, 2d
-    SW 아키텍처 설계 :2021-01-13, 2d
-    
-    section 	Backend 개발
-    DB 구축	:2021-01-11, 1d
-    임대단지 목록 기능 :2021-01-11, 6d
-    회원 기능 :2021-01-16, 2d
-    분양임대 공고문 목록 기능 :2021-01-18, 6d
-    분양임대 공고문 상세 기능 :2021-01-25, 6d
-    청약센터 공고문 목록 기능 :2021-02-01, 6d
-    메인 화면 기능 :2021-02-08, 6d
-    
-    section 	Frontend 개발
-    임대단지 목록 화면 :2021-01-13, 4d
-    회원 화면 :2021-01-16, 2d
-    분양임대 공고문 목록 화면 :2021-01-20, 4d
-    분양임대 공고문 상세 화면 :2021-01-27, 4d
-    청약센터 공고문 목록 화면 :2021-02-03, 4d
-    메인 화면 :2021-02-10, 4d
-    
-    section 	테스트 및 배포
-    기능 테스트	:2021-02-15, 3d
-    유지보수 :2021-02-15, 3d
-    AWS 배포 :2021-02-18, 3d
-    
-    section 	문서화
-    산출물 작성 :2021-02-22, 2d
-    결과 보고서 작성 :2021-02-24, 4d
-    
-```
-
-----
-
 
 
 ### :open_file_folder: 파일 구조
