@@ -5,6 +5,8 @@ import org.springframework.stereotype.Service;
 import project.personal.lhinfo.dao.AccountDao;
 import project.personal.lhinfo.dto.*;
 
+import java.util.List;
+
 @Service
 public class AccountServiceImpl implements AccountService {
 
@@ -39,5 +41,15 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public int updatePassword(AccountUpdatePwdDto accountUpdatePwdDto) {
         return accountDao.updatePassword(accountUpdatePwdDto);
+    }
+
+    @Override
+    public int createAccountLookup(AccountLookupDto accountLookupDto) {
+        return accountDao.createAccountLookup(accountLookupDto);
+    }
+
+    @Override
+    public List<AccountLookupDto> accountLookupList(String accountid) {
+        return accountDao.accountLookupList(accountid);
     }
 }

@@ -67,4 +67,18 @@
         SET password=md5(#{password})
         WHERE id=#{id}
     </update>
+
+    <!-- 회원 검색내역 저장 -->
+    <insert id="insertAccountLookup" parameterType="AccountLookupDto">
+        INSERT INTO accountlookup (accountid, category, type1, type2, url)
+        VALUES (#{accountid}, #{category}, #{type1}, #{type2}, #{url})
+    </insert>
+
+    <!-- 회원 검색내역 조회 -->
+    <select id="selectAccountLookups" resultType="AccountLookupDto">
+        SELECT *
+        FROM accountlookup
+        WHERE accountid=#{accountid}
+        ORDER BY id DESC
+    </select>
 </mapper>

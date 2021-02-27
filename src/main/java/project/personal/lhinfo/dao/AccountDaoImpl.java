@@ -5,6 +5,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import project.personal.lhinfo.dto.*;
 
+import java.util.List;
+
 @Repository
 public class AccountDaoImpl implements AccountDao{
 
@@ -40,6 +42,16 @@ public class AccountDaoImpl implements AccountDao{
     @Override
     public int updatePassword(AccountUpdatePwdDto accountUpdatePwdDto) {
         return session.update("lhinfoDB.updatePassword", accountUpdatePwdDto);
+    }
+
+    @Override
+    public int createAccountLookup(AccountLookupDto accountLookupDto) {
+        return session.insert("lhinfoDB.insertAccountLookup", accountLookupDto);
+    }
+
+    @Override
+    public List<AccountLookupDto> accountLookupList(String accountid) {
+        return session.selectList("lhinfoDB.selectAccountLookups", accountid);
     }
 
 }
