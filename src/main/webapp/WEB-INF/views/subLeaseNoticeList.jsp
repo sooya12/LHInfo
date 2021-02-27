@@ -14,151 +14,158 @@
     <title>분양임대 공고문 조회</title>
 </head>
 <body>
-<div class="container">
-    <jsp:include page="header.jsp"/>
-    <div id="titleArea">
-        <header>
-            <p>분양임대 공고문 조회</p>
-        </header>
-    </div>
-    <div id="selectBoxArea">
-        <form id="subLeaseNoticeSearchForm" action="/subleasenotice/list" method="get">
-            <div class="selectFormLine">
-                <div class="form-group">
-                    <label for="selLocation">지역 </label>
-                    <select class="form-control" id="selLocation" name="location">
-                        <c:forEach var="location" items="${locationList}">
-                            <option value="${location.code}">${location.info}</option>
-                        </c:forEach>
-                    </select>
+    <div class="container">
+        <jsp:include page="header.jsp"/>
+        <div id="titleArea">
+            <header>
+                <p>분양임대 공고문 조회</p>
+            </header>
+        </div>
+        <div class="noticeContent">
+            <span>
+                LH에서 관리하는 공지사항, 채용공고, 분양임대주택 공고 등 각종 공고 정보를 제공<br><br>
+                분양임대 공고문의 공고유형, 공고명, 지역, 공고게시일 정보 조회가 가능합니다.<br>
+                공고명을 클릭하시면 위치와 상권 정보를 포함한 상세 정보를 조회하실 수 있습니다.
+            </span>
+        </div>
+        <div id="selectBoxArea">
+            <form id="subLeaseNoticeSearchForm" action="/subleasenotice/list" method="get">
+                <div class="selectFormLine">
+                    <div class="form-group">
+                        <label for="selLocation">지역 </label>
+                        <select class="form-control" id="selLocation" name="location">
+                            <c:forEach var="location" items="${locationList}">
+                                <option value="${location.code}">${location.info}</option>
+                            </c:forEach>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="selNoticeType">공고유형 </label>
+                        <select class="form-control" id="selNoticeType" name="noticeType">
+                            <c:forEach var="noticeType" items="${noticeTypeList}">
+                                <option value="${noticeType.code}">${noticeType.info}</option>
+                            </c:forEach>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="selNoticeStatusType">공고상태 </label>
+                        <select class="form-control" id="selNoticeStatusType" name="noticeStatusType">
+                            <c:forEach var="noticeStatusType" items="${noticeStatusTypeList}">
+                                <option value="${noticeStatusType.code}">${noticeStatusType.code}</option>
+                            </c:forEach>
+                        </select>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label for="selNoticeType">공고유형 </label>
-                    <select class="form-control" id="selNoticeType" name="noticeType">
-                        <c:forEach var="noticeType" items="${noticeTypeList}">
-                            <option value="${noticeType.code}">${noticeType.info}</option>
-                        </c:forEach>
-                    </select>
+                <div class="selectFormLine">
+                    <div>
+                        <label for="inputNoticeName">공고명 </label>
+                        <input type="text" class="form-control" id="inputNoticeName" name="noticeName"/>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label for="selNoticeStatusType">공고상태 </label>
-                    <select class="form-control" id="selNoticeStatusType" name="noticeStatusType">
-                        <c:forEach var="noticeStatusType" items="${noticeStatusTypeList}">
-                            <option value="${noticeStatusType.code}">${noticeStatusType.code}</option>
-                        </c:forEach>
-                    </select>
+                <div class="selectFormLine">
+                    <div>
+                        <label for="datepicker-start-start">공고게시시작일 </label>
+                        <input type="text" class="form-control" id="datepicker-start-start" name="startDate" autocomplete="off"/>
+                    </div>
+                    <div>
+                        <label for="datepicker-start-end">공고게시종료일 </label>
+                        <input type="text" class="form-control" id="datepicker-start-end" name="endDate" autocomplete="off"/>
+                    </div>
+                    <div class="form-button">
+                        <button type="button" class="btn btn-basic" id="resetStartDate">초기화</button>
+                    </div>
                 </div>
-            </div>
-            <div class="selectFormLine">
-                <div>
-                    <label for="inputNoticeName">공고명 </label>
-                    <input type="text" class="form-control" id="inputNoticeName" name="noticeName"/>
+                <div class="selectFormLine">
+                    <div>
+                        <label for="datepicker-end-start">공고마감시작일 </label>
+                        <input type="text" class="form-control" id="datepicker-end-start" name="endStartDate" autocomplete="off"/>
+                    </div>
+                    <div>
+                        <label for="datepicker-end-end">공고마감종료일 </label>
+                        <input type="text" class="form-control" id="datepicker-end-end" name="endEndDate" autocomplete="off"/>
+                    </div>
+                    <div class="form-button">
+                        <button type="button" class="btn btn-basic" id="resetEndDate">초기화</button>
+                    </div>
+                    <input type="hidden" id="selPage" name="page">
+                    <div class="form-button">
+                        <button type="submit" class="btn btn-basic" id="inquiryButton">공고문 조회</button>
+                    </div>
                 </div>
-            </div>
-            <div class="selectFormLine">
-                <div>
-                    <label for="datepicker-start-start">공고게시시작일 </label>
-                    <input type="text" class="form-control" id="datepicker-start-start" name="startDate" autocomplete="off"/>
-                </div>
-                <div>
-                    <label for="datepicker-start-end">공고게시종료일 </label>
-                    <input type="text" class="form-control" id="datepicker-start-end" name="endDate" autocomplete="off"/>
-                </div>
-                <div class="form-button">
-                    <button type="button" class="btn btn-basic" id="resetStartDate">초기화</button>
-                </div>
-            </div>
-            <div class="selectFormLine">
-                <div>
-                    <label for="datepicker-end-start">공고마감시작일 </label>
-                    <input type="text" class="form-control" id="datepicker-end-start" name="endStartDate" autocomplete="off"/>
-                </div>
-                <div>
-                    <label for="datepicker-end-end">공고마감종료일 </label>
-                    <input type="text" class="form-control" id="datepicker-end-end" name="endEndDate" autocomplete="off"/>
-                </div>
-                <div class="form-button">
-                    <button type="button" class="btn btn-basic" id="resetEndDate">초기화</button>
-                </div>
-                <input type="hidden" id="selPage" name="page">
-                <div class="form-button">
-                    <button type="submit" class="btn btn-basic" id="inquiryButton">공고문 조회</button>
-                </div>
-            </div>
-        </form>
-    </div>
-    <div id="subLeaseNoticeArea">
-        <table class="table table-condensed" id="subLeaseNoticeTable">
-            <thead>
-            <tr>
-                <th>순번</th>
-                <th>지역명</th>
-                <th>공고명</th>
-                <th>유형명</th>
-                <th>세부유형명</th>
-                <th>공고게시일</th>
-                <th>공고마감일</th>
-                <th>공고상태</th>
-            </tr>
-            </thead>
-            <tbody>
-            <c:choose>
-                <c:when test="${subLeaseNoticeList.size() < 1}">
-                    <tr>
-                        <td colspan="8" id="noInfomation">해당 공고문 조회 정보가 없습니다.</td>
-                    </tr>
-                </c:when>
-                <c:otherwise>
-                    <c:forEach var="subLeaseNotice" items="${subLeaseNoticeList}" varStatus="idx">
+            </form>
+        </div>
+        <div id="subLeaseNoticeArea">
+            <table class="table table-condensed" id="subLeaseNoticeTable">
+                <thead>
+                <tr>
+                    <th>순번</th>
+                    <th>지역명</th>
+                    <th>공고명</th>
+                    <th>유형명</th>
+                    <th>세부유형명</th>
+                    <th>공고게시일</th>
+                    <th>공고마감일</th>
+                    <th>공고상태</th>
+                </tr>
+                </thead>
+                <tbody>
+                <c:choose>
+                    <c:when test="${subLeaseNoticeList.size() < 1}">
                         <tr>
-                            <td>${subLeaseNotice.RNUM}</td>
-                            <td>${subLeaseNotice.CNP_CD_NM}</td>
-                            <td>${subLeaseNotice.PAN_NM}</td>
-                            <td>${subLeaseNotice.UPP_AIS_TP_NM}</td>
-                            <td>${subLeaseNotice.AIS_TP_CD_NM}</td>
-                            <td>${subLeaseNotice.PAN_NT_ST_DT}</td>
-                            <td>${subLeaseNotice.CLSG_DT}</td>
-                            <td>${subLeaseNotice.PAN_SS}</td>
-                            <form class="submitForm" action="/subleasenotice/detail" method="get">
-                                <input type="hidden" name="AIS_TP_CD" value="${subLeaseNotice.AIS_TP_CD}"/>
-                                <input type="hidden" name="SPL_INF_TP_CD" value="${subLeaseNotice.SPL_INF_TP_CD}"/>
-                                <input type="hidden" name="PAN_ID" value="${subLeaseNotice.PAN_ID}"/>
-                                <input type="hidden" name="UPP_AIS_TP_CD" value="${subLeaseNotice.UPP_AIS_TP_CD}"/>
-                                <input type="hidden" name="CCR_CNNT_SYS_DS_CD" value="${subLeaseNotice.CCR_CNNT_SYS_DS_CD}"/>
-                            </form>
-                            <script type="text/javascript">
-                                $(document).ready(function () {
-                                    const line = $("#subLeaseNoticeTable tr:eq(${idx.count}) td:eq(2)");
-
-                                    $(line).hover(function() {
-                                        $(this).css("cursor", "pointer");
-                                        $(this).css("color", "#759CD8");
-                                    });
-
-                                    $(line).mouseout(function() {
-                                        $(this).css("color", "#000000");
-                                    });
-
-                                    $(line).click(function () {
-                                        sessionStorage.setItem("noticeName", "${subLeaseNotice.PAN_NM}");
-                                        sessionStorage.setItem("noticeType", "${subLeaseNotice.UPP_AIS_TP_NM}");
-                                        sessionStorage.setItem("noticeDetailType", "${subLeaseNotice.AIS_TP_CD_NM}");
-                                        sessionStorage.setItem("locationName", "${subLeaseNotice.CNP_CD_NM}");
-                                        sessionStorage.setItem("noticeStatus", "${subLeaseNotice.PAN_SS}");
-                                        $(".submitForm").submit();
-                                    });
-                                });
-                            </script>
+                            <td colspan="8" id="noInfomation">해당 공고문 조회 정보가 없습니다.</td>
                         </tr>
-                    </c:forEach>
-                </c:otherwise>
-            </c:choose>
-            </tbody>
-        </table>
+                    </c:when>
+                    <c:otherwise>
+                        <c:forEach var="subLeaseNotice" items="${subLeaseNoticeList}" varStatus="idx">
+                            <tr>
+                                <td>${subLeaseNotice.RNUM}</td>
+                                <td>${subLeaseNotice.CNP_CD_NM}</td>
+                                <td>${subLeaseNotice.PAN_NM}</td>
+                                <td>${subLeaseNotice.UPP_AIS_TP_NM}</td>
+                                <td>${subLeaseNotice.AIS_TP_CD_NM}</td>
+                                <td>${subLeaseNotice.PAN_NT_ST_DT}</td>
+                                <td>${subLeaseNotice.CLSG_DT}</td>
+                                <td>${subLeaseNotice.PAN_SS}</td>
+                                <form class="submitForm" action="/subleasenotice/detail" method="get">
+                                    <input type="hidden" name="AIS_TP_CD" value="${subLeaseNotice.AIS_TP_CD}"/>
+                                    <input type="hidden" name="SPL_INF_TP_CD" value="${subLeaseNotice.SPL_INF_TP_CD}"/>
+                                    <input type="hidden" name="PAN_ID" value="${subLeaseNotice.PAN_ID}"/>
+                                    <input type="hidden" name="UPP_AIS_TP_CD" value="${subLeaseNotice.UPP_AIS_TP_CD}"/>
+                                    <input type="hidden" name="CCR_CNNT_SYS_DS_CD" value="${subLeaseNotice.CCR_CNNT_SYS_DS_CD}"/>
+                                </form>
+                                <script type="text/javascript">
+                                    $(document).ready(function () {
+                                        const line = $("#subLeaseNoticeTable tr:eq(${idx.count}) td:eq(2)");
+
+                                        $(line).hover(function() {
+                                            $(this).css("cursor", "pointer");
+                                            $(this).css("color", "#759CD8");
+                                        });
+
+                                        $(line).mouseout(function() {
+                                            $(this).css("color", "#000000");
+                                        });
+
+                                        $(line).click(function () {
+                                            sessionStorage.setItem("noticeName", "${subLeaseNotice.PAN_NM}");
+                                            sessionStorage.setItem("noticeType", "${subLeaseNotice.UPP_AIS_TP_NM}");
+                                            sessionStorage.setItem("noticeDetailType", "${subLeaseNotice.AIS_TP_CD_NM}");
+                                            sessionStorage.setItem("locationName", "${subLeaseNotice.CNP_CD_NM}");
+                                            sessionStorage.setItem("noticeStatus", "${subLeaseNotice.PAN_SS}");
+                                            $(".submitForm").submit();
+                                        });
+                                    });
+                                </script>
+                            </tr>
+                        </c:forEach>
+                    </c:otherwise>
+                </c:choose>
+                </tbody>
+            </table>
+        </div>
+        <div id="paginationArea"></div>
+        <jsp:include page="footer.jsp"/>
     </div>
-    <div id="paginationArea"></div>
-    <jsp:include page="footer.jsp"/>
-</div>
 </body>
 </html>
 <script>
@@ -259,6 +266,16 @@
     #titleArea p {
         font-size: min(max(3vw, 20px), 40px);
         font-weight: bold;
+    }
+
+    .noticeContent {
+        width: 90%;
+        height: auto;
+        float: none;
+        margin: 0 auto;
+        margin-bottom: 40px;
+        text-align: center;
+        color: #73746E;
     }
 
     #selectBoxArea {

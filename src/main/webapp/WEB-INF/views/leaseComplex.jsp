@@ -22,6 +22,13 @@
                 <p>임대단지 조회</p>
             </header>
         </div>
+        <div id="leaseComplexContent">
+            <span>
+                LH공사에서 관리하는 공공임대주택의 단지 정보 제공<br><br>
+                임대주택 단지의 지역명, 공급유형, 단지명, 총 세대수, 전용면적, 세대수, 임대보증금, 월임대료, 최초 입주년월 정보 조회가 가능합니다.<br>
+                지역과 공급유형에 따른 조회를 하실 수 있습니다.
+            </span>
+        </div>
         <div id="selectBoxArea">
             <form id="leaseComplexSelectForm" action="/leasecomplex" method="get">
                 <div class="form-group">
@@ -154,6 +161,16 @@
     #titleArea p {
         font-size: min(max(3vw, 20px), 40px);
         font-weight: bold;
+    }
+
+    #leaseComplexContent {
+        width: 90%;
+        height: auto;
+        float: none;
+        margin: 0 auto;
+        margin-bottom: 40px;
+        text-align: center;
+        color: #996C66;
     }
 
     #selectBoxArea {
