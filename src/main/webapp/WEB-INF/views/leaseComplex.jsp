@@ -49,7 +49,7 @@
                 </div>
                 <input type="hidden" id="selPage" name="page">
                 <div class="form-button">
-                    <button type="submit" class="btn btn-basic" id="inquiryButton">임대단지 조회</button>
+                    <button type="button" class="btn btn-basic" id="inquiryButton">임대단지 조회</button>
                 </div>
             </form>
         </div>
@@ -146,6 +146,31 @@
                 $("#leaseComplexSelectForm").submit();
             }
         }
+    });
+
+    $("#inquiryButton").click(function() {
+        $.ajax({
+            type: "POST",
+            async: false,
+            url: "/account/createAccountLookup",
+            data: {accountid: "<%=request.getSession().getAttribute("accountId")%>",
+                    type1: document.querySelector("#selLocation").options[document.querySelector("#selLocation").selectedIndex].text,
+                    type2: document.querySelector("#selSupplyType").options[document.querySelector("#selSupplyType").selectedIndex].text,
+                    category: "임대단지",
+                    url: "http://localhost:8080/leasecomplex?location=" + $("#selLocation").val() + "&supplytype=" + $("#selSupplyType").val() + "&page=1"
+            },
+            dataType: "text",
+            success: function(data) {
+                if(data == "success") {
+                    $("#leaseComplexSelectForm").submit();
+                } else if(data == "fail") {
+                    $("#inquiryButton").click();
+                }
+            },
+            error: function(err) {
+                console.log(err);
+            }
+        });
     });
 
 </script>

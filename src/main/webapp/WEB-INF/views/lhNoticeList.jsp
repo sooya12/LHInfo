@@ -61,7 +61,7 @@
                     </div>
                     <input type="hidden" id="selPage" name="page">
                     <div class="form-button">
-                        <button type="submit" class="btn btn-basic" id="inquiryButton">공고문 조회</button>
+                        <button type="button" class="btn btn-basic" id="inquiryButton">공고문 조회</button>
                     </div>
                 </div>
             </form>
@@ -181,6 +181,31 @@
                 $("#lhNoticeSearchForm").submit();
             }
         }
+    });
+
+    $("#inquiryButton").click(function() {
+        $.ajax({
+            type: "POST",
+            async: false,
+            url: "/account/createAccountLookup",
+            data: {accountid: "<%=request.getSession().getAttribute("accountId")%>",
+                type1: document.querySelector("#selNoticeType").options[document.querySelector("#selNoticeType").selectedIndex].text,
+                type2: $("#searchContent").val(),
+                category: "청약센터",
+                url: "http://localhost:8080/lhnotice?noticeType=" + $("#selNoticeType").val() + "&searchType=" + $("#selSearchType").val() + "&searchContent=" + $("#searchContent").val() + "&page=1"
+            },
+            dataType: "text",
+            success: function(data) {
+                if(data == "success") {
+                    $("#lhNoticeSearchForm").submit();
+                } else if(data == "fail") {
+                    $("#inquiryButton").click();
+                }
+            },
+            error: function(err) {
+                console.log(err);
+            }
+        });
     });
 </script>
 <style>

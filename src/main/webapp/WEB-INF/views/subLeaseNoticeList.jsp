@@ -89,7 +89,7 @@
                     </div>
                     <input type="hidden" id="selPage" name="page">
                     <div class="form-button">
-                        <button type="submit" class="btn btn-basic" id="inquiryButton">공고문 조회</button>
+                        <button type="button" class="btn btn-basic" id="inquiryButton">공고문 조회</button>
                     </div>
                 </div>
             </form>
@@ -251,6 +251,31 @@
                 $("#subLeaseNoticeSearchForm").submit();
             }
         }
+    });
+
+    $("#inquiryButton").click(function() {
+        $.ajax({
+            type: "POST",
+            async: false,
+            url: "/account/createAccountLookup",
+            data: {accountid: "<%=request.getSession().getAttribute("accountId")%>",
+                type1: document.querySelector("#selLocation").options[document.querySelector("#selLocation").selectedIndex].text,
+                type2: document.querySelector("#selNoticeType").options[document.querySelector("#selNoticeType").selectedIndex].text,
+                category: "분양임대",
+                url: "http://localhost:8080/subleasenotice/list?location=" + $("#selLocation").val() + "&noticeType=" + $("#selNoticeType").val() + "&page=1"
+            },
+            dataType: "text",
+            success: function(data) {
+                if(data == "success") {
+                    $("#subLeaseNoticeSearchForm").submit();
+                } else if(data == "fail") {
+                    $("#inquiryButton").click();
+                }
+            },
+            error: function(err) {
+                console.log(err);
+            }
+        });
     });
 
 </script>
