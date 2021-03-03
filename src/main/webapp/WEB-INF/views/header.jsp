@@ -27,6 +27,9 @@
                     <li><a href="/leasecomplex">임대단지</a></li>
                     <li><a href="/subleasenotice/list">분양임대 공고문</a></li>
                     <li><a href="/lhnotice">청약센터 공고문</a></li>
+                    <c:if test="${accountId == 0}">
+                        <li><a href="/account/readAccountList">회원 목록</a></li>
+                    </c:if>
                 </ul>
                 <c:choose>
                     <c:when test="${accountId == null}">
