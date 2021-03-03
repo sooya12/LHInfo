@@ -21,4 +21,6 @@ public interface AccountService {
     int createAccountLookup(AccountLookupDto accountLookupDto);
 
     List<AccountLookupDto> accountLookupList(String accountid);
+
+    List<AccountInfoDto> readAccounts();
 }

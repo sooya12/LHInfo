@@ -52,4 +52,9 @@ public class AccountServiceImpl implements AccountService {
     public List<AccountLookupDto> accountLookupList(String accountid) {
         return accountDao.accountLookupList(accountid);
     }
+
+    @Override
+    public List<AccountInfoDto> readAccounts() {
+        return accountDao.readAccounts();
+    }
 }

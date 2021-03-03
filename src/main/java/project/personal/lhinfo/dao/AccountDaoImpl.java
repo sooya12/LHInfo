@@ -54,4 +54,9 @@ public class AccountDaoImpl implements AccountDao{
         return session.selectList("lhinfoDB.selectAccountLookups", accountid);
     }
 
+    @Override
+    public List<AccountInfoDto> readAccounts() {
+        return session.selectList("lhinfoDB.selectAccounts");
+    }
+
 }

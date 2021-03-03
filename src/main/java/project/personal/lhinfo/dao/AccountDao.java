@@ -20,4 +20,6 @@ public interface AccountDao {
     int createAccountLookup(AccountLookupDto accountLookupDto);
 
     List<AccountLookupDto> accountLookupList(String accountid);
+
+    List<AccountInfoDto> readAccounts();
 }

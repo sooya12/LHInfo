@@ -168,4 +168,12 @@ public class AccountController {
         return accountLookupList;
     }
 
+    @RequestMapping(value = "/readAccountList", method = RequestMethod.GET)
+    public String readAccountList(Model model) {
+        List<AccountInfoDto> accountInfoList = accountService.readAccounts();
+        model.addAttribute("accountInfoList", accountInfoList);
+
+        return "accountList";
+    }
+
 }
