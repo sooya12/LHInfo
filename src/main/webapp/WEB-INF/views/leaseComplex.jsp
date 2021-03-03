@@ -77,31 +77,31 @@
                             </tr>
                         </c:when>
                         <c:otherwise>
-                        <c:forEach var="leaseComplex" items="${leaseComplexList}" varStatus="idx">
-                            <tr>
-                                <td><c:out value="${leaseComplex.RNUM}"/></td>
-                                <td><c:out value="${leaseComplex.ARA_NM}"/></td>
-                                <td><c:out value="${leaseComplex.AIS_TP_CD_NM}"/></td>
-                                <td><c:out value="${leaseComplex.SBD_LGO_NM}"/></td>
-                                <td><c:out value="${leaseComplex.DDO_AR}"/></td>
-                                <td><c:out value="${leaseComplex.RFE}"/></td>
-                                <td><c:out value="${leaseComplex.SUM_HSH_CNT}"/></td>
-                                <td><c:out value="${leaseComplex.HSH_CNT}"/></td>
-                                <td><c:out value="${leaseComplex.MVIN_XPC_YM}"/></td>
-                                <td><c:out value="${leaseComplex.LS_GMY}"/></td>
-                                <script type="text/javascript">
-                                    $(document).ready(function () {
-                                        const regexp = /\B(?=(\d{3})+(?!\d))/g;
+                            <c:forEach var="leaseComplex" items="${leaseComplexList}" varStatus="idx">
+                                <tr>
+                                    <td><c:out value="${leaseComplex.RNUM}"/></td>
+                                    <td><c:out value="${leaseComplex.ARA_NM}"/></td>
+                                    <td><c:out value="${leaseComplex.AIS_TP_CD_NM}"/></td>
+                                    <td><c:out value="${leaseComplex.SBD_LGO_NM}"/></td>
+                                    <td><c:out value="${leaseComplex.DDO_AR}"/></td>
+                                    <td><c:out value="${leaseComplex.RFE}"/></td>
+                                    <td><c:out value="${leaseComplex.SUM_HSH_CNT}"/></td>
+                                    <td><c:out value="${leaseComplex.HSH_CNT}"/></td>
+                                    <td><c:out value="${leaseComplex.MVIN_XPC_YM}"/></td>
+                                    <td><c:out value="${leaseComplex.LS_GMY}"/></td>
+                                    <script type="text/javascript">
+                                        $(document).ready(function () {
+                                            const regexp = /\B(?=(\d{3})+(?!\d))/g;
 
-                                        const rfe = $("#leaseComplexTable tr:eq(${idx.count}) td:eq(5)");
-                                        rfe.html(rfe.html().replace(regexp, ','));
+                                            const rfe = $("#leaseComplexTable tr:eq(${idx.count}) td:eq(5)");
+                                            rfe.html(rfe.html().replace(regexp, ','));
 
-                                        const ls_gmy = $("#leaseComplexTable tr:eq(${idx.count}) td:eq(9)");
-                                        ls_gmy.html(ls_gmy.html().replace(regexp, ','));
-                                    });
-                                </script>
-                            </tr>
-                        </c:forEach>
+                                            const ls_gmy = $("#leaseComplexTable tr:eq(${idx.count}) td:eq(9)");
+                                            ls_gmy.html(ls_gmy.html().replace(regexp, ','));
+                                        });
+                                    </script>
+                                </tr>
+                            </c:forEach>
                         </c:otherwise>
                     </c:choose>
                 </tbody>
