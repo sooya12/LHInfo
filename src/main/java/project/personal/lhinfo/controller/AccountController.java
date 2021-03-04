@@ -168,12 +168,42 @@ public class AccountController {
         return accountLookupList;
     }
 
+    // 회원 목록 조회
     @RequestMapping(value = "/readAccountList", method = RequestMethod.GET)
     public String readAccountList(Model model) {
         List<AccountInfoDto> accountInfoList = accountService.readAccounts();
+
+        if(accountInfoList == null) {
+            accountInfoList = new ArrayList<>();
+        }
         model.addAttribute("accountInfoList", accountInfoList);
 
         return "accountList";
     }
 
+    // 회원 검색 내역 카테고리별 조회
+    @RequestMapping(value = "/readAccountLookupCountList", method = RequestMethod.GET)
+    @ResponseBody
+    public List<AccountLookupCountDto> readAccountLookupCountList() {
+        List<AccountLookupCountDto> accountLookupCountList = accountService.readAccountLookupCountList();
+
+        if(accountLookupCountList == null) {
+            accountLookupCountList = new ArrayList<>();
+        }
+
+        return accountLookupCountList;
+    }
+
+    // 회원 검색 내역 카테고리 유형별 조회
+    @RequestMapping(value = "/readAccountLookupCategoryCountList", method = RequestMethod.GET)
+    @ResponseBody
+    public List<AccountLookupCountDto> readAccountLookupCategoryCountList(@RequestParam int categoryid) {
+        List<AccountLookupCountDto> accountLookupCountList = accountService.readAccountLookupCategoryCountList(categoryid);
+
+        if(accountLookupCountList == null) {
+            accountLookupCountList = new ArrayList<>();
+        }
+
+        return accountLookupCountList;
+    }
 }

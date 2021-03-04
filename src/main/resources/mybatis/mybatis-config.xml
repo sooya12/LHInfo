@@ -11,5 +11,6 @@
         <typeAlias alias="UpdatePwdDto" type="project.personal.lhinfo.dto.AccountUpdatePwdDto"/>
         <typeAlias alias="AccountInfoDto" type="project.personal.lhinfo.dto.AccountInfoDto"/>
         <typeAlias alias="AccountLookupDto" type="project.personal.lhinfo.dto.AccountLookupDto"/>
+        <typeAlias alias="AccountLookupCountDto" type="project.personal.lhinfo.dto.AccountLookupCountDto"/>
     </typeAliases>
 </configuration>

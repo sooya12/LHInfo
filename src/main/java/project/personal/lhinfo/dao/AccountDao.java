@@ -22,4 +22,8 @@ public interface AccountDao {
     List<AccountLookupDto> accountLookupList(String accountid);
 
     List<AccountInfoDto> readAccounts();
+
+    List<AccountLookupCountDto> readAccountLookupCountList();
+
+    List<AccountLookupCountDto> readAccountLookupCategoryCountList(int categoryid);
 }

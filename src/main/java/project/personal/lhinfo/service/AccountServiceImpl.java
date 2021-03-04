@@ -57,4 +57,14 @@ public class AccountServiceImpl implements AccountService {
     public List<AccountInfoDto> readAccounts() {
         return accountDao.readAccounts();
     }
+
+    @Override
+    public List<AccountLookupCountDto> readAccountLookupCountList() {
+        return accountDao.readAccountLookupCountList();
+    }
+
+    @Override
+    public List<AccountLookupCountDto> readAccountLookupCategoryCountList(int categoryid) {
+        return accountDao.readAccountLookupCategoryCountList(categoryid);
+    }
 }
