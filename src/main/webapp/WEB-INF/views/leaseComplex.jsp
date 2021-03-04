@@ -22,6 +22,13 @@
                 <p>임대단지 조회</p>
             </header>
         </div>
+        <div id="leaseComplexContent">
+            <span>
+                LH공사에서 관리하는 공공임대주택의 단지 정보 제공<br><br>
+                임대주택 단지의 지역명, 공급유형, 단지명, 총 세대수, 전용면적, 세대수, 임대보증금, 월임대료, 최초 입주년월 정보 조회가 가능합니다.<br>
+                지역과 공급유형에 따른 조회를 하실 수 있습니다.
+            </span>
+        </div>
         <div id="selectBoxArea">
             <form id="leaseComplexSelectForm" action="/leasecomplex" method="get">
                 <div class="form-group">
@@ -42,7 +49,7 @@
                 </div>
                 <input type="hidden" id="selPage" name="page">
                 <div class="form-button">
-                    <button type="submit" class="btn btn-basic" id="inquiryButton">임대단지 조회</button>
+                    <button type="button" class="btn btn-basic" id="inquiryButton">임대단지 조회</button>
                 </div>
             </form>
         </div>
@@ -70,31 +77,31 @@
                             </tr>
                         </c:when>
                         <c:otherwise>
-                        <c:forEach var="leaseComplex" items="${leaseComplexList}" varStatus="idx">
-                            <tr>
-                                <td><c:out value="${leaseComplex.RNUM}"/></td>
-                                <td><c:out value="${leaseComplex.ARA_NM}"/></td>
-                                <td><c:out value="${leaseComplex.AIS_TP_CD_NM}"/></td>
-                                <td><c:out value="${leaseComplex.SBD_LGO_NM}"/></td>
-                                <td><c:out value="${leaseComplex.DDO_AR}"/></td>
-                                <td><c:out value="${leaseComplex.RFE}"/></td>
-                                <td><c:out value="${leaseComplex.SUM_HSH_CNT}"/></td>
-                                <td><c:out value="${leaseComplex.HSH_CNT}"/></td>
-                                <td><c:out value="${leaseComplex.MVIN_XPC_YM}"/></td>
-                                <td><c:out value="${leaseComplex.LS_GMY}"/></td>
-                                <script type="text/javascript">
-                                    $(document).ready(function () {
-                                        const regexp = /\B(?=(\d{3})+(?!\d))/g;
+                            <c:forEach var="leaseComplex" items="${leaseComplexList}" varStatus="idx">
+                                <tr>
+                                    <td><c:out value="${leaseComplex.RNUM}"/></td>
+                                    <td><c:out value="${leaseComplex.ARA_NM}"/></td>
+                                    <td><c:out value="${leaseComplex.AIS_TP_CD_NM}"/></td>
+                                    <td><c:out value="${leaseComplex.SBD_LGO_NM}"/></td>
+                                    <td><c:out value="${leaseComplex.DDO_AR}"/></td>
+                                    <td><c:out value="${leaseComplex.RFE}"/></td>
+                                    <td><c:out value="${leaseComplex.SUM_HSH_CNT}"/></td>
+                                    <td><c:out value="${leaseComplex.HSH_CNT}"/></td>
+                                    <td><c:out value="${leaseComplex.MVIN_XPC_YM}"/></td>
+                                    <td><c:out value="${leaseComplex.LS_GMY}"/></td>
+                                    <script type="text/javascript">
+                                        $(document).ready(function () {
+                                            const regexp = /\B(?=(\d{3})+(?!\d))/g;
 
-                                        const rfe = $("#leaseComplexTable tr:eq(${idx.count}) td:eq(5)");
-                                        rfe.html(rfe.html().replace(regexp, ','));
+                                            const rfe = $("#leaseComplexTable tr:eq(${idx.count}) td:eq(5)");
+                                            rfe.html(rfe.html().replace(regexp, ','));
 
-                                        const ls_gmy = $("#leaseComplexTable tr:eq(${idx.count}) td:eq(9)");
-                                        ls_gmy.html(ls_gmy.html().replace(regexp, ','));
-                                    });
-                                </script>
-                            </tr>
-                        </c:forEach>
+                                            const ls_gmy = $("#leaseComplexTable tr:eq(${idx.count}) td:eq(9)");
+                                            ls_gmy.html(ls_gmy.html().replace(regexp, ','));
+                                        });
+                                    </script>
+                                </tr>
+                            </c:forEach>
                         </c:otherwise>
                     </c:choose>
                 </tbody>
@@ -141,6 +148,32 @@
         }
     });
 
+    $("#inquiryButton").click(function() {
+        $.ajax({
+            type: "POST",
+            async: false,
+            url: "/account/createAccountLookup",
+            data: {accountid: "<%=request.getSession().getAttribute("accountId")%>",
+                    type1: document.querySelector("#selLocation").options[document.querySelector("#selLocation").selectedIndex].text,
+                    type2: document.querySelector("#selSupplyType").options[document.querySelector("#selSupplyType").selectedIndex].text,
+                    category: "임대단지",
+                    // url: "http://localhost:8080/leasecomplex?location=" + $("#selLocation").val() + "&supplytype=" + $("#selSupplyType").val() + "&page=1"
+                    url: "http://3.36.122.179/leasecomplex?location=" + $("#selLocation").val() + "&supplytype=" + $("#selSupplyType").val() + "&page=1"
+            },
+            dataType: "text",
+            success: function(data) {
+                if(data == "success") {
+                    $("#leaseComplexSelectForm").submit();
+                } else if(data == "fail") {
+                    $("#inquiryButton").click();
+                }
+            },
+            error: function(err) {
+                console.log(err);
+            }
+        });
+    });
+
 </script>
 <style>
     #titleArea {
@@ -154,6 +187,16 @@
     #titleArea p {
         font-size: min(max(3vw, 20px), 40px);
         font-weight: bold;
+    }
+
+    #leaseComplexContent {
+        width: 90%;
+        height: auto;
+        float: none;
+        margin: 0 auto;
+        margin-bottom: 40px;
+        text-align: center;
+        color: #996C66;
     }
 
     #selectBoxArea {

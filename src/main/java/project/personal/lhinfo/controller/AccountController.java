@@ -11,6 +11,8 @@ import project.personal.lhinfo.service.AccountService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 @RequestMapping(value = "/account")
@@ -65,7 +67,10 @@ public class AccountController {
         AccountInfoDto account = accountService.readAccount(id);
 
         HttpSession session = request.getSession();
-        session.setAttribute("account", account);
+        session.setAttribute("accountId", account.getId());
+        session.setAttribute("accountIdentify", account.getIdentify());
+        session.setAttribute("accountName", account.getName());
+        session.setAttribute("accountEmail", account.getEmail());
 
         return "redirect:/home";
     }
@@ -120,4 +125,85 @@ public class AccountController {
         }
     }
 
+    // 검색내역 저장
+    @RequestMapping(value = "/createAccountLookup", method = RequestMethod.POST)
+    @ResponseBody
+    public String createAccountLookup(AccountLookupDto accountLookupDto) {
+        int result = accountService.createAccountLookup(accountLookupDto);
+
+        if(result == 1) {
+            return "success";
+        } else {
+            return "fail";
+        }
+    }
+
+    // 최근 5개의 검색내역 조회
+    @RequestMapping(value = "/readAccountLookupList", method = RequestMethod.GET)
+    @ResponseBody
+    public List<AccountLookupDto> readAccountLookupList(HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        String accountid = (String)session.getAttribute("accountId");
+
+        List<AccountLookupDto> totalList = accountService.accountLookupList(accountid);
+        List<AccountLookupDto> accountLookupList = new ArrayList<>();
+        AccountLookupDto tmp;
+        ArrayList<String> urlList = new ArrayList<>();
+
+        for (int i = 0; i < totalList.size(); i++) {
+            if(urlList.size() == 5) {
+                break;
+            }
+
+            tmp = totalList.get(i);
+
+            if(urlList.contains(tmp.getUrl())) {
+                continue;
+            }
+
+            urlList.add(tmp.getUrl());
+            accountLookupList.add(tmp);
+        }
+
+        return accountLookupList;
+    }
+
+    // 회원 목록 조회
+    @RequestMapping(value = "/readAccountList", method = RequestMethod.GET)
+    public String readAccountList(Model model) {
+        List<AccountInfoDto> accountInfoList = accountService.readAccounts();
+
+        if(accountInfoList == null) {
+            accountInfoList = new ArrayList<>();
+        }
+        model.addAttribute("accountInfoList", accountInfoList);
+
+        return "accountList";
+    }
+
+    // 회원 검색 내역 카테고리별 조회
+    @RequestMapping(value = "/readAccountLookupCountList", method = RequestMethod.GET)
+    @ResponseBody
+    public List<AccountLookupCountDto> readAccountLookupCountList() {
+        List<AccountLookupCountDto> accountLookupCountList = accountService.readAccountLookupCountList();
+
+        if(accountLookupCountList == null) {
+            accountLookupCountList = new ArrayList<>();
+        }
+
+        return accountLookupCountList;
+    }
+
+    // 회원 검색 내역 카테고리 유형별 조회
+    @RequestMapping(value = "/readAccountLookupCategoryCountList", method = RequestMethod.GET)
+    @ResponseBody
+    public List<AccountLookupCountDto> readAccountLookupCategoryCountList(@RequestParam int categoryid) {
+        List<AccountLookupCountDto> accountLookupCountList = accountService.readAccountLookupCategoryCountList(categoryid);
+
+        if(accountLookupCountList == null) {
+            accountLookupCountList = new ArrayList<>();
+        }
+
+        return accountLookupCountList;
+    }
 }

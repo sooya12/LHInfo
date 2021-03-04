@@ -12,9 +12,9 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         HttpSession session = request.getSession();
-        Object account = session.getAttribute("account");
+        Object accountId = session.getAttribute("accountId");
 
-        if(account == null) {
+        if(accountId == null) {
             response.sendRedirect("/");
 
             return false;

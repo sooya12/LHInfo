@@ -27,9 +27,12 @@
                     <li><a href="/leasecomplex">임대단지</a></li>
                     <li><a href="/subleasenotice/list">분양임대 공고문</a></li>
                     <li><a href="/lhnotice">청약센터 공고문</a></li>
+                    <c:if test="${accountId == 0}">
+                        <li><a href="/account/readAccountList">회원 목록</a></li>
+                    </c:if>
                 </ul>
                 <c:choose>
-                    <c:when test="${account == null}">
+                    <c:when test="${accountId == null}">
                         <ul class="nav navbar-nav navbar-right">
                             <li><a href="/"><i class="fas fa-user-check"></i> 로그인</a></li>
                             <li><a href="/"><i class="fas fa-user-plus"></i> 회원가입</a></li>
@@ -37,7 +40,7 @@
                     </c:when>
                     <c:otherwise>
                         <ul class="nav navbar-nav navbar-right">
-                            <li><a id="accountName" aria-disabled="true"><i class="far fa-laugh-wink"></i> ${account.name}</a></li>
+                            <li><a id="accountName" aria-disabled="true"><i class="far fa-laugh-wink"></i> ${accountName} </a></li>
                             <li><a href="/account/signout"><i class="fad fa-user-times"></i> 로그아웃</a></li>
                         </ul>
                     </c:otherwise>
@@ -46,7 +49,16 @@
         </nav>
     </div>
     <div id="move-top">
-        <i class="fad fa-arrow-circle-up"></i>
+        <div id="arrowArea">
+            <i class="fad fa-arrow-circle-up"></i>
+        </div>
+        <div id="accountLookupArea">
+            <header>
+                <p>최근 검색내역</p>
+            </header>
+            <ul id="accountLookupUl">
+            </ul>
+        </div>
     </div>
 </body>
 </html>
@@ -77,6 +89,19 @@
         window.scrollTo(0, 0);
     });
 
+    $(document).ready(function() {
+        $.ajax({
+            type: "GET",
+            url: "/account/readAccountLookupList",
+            success: function(data) {
+                var ul = $("#accountLookupUl");
+
+                for(var i = 0; i < data.length; i++) {
+                    ul.append("<li><a href=" + data[i].url + ">" + data[i].category + " " + data[i].type1 + " " + data[i].type2 + "</a></li>");
+                }
+            }
+        });
+    });
 </script>
 <style>
     body {
@@ -91,6 +116,8 @@
         background-image: url('/resources/img/jack-prommel-T2wAe8qXy4w-unsplash_cut.jpg');
         background-size: cover;
         background-position: top;
+        position: relative;
+        z-index: 999;
     }
 
     #header-titleArea {
@@ -103,6 +130,7 @@
         display: flex;
         align-items: center;
         justify-content: center;
+        z-index: 999;
     }
 
     #header-titleArea p {
@@ -114,18 +142,51 @@
 
     nav, .navbar {
         margin: 0;
+        z-index: 999;
     }
 
     #move-top {
         width: 95%;
         position: fixed;
-        bottom: 140px;
+        top: 50%;
+        bottom: 50%;
         margin: 10px;
+        z-index: 888;
+    }
+
+    #move-top #arrowArea {
+        width: 100%;
+        height: 24px;
     }
 
     #move-top i {
         font-size: x-large;
         float: right;
+    }
+
+    #accountLookupArea {
+        margin-top: 20px;
+        float: right;
+        text-align: right;
+    }
+
+    #accountLookupArea ul {
+        list-style: none;
+    }
+
+    #accountLookupArea a:link {
+        color: #a0b3b0;
+        text-decoration: none;
+    }
+
+    #accountLookupArea a:visited {
+        color: #a0b3b0;
+        text-decoration: none;
+    }
+
+    #accountLookupArea a:hover {
+        color: #000000;
+        text-decoration: none;
     }
 
     #accountName {

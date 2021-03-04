@@ -17,6 +17,170 @@
     <div class="container">
         <jsp:include page="header.jsp"/>
         <div id="mainArea">
+            <div id="chartArea">
+                <div id="chartTitle">
+                    <header>
+                        <p>인기 조회</p>
+                    </header>
+                </div>
+                <div id="chartContent" style="width: 30%; min-height: 300px; margin: 0 auto; float: left;">
+                    <span>분야별 전체 조회수</span>
+                    <div class="chart" style="width: min(100%, 400px); height: auto; margin: 0 auto; margin-bottom: 50px;">
+                        <canvas id="categoryChart"></canvas>
+                        <script>
+                            var colorpalette = [
+                                "#9bbfe0",
+                                "#eba09a",
+                                "#c6d68f",
+                                "#cbaacb",
+                                "#f0a58f",
+                                "#b6cfb6",
+                                "#f6eac2",
+                                "#ff968a",
+                                "#8fcaca",
+                                "#f3b0c3",
+                                "#d4f0f0",
+                                "#ffc5bf",
+                                "#97c1a9",
+                                "#ffd8de",
+                                "#55cbcd",
+                                "#ecd5e3",
+                                "#eabe38",
+                                "#cce2cb",
+                            ];
+
+                            var labelData = [];
+                            var countData = [];
+
+                            $.ajax({
+                               type: "GET",
+                               url: "/account/readAccountLookupCountList",
+                               async: false,
+                               success: function(data) {
+                                   for(var i = 0; i < data.length; i++) {
+                                       labelData.push(data[i].category);
+                                       countData.push(data[i].count);
+                                   }
+                               }
+                            });
+
+                            var ctx = document.getElementById("categoryChart");
+                            var categoryChart = new Chart(ctx, {
+                                type: "pie",
+                                data: {
+                                    labels: labelData,
+                                    datasets: [{
+                                        data: countData,
+                                        backgroundColor: colorpalette,
+                                    }],
+                                }
+                            })
+                        </script>
+                    </div>
+                </div>
+                <div id="detailChartContent" style="width: 70%; min-height: 300px; margin: 0 auto; float: left; text-align: center;">
+                    <p>분야별 상세 조회수</p>
+                    <div class="chart" style="width: max(30%, 200px); height: auto; margin: 0 auto; margin-bottom: 50px; float: left;">
+                        <canvas id="leaseComplexChart"></canvas>
+                        <script>
+                            var labelData = [];
+                            var countData = [];
+
+                            $.ajax({
+                                type: "GET",
+                                url: "/account/readAccountLookupCategoryCountList",
+                                data: {categoryid: 1},
+                                async: false,
+                                success: function(data) {
+                                    for(var i = 0; i < data.length; i++) {
+                                        labelData.push(data[i].category);
+                                        countData.push(data[i].count);
+                                    }
+                                }
+                            });
+
+                            var ctx = document.getElementById("leaseComplexChart");
+                            var leaseComplexChart = new Chart(ctx, {
+                                type: "bar",
+                                data: {
+                                    labels: labelData,
+                                    datasets: [{
+                                        label: "임대단지 인기 조회",
+                                        data: countData,
+                                        backgroundColor: colorpalette,
+                                    }],
+                                }
+                            })
+                        </script>
+                    </div>
+                    <div class="chart" style="width: max(30%, 200px); height: auto; margin: 0 auto; margin-bottom: 50px; float: left;">
+                        <canvas id="subLeaseNoticeChart"></canvas>
+                        <script>
+                            var labelData = [];
+                            var countData = [];
+
+                            $.ajax({
+                                type: "GET",
+                                url: "/account/readAccountLookupCategoryCountList",
+                                data: {categoryid: 2},
+                                async: false,
+                                success: function(data) {
+                                    for(var i = 0; i < data.length; i++) {
+                                        labelData.push(data[i].category);
+                                        countData.push(data[i].count);
+                                    }
+                                }
+                            });
+
+                            var ctx = document.getElementById("subLeaseNoticeChart");
+                            var subLeaseNoticeChart = new Chart(ctx, {
+                                type: "bar",
+                                data: {
+                                    labels: labelData,
+                                    datasets: [{
+                                        label: "분양임대 인기 조회",
+                                        data: countData,
+                                        backgroundColor: colorpalette,
+                                    }],
+                                }
+                            })
+                        </script>
+                    </div>
+                    <div class="chart" style="width: max(30%, 200px); height: auto; margin: 0 auto; margin-bottom: 50px; float: left;">
+                        <canvas id="lhNoticeChart"></canvas>
+                        <script>
+                            var labelData = [];
+                            var countData = [];
+
+                            $.ajax({
+                                type: "GET",
+                                url: "/account/readAccountLookupCategoryCountList",
+                                data: {categoryid: 3},
+                                async: false,
+                                success: function(data) {
+                                    for(var i = 0; i < data.length; i++) {
+                                        labelData.push(data[i].category);
+                                        countData.push(data[i].count);
+                                    }
+                                }
+                            });
+
+                            var ctx = document.getElementById("lhNoticeChart");
+                            var lhNoticeChart = new Chart(ctx, {
+                                type: "horizontalBar",
+                                data: {
+                                    labels: labelData,
+                                    datasets: [{
+                                        label: "청약센터 인기 조회",
+                                        data: countData,
+                                        backgroundColor: colorpalette,
+                                    }],
+                                }
+                            })
+                        </script>
+                    </div>
+                </div>
+            </div>
             <div id="leaseComplexArea">
                 <div id="leaseComplexTitle">
                     <header>
@@ -49,7 +213,7 @@
                             </select>
                         </div>
                         <div class="form-button">
-                            <button type="submit" class="btn btn-basic" id="inquiryButton">임대단지 조회</button>
+                            <button type="button" class="btn btn-basic" id="inquiryButton">임대단지 조회</button>
                         </div>
                     </form>
                 </div>
@@ -163,12 +327,46 @@
         $(this).css("color", "#957767");
     });
 
+    $("#inquiryButton").click(function() {
+        $.ajax({
+            type: "POST",
+            async: false,
+            url: "/account/createAccountLookup",
+            data: {accountid: "<%=request.getSession().getAttribute("accountId")%>",
+                type1: document.querySelector("#selLocation").options[document.querySelector("#selLocation").selectedIndex].text,
+                type2: document.querySelector("#selSupplyType").options[document.querySelector("#selSupplyType").selectedIndex].text,
+                category: "임대단지",
+                // url: "http://localhost:8080/leasecomplex?location=" + $("#selLocation").val() + "&supplytype=" + $("#selSupplyType").val() + "&page=1"
+                url: "http://3.36.122.179/leasecomplex?location=" + $("#selLocation").val() + "&supplytype=" + $("#selSupplyType").val() + "&page=1"
+            },
+            dataType: "text",
+            success: function(data) {
+                if(data == "success") {
+                    $("#leaseComplexSelectForm").submit();
+                } else if(data == "fail") {
+                    $("#inquiryButton").click();
+                }
+            },
+            error: function(err) {
+                console.log(err);
+            }
+        });
+    });
+
 </script>
 <style>
     #mainArea {
         width: 100%;
         min-height: 850px;
         margin: 0 auto;
+    }
+
+    #chartArea {
+        border-bottom: 3px solid #4E211F;
+        width: 100%;
+        min-height: 350px;
+        margin: 0 auto;
+        color: #4E211F;
     }
 
     #leaseComplexArea {
@@ -179,14 +377,14 @@
         color: #996C66;
     }
 
-    #leaseComplexTitle, .noticeTitle {
+    #chartTitle, #leaseComplexTitle, .noticeTitle {
         width: 90%;
         min-height: auto;
         float: none;
         margin: 0 auto;
     }
 
-    #leaseComplexContent, .noticeContent {
+    #chartContent, #leaseComplexContent, .noticeContent {
         width: 90%;
         height: auto;
         float: none;

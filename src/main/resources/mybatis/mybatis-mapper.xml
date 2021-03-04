@@ -67,4 +67,44 @@
         SET password=md5(#{password})
         WHERE id=#{id}
     </update>
+
+    <!-- 회원 검색내역 저장 -->
+    <insert id="insertAccountLookup" parameterType="AccountLookupDto">
+        INSERT INTO accountlookup (accountid, category, type1, type2, url)
+        VALUES (#{accountid}, #{category}, #{type1}, #{type2}, #{url})
+    </insert>
+
+    <!-- 회원 검색내역 조회 -->
+    <select id="selectAccountLookups" resultType="AccountLookupDto">
+        SELECT *
+        FROM accountlookup
+        WHERE accountid=#{accountid}
+        ORDER BY id DESC
+    </select>
+
+    <!-- 관리자 제외 회원 목록 조회 -->
+    <select id="selectAccounts" resultType="AccountInfoDto">
+        SELECT id, identify, name, email
+        FROM account
+        WHERE id!=0
+    </select>
+
+    <!-- 카테고리별 사용자 검색 횟수 조회 -->
+    <select id="selectAccountLookupCounts" resultType="AccountLookupCountDto">
+        SELECT category, count(*) as count
+        FROM accountlookup
+        GROUP BY category
+    </select>
+
+    <!-- 카테고리 내 상세 유형별 사용자 검색 횟수 조회 -->
+    <select id="selectAccountLookupCategoryCounts" resultType="AccountLookupCountDto">
+        SELECT type1 AS category, count(*) as count
+        FROM accountlookup
+        WHERE category=(
+                SELECT category
+                FROM category
+                WHERE id=#{categoryid}
+            )
+        GROUP BY type1
+    </select>
 </mapper>

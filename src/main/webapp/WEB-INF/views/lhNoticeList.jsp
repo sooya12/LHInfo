@@ -21,6 +21,13 @@
                 <p>청약센터 공고문 조회</p>
             </header>
         </div>
+        <div class="noticeContent">
+            <span>
+                LH 청약센터 공지사항 정보를 제공<br><br>
+                LH 청약센터 공지사항의 유형, 제목, 공고 게시일 정보 조회가 가능합니다.<br>
+                공고 게시일과 검색어(제목/내용)에 따른 조회를 하실 수 있습니다.
+            </span>
+        </div>
         <div id="selectBoxArea">
             <form id="lhNoticeSearchForm" action="/lhnotice" method="get">
                 <div class="selectFormLine">
@@ -54,7 +61,7 @@
                     </div>
                     <input type="hidden" id="selPage" name="page">
                     <div class="form-button">
-                        <button type="submit" class="btn btn-basic" id="inquiryButton">공고문 조회</button>
+                        <button type="button" class="btn btn-basic" id="inquiryButton">공고문 조회</button>
                     </div>
                 </div>
             </form>
@@ -175,6 +182,32 @@
             }
         }
     });
+
+    $("#inquiryButton").click(function() {
+        $.ajax({
+            type: "POST",
+            async: false,
+            url: "/account/createAccountLookup",
+            data: {accountid: "<%=request.getSession().getAttribute("accountId")%>",
+                type1: document.querySelector("#selNoticeType").options[document.querySelector("#selNoticeType").selectedIndex].text,
+                type2: $("#searchContent").val(),
+                category: "청약센터",
+                // url: "http://localhost:8080/lhnotice?noticeType=" + $("#selNoticeType").val() + "&searchType=" + $("#selSearchType").val() + "&searchContent=" + $("#searchContent").val() + "&page=1"
+                url: "http://3.36.122.179/lhnotice?noticeType=" + $("#selNoticeType").val() + "&searchType=" + $("#selSearchType").val() + "&searchContent=" + $("#searchContent").val() + "&page=1"
+            },
+            dataType: "text",
+            success: function(data) {
+                if(data == "success") {
+                    $("#lhNoticeSearchForm").submit();
+                } else if(data == "fail") {
+                    $("#inquiryButton").click();
+                }
+            },
+            error: function(err) {
+                console.log(err);
+            }
+        });
+    });
 </script>
 <style>
     #titleArea {
@@ -188,6 +221,16 @@
     #titleArea p {
         font-size: min(max(3vw, 20px), 40px);
         font-weight: bold;
+    }
+
+    .noticeContent {
+        width: 90%;
+        height: auto;
+        float: none;
+        margin: 0 auto;
+        margin-bottom: 40px;
+        text-align: center;
+        color: #957767;
     }
 
     #selectBoxArea {
