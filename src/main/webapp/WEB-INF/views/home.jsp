@@ -23,9 +23,9 @@
                         <p>인기 조회</p>
                     </header>
                 </div>
-                <div id="chartContent" style="width: 30%; height: 300px; margin: 0 auto; float: left;">
+                <div id="chartContent" style="width: 30%; min-height: 300px; margin: 0 auto; float: left;">
                     <span>분야별 전체 조회수</span>
-                    <div class="chart" style="width: 400px; height: auto; margin: 0 auto; margin-bottom: 50px;">
+                    <div class="chart" style="width: min(100%, 400px); height: auto; margin: 0 auto; margin-bottom: 50px;">
                         <canvas id="categoryChart"></canvas>
                         <script>
                             var colorpalette = [
@@ -78,9 +78,9 @@
                         </script>
                     </div>
                 </div>
-                <div id="detailChartContent" style="width: 70%; height: 300px; margin: 0 auto; float: left; text-align: center;">
+                <div id="detailChartContent" style="width: 70%; min-height: 300px; margin: 0 auto; float: left; text-align: center;">
                     <p>분야별 상세 조회수</p>
-                    <div class="chart" style="width: 30%; height: auto; margin: 0 auto; margin-bottom: 50px; float: left;">
+                    <div class="chart" style="width: max(30%, 200px); height: auto; margin: 0 auto; margin-bottom: 50px; float: left;">
                         <canvas id="leaseComplexChart"></canvas>
                         <script>
                             var labelData = [];
@@ -101,7 +101,7 @@
 
                             var ctx = document.getElementById("leaseComplexChart");
                             var leaseComplexChart = new Chart(ctx, {
-                                type: "horizontalBar",
+                                type: "bar",
                                 data: {
                                     labels: labelData,
                                     datasets: [{
@@ -113,7 +113,7 @@
                             })
                         </script>
                     </div>
-                    <div class="chart" style="width: 30%; height: auto; margin: 0 auto; margin-bottom: 50px; float: left;">
+                    <div class="chart" style="width: max(30%, 200px); height: auto; margin: 0 auto; margin-bottom: 50px; float: left;">
                         <canvas id="subLeaseNoticeChart"></canvas>
                         <script>
                             var labelData = [];
@@ -146,7 +146,7 @@
                             })
                         </script>
                     </div>
-                    <div class="chart" style="width: 30%; height: auto; margin: 0 auto; margin-bottom: 50px; float: left;">
+                    <div class="chart" style="width: max(30%, 200px); height: auto; margin: 0 auto; margin-bottom: 50px; float: left;">
                         <canvas id="lhNoticeChart"></canvas>
                         <script>
                             var labelData = [];
