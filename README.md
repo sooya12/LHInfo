@@ -2,7 +2,7 @@
 
 #### *임대단지, 분양임대 공고문, 청약센터 공고문 정보를 제공하는 서비스*
 
-![image](https://user-images.githubusercontent.com/52819764/109245359-aa394300-7823-11eb-8be9-b8c216eb9e49.png)
+![image](https://user-images.githubusercontent.com/52819764/110055818-07437480-7da1-11eb-920f-4c7232f7dd26.png)
 
 
 
@@ -30,7 +30,7 @@
 
 - ###### Backend
 
-  ![](https://img.shields.io/badge/Java-1.11-beige) ![](https://img.shields.io/badge/Spring-5.2.9.RELEASE-beige) ![](https://img.shields.io/badge/Maven-3.8.0-beige) ![](https://img.shields.io/badge/Tomcat-8.5.61-beige) ![](https://img.shields.io/badge/Mysql-8.0-beige) ![](https://img.shields.io/badge/MyBatis-3.5.6-beige) ![](https://img.shields.io/badge/Intellij-2020.3-beige)
+  ![](https://img.shields.io/badge/Java-1.11-beige) ![](https://img.shields.io/badge/Spring-5.2.9.RELEASE-beige) ![](https://img.shields.io/badge/Maven-3.8.0-beige) ![](https://img.shields.io/badge/Tomcat-8.5.61-beige) ![](https://img.shields.io/badge/Mysql-8.0-beige) ![](https://img.shields.io/badge/MyBatis-3.5.6-beige) ![](https://img.shields.io/badge/Intellij-2020.3-beige) ![](https://img.shields.io/badge/Jackson-2.12.0-beige)
 
 - ###### Frontend
 
@@ -40,6 +40,44 @@
 
   ![](https://img.shields.io/badge/KakaoMapsAPI-Kakao-black) ![](https://img.shields.io/badge/임대주택단지조회API-공공데이터포털-black) ![](https://img.shields.io/badge/분양임대공고문조회API-공공데이터포털-black) ![](https://img.shields.io/badge/분양임대공고별상세정보조회API-공공데이터포털-black) ![](https://img.shields.io/badge/청약센터공지사항목록조회API-공공데이터포털-black) ![](https://img.shields.io/badge/소상공인진흥공단상가(상권)정보API-공공데이터포털-black) 
 
+
+
+---
+
+
+
+### :floppy_disk: 구현 기능
+- ###### 회원 기능
+
+  > 회원가입
+  >
+  > 로그인 / 로그아웃
+  >
+  > 임시 비밀번호 발급 (아이디, 이메일 확인)
+
+- ###### 임대단지 조회 기능
+
+  > 목록 조회 - 지역 / 공급유형
+
+- ###### 분양임대 공고문 조회 기능
+
+  > 목록 조회 - 지역 / 공급유형 / 공고유형 / 게시일자 / 마감일자
+  >
+  > 상세 조회 - 공고문 정보 / 지도 / 500m 반경 상권 통계
+
+- ###### 청약센터 공고문 조회 기능
+
+  > 목록 조회 - 공고유형 / 검색어 / 검색일자
+  >
+  > 상세 조회 - LH url로 이동
+
+- ###### 추가 기능
+
+  > Chart.js 사용 - 홈 화면 4개의 통계 정보 / 분양임대 공고문 상세 통계 정보
+  >
+  > Pagination.js 사용 - 임대단지 / 분양임대 / 청약센터 목록 페이징 처리
+  >
+  > Jackson 사용 - JSON 파싱
 
 
 ---
