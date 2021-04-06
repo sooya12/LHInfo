@@ -157,8 +157,8 @@
                     type1: document.querySelector("#selLocation").options[document.querySelector("#selLocation").selectedIndex].text,
                     type2: document.querySelector("#selSupplyType").options[document.querySelector("#selSupplyType").selectedIndex].text,
                     category: "임대단지",
-                    // url: "http://localhost:8080/leasecomplex?location=" + $("#selLocation").val() + "&supplytype=" + $("#selSupplyType").val() + "&page=1"
-                    url: "http://3.36.122.179/leasecomplex?location=" + $("#selLocation").val() + "&supplytype=" + $("#selSupplyType").val() + "&page=1"
+                    // url: "http://localhost:8080/leasecomplex?location=" + $("#selLocation").val() + "&supplyType=" + $("#selSupplyType").val() + "&page=1"
+                    url: "http://3.35.55.54/leasecomplex?location=" + $("#selLocation").val() + "&supplyType=" + $("#selSupplyType").val() + "&page=1"
             },
             dataType: "text",
             success: function(data) {
