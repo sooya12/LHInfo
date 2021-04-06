@@ -193,7 +193,7 @@
                 type2: $("#searchContent").val(),
                 category: "청약센터",
                 // url: "http://localhost:8080/lhnotice?noticeType=" + $("#selNoticeType").val() + "&searchType=" + $("#selSearchType").val() + "&searchContent=" + $("#searchContent").val() + "&page=1"
-                url: "http://3.36.122.179/lhnotice?noticeType=" + $("#selNoticeType").val() + "&searchType=" + $("#selSearchType").val() + "&searchContent=" + $("#searchContent").val() + "&page=1"
+                url: "http://3.35.55.54/lhnotice?noticeType=" + $("#selNoticeType").val() + "&searchType=" + $("#selSearchType").val() + "&searchContent=" + $("#searchContent").val() + "&page=1"
             },
             dataType: "text",
             success: function(data) {

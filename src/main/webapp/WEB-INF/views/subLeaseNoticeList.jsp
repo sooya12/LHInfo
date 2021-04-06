@@ -263,7 +263,7 @@
                 type2: document.querySelector("#selNoticeType").options[document.querySelector("#selNoticeType").selectedIndex].text,
                 category: "분양임대",
                 // url: "http://localhost:8080/subleasenotice/list?location=" + $("#selLocation").val() + "&noticeType=" + $("#selNoticeType").val() + "&page=1"
-                url: "http://3.36.122.179/subleasenotice/list?location=" + $("#selLocation").val() + "&noticeType=" + $("#selNoticeType").val() + "&page=1"
+                url: "http://3.35.55.54/subleasenotice/list?location=" + $("#selLocation").val() + "&noticeType=" + $("#selNoticeType").val() + "&page=1"
             },
             dataType: "text",
             success: function(data) {
